@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:App_v3.Models;assembly=App_v3"
+             x:Class="App_v3.Views.GestionPersonasPage"
+             Title="{Binding TituloPantalla}"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="15" RowSpacing="10">
+
+        <!-- Selector de Tipo de Usuario -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, *" ColumnSpacing="10">
+            <Button Grid.Column="0" 
+                    Text="Estudiantes" 
+                    Command="{Binding CambiarModoCommand}" 
+                    CommandParameter="Estudiante"
+                    BackgroundColor="#1976D2" 
+                    TextColor="White" 
+                    FontAttributes="Bold" />
+
+            <Button Grid.Column="1" 
+                    Text="Profesores" 
+                    Command="{Binding CambiarModoCommand}" 
+                    CommandParameter="Profesor"
+                    BackgroundColor="#1976D2" 
+                    TextColor="White" 
+                    FontAttributes="Bold" />
+        </Grid>
+
+        <!-- Formulario con Border -->
+        <Border Grid.Row="1" Padding="15" BackgroundColor="White">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Border.Stroke>
+                <SolidColorBrush Color="Transparent" />
+            </Border.Stroke>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Alta / Registro Manual" FontSize="16" FontAttributes="Bold" TextColor="#1976D2" />
+
+                <Entry Placeholder="Nombre Completo" Text="{Binding NombreCompleto}" />
+                <Entry Placeholder="Correo Electrónico" Text="{Binding Email}" Keyboard="Email" />
+                <Entry Placeholder="Legajo / Cátedra" Text="{Binding CampoSecundario}" />
+
+                <Button Text="Guardar Registro" 
+                        Command="{Binding GuardarCommand}"
+                        BackgroundColor="#2E7D32" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        Margin="0,5,0,0" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Label Grid.Row="2" Text="Registrados en el Sistema" FontSize="16" FontAttributes="Bold" Margin="0,5,0,0" />
+
+        <!-- Lista de Estudiantes con Border -->
+        <CollectionView Grid.Row="3" ItemsSource="{Binding ListaEstudiantes}" IsVisible="{Binding EsModoEstudiante}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Estudiante">
+                    <Border Margin="0,4" Padding="12" BackgroundColor="White">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Border.Stroke>
+                            <SolidColorBrush Color="#DDD" />
+                        </Border.Stroke>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding NombreCompleto}" FontSize="15" FontAttributes="Bold" />
+                                <Label Text="{Binding Email}" FontSize="12" TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding Legajo, StringFormat='Leg: {0}'}" FontAttributes="Bold" TextColor="#1976D2" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Lista de Profesores con Border -->
+        <CollectionView Grid.Row="3" ItemsSource="{Binding ListaProfesores}" IsVisible="{Binding EsModoProfesor}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Profesor">
+                    <Border Margin="0,4" Padding="12" BackgroundColor="White">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+                        <Border.Stroke>
+                            <SolidColorBrush Color="#DDD" />
+                        </Border.Stroke>
+                        <Grid ColumnDefinitions="*, Auto">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding NombreCompleto}" FontSize="15" FontAttributes="Bold" />
+                                <Label Text="{Binding Email}" FontSize="12" TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding Catedra}" FontAttributes="Bold" TextColor="#D32F2F" VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
