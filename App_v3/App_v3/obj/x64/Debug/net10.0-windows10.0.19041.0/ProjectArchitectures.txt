@@ -1,1 +1,0 @@
-C:\MAUI\App_v3\App_v3\App_v3.csproj;x64
