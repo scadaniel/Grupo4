@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <_CodesignBundle Include="App_v3.app">
+      <EnableCodeSigning>true</EnableCodeSigning>
+      <CodesignSigningKey></CodesignSigningKey>
+      <CodesignEntitlements></CodesignEntitlements>
+      <CodesignUseSecureTimestamp></CodesignUseSecureTimestamp>
+      <CodesignAllocate></CodesignAllocate>
+      <CodesignExtraArgs></CodesignExtraArgs>
+      <CodesignResourceRules></CodesignResourceRules>
+      <CodesignDisableTimestamp>true</CodesignDisableTimestamp>
+      <CodesignKeychain></CodesignKeychain>
+      <CodesignUseHardenedRuntime></CodesignUseHardenedRuntime>
+      <SourceProjectPath>C:\Users\DELL\Documents\GitHub\PP2_Grupo4\App_v3\App_v3</SourceProjectPath>
+    </_CodesignBundle>
+  </ItemGroup>
+</Project>
