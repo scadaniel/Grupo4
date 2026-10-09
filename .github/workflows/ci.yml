@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, 'sprint*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    name: Pruebas unitarias
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restaurar
+        run: dotnet restore App_v3/App_v3.Tests/App_v3.Tests.csproj
+
+      - name: Ejecutar pruebas
+        run: >
+          dotnet test App_v3/App_v3.Tests/App_v3.Tests.csproj
+          --no-restore
+          --logger "trx;LogFileName=resultados.trx"
+          --results-directory ./resultados
+
+      - name: Guardar resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-pruebas
+          path: resultados/*.trx
