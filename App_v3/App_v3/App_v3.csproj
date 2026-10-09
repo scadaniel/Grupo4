@@ -50,4 +50,8 @@
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\App_v3.Core\App_v3.Core.csproj" />
+  </ItemGroup>
+
 </Project>
