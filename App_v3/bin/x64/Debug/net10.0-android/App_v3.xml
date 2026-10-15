@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App_v3</name>
+    </assembly>
+    <members>
+        <member name="M:App_v3.Models.UmbralesRiesgo.Validar">
+            <summary>
+            Valida que los valores de los umbrales no sean contradictorios ni negativos.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
+            <summary>
+            Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32,App_v3.Models.UmbralesRiesgo)">
+            <summary>
+            CA 6.1 y CA 6.2: Evalúa inasistencias y TPs vencidos asignando el nivel general más alto.
+            (Tu método original intacto)
+            </summary>
+        </member>
+        <member name="T:App_v3.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

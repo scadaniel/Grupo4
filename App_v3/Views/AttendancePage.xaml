@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.AttendancePage"
+             Title="Registro de Asistencia">
+
+    <!-- Usamos un Grid principal para distribuir el espacio de la pantalla de forma fluida -->
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto" Padding="20" RowSpacing="12">
+
+        <!-- Título -->
+        <Label Grid.Row="0" 
+               Text="Control de Asistencia" 
+               FontSize="20" 
+               FontAttributes="Bold" />
+
+        <!-- Selección de Comisión / Clase -->
+        <VerticalStackLayout Grid.Row="1" Spacing="4">
+            <Label Text="Seleccionar Comisión / Clase:" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding ComisionesList}"
+                    SelectedItem="{Binding ClaseSeleccionada}"
+                    ItemDisplayBinding="{Binding Comision}"
+                    Title="Elija una comisión..." />
+        </VerticalStackLayout>
+
+        <!-- Selección de Fecha -->
+        <VerticalStackLayout Grid.Row="2" Spacing="4">
+            <Label Text="Fecha de la Clase:" FontAttributes="Bold" />
+            <DatePicker Date="{Binding FechaSeleccionada}" />
+        </VerticalStackLayout>
+
+        <BoxView Grid.Row="3" HeightRequest="1" BackgroundColor="LightGray" Margin="0,2" />
+
+        <!-- Encabezado de la Lista de Alumnos -->
+        <Label Grid.Row="4" 
+               Text="Listado de Alumnos:" 
+               FontAttributes="Bold" 
+               FontSize="18" />
+
+        <!-- CollectionView nativo con desplazamiento independiente (Fila 5 flexible "*") -->
+        <CollectionView Grid.Row="5" 
+                        ItemsSource="{Binding AlumnosAsistencia}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,4" 
+                            Padding="10" 
+                            BackgroundColor="#F9F9F9" 
+                            Stroke="LightGray" 
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 6">
+                        <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                            <!-- Checkbox marcado en True por defecto -->
+                            <CheckBox IsChecked="{Binding EstaPresente}" VerticalOptions="Center" />
+                            <Label Text="{Binding NombreCompleto}" VerticalOptions="Center" FontSize="16" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón de Guardado Masivo (Fija al pie) -->
+        <Button Grid.Row="6"
+                Text="Guardar Asistencia" 
+                Command="{Binding GuardarAsistenciaCommand}" 
+                BackgroundColor="DarkGreen" 
+                TextColor="White" 
+                CornerRadius="8"
+                Margin="0,5,0,0" />
+
+    </Grid>
+</ContentPage>

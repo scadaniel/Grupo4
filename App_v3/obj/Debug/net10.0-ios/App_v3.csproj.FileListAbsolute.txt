@@ -1,0 +1,7 @@
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\_ProcessedBundleResourcesPath.items
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\_ProcessedContentPath.items
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\App_v3.csproj.AssemblyReference.cache
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\App_v3.GeneratedMSBuildEditorConfig.editorconfig
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\App_v3.AssemblyInfoInputs.cache
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\App_v3.AssemblyInfo.cs
+C:\MAUI\App_v3\App_v3\obj\Debug\net10.0-ios\App_v3.csproj.CoreCompileInputs.cache

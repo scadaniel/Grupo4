@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.GestionPersonasPage"
+             Title="{Binding TituloPantalla}"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="*, Auto" Padding="15">
+
+        <!-- Contenido scrollable para evitar que los elementos desaparezcan en pantallas chicas -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="12">
+
+                <!-- Selector de Tipo de Usuario -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <Button Grid.Column="0" 
+                            Text="Estudiantes" 
+                            Command="{Binding CambiarModoCommand}" 
+                            CommandParameter="Estudiante"
+                            BackgroundColor="#1976D2" 
+                            TextColor="White" 
+                            FontAttributes="Bold" />
+
+                    <Button Grid.Column="1" 
+                            Text="Profesores" 
+                            Command="{Binding CambiarModoCommand}" 
+                            CommandParameter="Profesor"
+                            BackgroundColor="#1976D2" 
+                            TextColor="White" 
+                            FontAttributes="Bold" />
+                </Grid>
+
+                <!-- Formulario de Alta -->
+                <Border Padding="15" BackgroundColor="White">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Border.Stroke>
+                        <SolidColorBrush Color="Transparent" />
+                    </Border.Stroke>
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Alta / Registro Manual" FontSize="16" FontAttributes="Bold" TextColor="#1976D2" />
+
+                        <Entry Placeholder="Nombre Completo" Text="{Binding NombreCompleto}" />
+                        <Entry Placeholder="Correo Electrónico" Text="{Binding Email}" Keyboard="Email" />
+                        <Entry Placeholder="Legajo / Cátedra" Text="{Binding CampoSecundario}" />
+
+                        <!-- Botón de Guardar visible y verde -->
+                        <Button Text="Guardar Registro" 
+                                Command="{Binding GuardarCommand}"
+                                BackgroundColor="#2E7D32" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                HeightRequest="45"
+                                Margin="0,5,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Título dinámico del listado -->
+                <Label Text="{Binding TituloListado}" FontSize="16" FontAttributes="Bold" Margin="0,5,0,0" />
+
+                <!-- Lista de Estudiantes -->
+                <VerticalStackLayout IsVisible="{Binding EsModoEstudiante}">
+                    <CollectionView ItemsSource="{Binding ListaEstudiantes}">
+                        <CollectionView.EmptyView>
+                            <Label Text="No hay estudiantes registrados." HorizontalOptions="Center" TextColor="Gray" Margin="0,10" />
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,4" Padding="12" BackgroundColor="White">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Border.Stroke>
+                                        <SolidColorBrush Color="#DDD" />
+                                    </Border.Stroke>
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding NombreCompleto}" FontSize="15" FontAttributes="Bold" />
+                                            <Label Text="{Binding Email}" FontSize="12" TextColor="Gray" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="1" Text="{Binding Legajo, StringFormat='Leg: {0}'}" FontAttributes="Bold" TextColor="#1976D2" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- Lista de Profesores -->
+                <VerticalStackLayout IsVisible="{Binding EsModoProfesor}">
+                    <CollectionView ItemsSource="{Binding ListaProfesores}">
+                        <CollectionView.EmptyView>
+                            <Label Text="No hay profesores registrados." HorizontalOptions="Center" TextColor="Gray" Margin="0,10" />
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,4" Padding="12" BackgroundColor="White">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Border.Stroke>
+                                        <SolidColorBrush Color="#DDD" />
+                                    </Border.Stroke>
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding NombreCompleto}" FontSize="15" FontAttributes="Bold" />
+                                            <Label Text="{Binding Email}" FontSize="12" TextColor="Gray" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="1" Text="{Binding Legajo, StringFormat='Cátedra: {0}'}" FontAttributes="Bold" TextColor="#D32F2F" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botón de Reset BD ubicado en la esquina inferior derecha -->
+        <Button Grid.Row="1"
+                Text="⚠️ Reset BD"
+                Command="{Binding ResetDatabaseCommand}"
+                BackgroundColor="#D32F2F"
+                TextColor="White"
+                FontSize="11"
+                HeightRequest="30"
+                WidthRequest="100"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Margin="0,8,0,0" />
+
+    </Grid>
+</ContentPage>

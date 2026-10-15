@@ -1,0 +1,356 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MAUI\\App_v3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\viewmodels\\estudianteitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\estudianteitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\models\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\models\\estudiante.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\estudiante.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\viewmodels\\estudiantelistviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\estudiantelistviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\views\\estudiantelistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\estudiantelistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\MAUI\\App_v3\\App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\views\\estudiantelistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\estudiantelistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\views\\gestionclasespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionclasespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\views\\gestionpersonaspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionpersonaspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\app_v3.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app_v3.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\viewmodels\\gestionpersonasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\gestionpersonasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\models\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\maui\\app_v3\\app_v3\\app_v3.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app_v3.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EstudianteItemViewModel.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\EstudianteItemViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteItemViewModel.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\EstudianteItemViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\EstudianteItemViewModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAYwBEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T06:11:28.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "App_v3\\MauiProgram.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\MauiProgram.cs",
+              "RelativeToolTip": "App_v3\\MauiProgram.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T05:58:35.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "App.g.i.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
+              "RelativeDocumentMoniker": "App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
+              "RelativeToolTip": "App_v3\\obj\\x64\\Debug\\net10.0-windows10.0.19041.0\\win-x64\\Platforms\\Windows\\App.g.i.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAtwEQAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T05:29:18.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\App.xaml.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\App.xaml.cs",
+              "RelativeToolTip": "App_v3\\App.xaml.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T05:18:41.3Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\AppShell.xaml.cs",
+              "RelativeToolTip": "App_v3\\AppShell.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T05:15:59.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\MainPage.xaml.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\MainPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\MainPage.xaml.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwAIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T05:03:54.801Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EstudianteListPage.xaml.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\EstudianteListPage.xaml.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\EstudianteListPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T04:51:34.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EstudianteListPage.xaml",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\EstudianteListPage.xaml",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\EstudianteListPage.xaml",
+              "ViewState": "AgIAAGAAAAAAAAAAAADwv2kAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-09T04:50:48.854Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EstudianteListViewModel.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAADwv10AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T04:50:13.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Estudiante.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Models\\Estudiante.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Estudiante.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Models\\Estudiante.cs",
+              "RelativeToolTip": "App_v3\\Models\\Estudiante.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwAQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T22:50:17.641Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "App_v3",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeDocumentMoniker": "App_v3\\App_v3.csproj",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeToolTip": "App_v3\\App_v3.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-02T22:31:56.133Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "GestionPersonasPage.xaml",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionPersonasPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\GestionPersonasPage.xaml",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionPersonasPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\GestionPersonasPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwIcAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-02T18:18:57.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GestionPersonasViewModel.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\GestionPersonasViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionPersonasViewModel.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\GestionPersonasViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\GestionPersonasViewModel.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAowAcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:57:16.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\AppShell.xaml",
+              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\AppShell.xaml",
+              "RelativeToolTip": "App_v3\\AppShell.xaml",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBMAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-02T17:55:38.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "GestionClasesPage.xaml",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\GestionClasesPage.xaml",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\GestionClasesPage.xaml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAmwC0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-02T17:34:51.941Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Persona.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Models\\Persona.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Persona.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Models\\Persona.cs",
+              "RelativeToolTip": "App_v3\\Models\\Persona.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:31:23.125Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Services\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "App_v3\\Services\\DatabaseService.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Services\\DatabaseService.cs",
+              "RelativeToolTip": "App_v3\\Services\\DatabaseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:29:58.456Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Clase.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Models\\Clase.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Clase.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Models\\Clase.cs",
+              "RelativeToolTip": "App_v3\\Models\\Clase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:29:31.931Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "GestionClasesPage.xaml.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\GestionClasesPage.xaml.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\GestionClasesPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:17:20.473Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GestionClasesViewModel.cs",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAmwEoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-02T17:15:50.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "App_v3.csproj",
+              "DocumentMoniker": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeDocumentMoniker": "App_v3\\App_v3.csproj",
+              "ToolTip": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeToolTip": "App_v3\\App_v3.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAQwDYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-02T08:39:58.547Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

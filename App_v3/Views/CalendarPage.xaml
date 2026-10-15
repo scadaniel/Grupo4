@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.CalendarPage"
+             Title="Calendario de Cursada">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Gestión del Calendario" FontSize="20" FontAttributes="Bold" />
+
+            <Label Text="Tipo de Evento:" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding TiposEvento}"
+                    SelectedItem="{Binding TipoSeleccionado}" />
+
+            <Label Text="Título / Tema / Nombre del TP:" FontAttributes="Bold" />
+            <Entry Text="{Binding TituloInput}" Placeholder="Ej: Introducción a Sensores o TP 1" />
+
+            <Label Text="Fecha Programada / Límite:" FontAttributes="Bold" />
+            <DatePicker Date="{Binding FechaInput}" />
+
+            <Button Text="Guardar en el Calendario" 
+                    Command="{Binding GuardarEventoCommand}" 
+                    BackgroundColor="Navy" 
+                    TextColor="White" />
+
+            <BoxView HeightRequest="1" BackgroundColor="LightGray" Margin="0,10" />
+
+            <Label Text="Cronograma de Clases y Trabajos Prácticos:" FontSize="18" FontAttributes="Bold" />
+
+            <!-- Visualización usando Border (Estándar .NET 10) -->
+            <CollectionView ItemsSource="{Binding EventosCalendario}" HeightRequest="300">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,5" Padding="10" BackgroundColor="#F9F9F9" Stroke="LightGray" StrokeThickness="1" StrokeShape="RoundRectangle 8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="{Binding Tipo}" FontAttributes="Bold" TextColor="DarkBlue" FontSize="12" />
+                                <Label Text="{Binding Descripcion}" FontSize="16" />
+                                <Label Text="{Binding FechaFormateada}" FontSize="12" TextColor="Gray" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

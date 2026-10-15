@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:App_v3.ViewModels"
+             x:Class="App_v3.Views.GestionClasesPage"
+             Title="Gestión de Clases y Cátedras">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Registrar Nueva Cátedra / Clase"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Entry Placeholder="Nombre de la Materia"
+                   Text="{Binding NombreMateria}" />
+
+            <Entry Placeholder="Comisión / Aula"
+                   Text="{Binding Comision}" />
+
+            <Button Text="Guardar Clase"
+                    Command="{Binding GuardarClaseCommand}"
+                    BackgroundColor="#512BD4"
+                    TextColor="White" />
+
+            <BoxView HeightRequest="1" Color="Gray" Margin="0,10" />
+
+            <Label Text="Clases Registradas"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+
+            <CollectionView ItemsSource="{Binding Clases}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding NombreMateria}" FontAttributes="Bold" FontSize="16" />
+                                <!-- CAMBIO AQUÍ: TextColor en lugar de Color -->
+                                <Label Text="{Binding Comision, StringFormat='Comisión: {0}'}" FontSize="14" TextColor="Gray" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

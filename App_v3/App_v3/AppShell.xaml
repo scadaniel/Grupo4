@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="App_v3.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    Title="Sistema de Alerta Temprana">
+
+    <TabBar>
+        <Tab Title="Personas" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
+        </Tab>
+
+        <Tab Title="Alumnos" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
+        </Tab>
+
+        <Tab Title="Clases" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>
