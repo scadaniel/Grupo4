@@ -36331,11 +36331,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+      "projectUniqueName": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App_v3.csproj",
       "projectName": "App_v3",
-      "projectPath": "C:\\MAUI\\App_v3\\App_v3\\App_v3.csproj",
+      "projectPath": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App_v3.csproj",
       "packagesPath": "C:\\Users\\scada\\.nuget\\packages\\",
-      "outputPath": "C:\\MAUI\\App_v3\\App_v3\\obj\\",
+      "outputPath": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [

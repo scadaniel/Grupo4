@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.AttendancePage"
+             Title="Control de Asistencia">
+
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *, Auto" Padding="20" RowSpacing="10">
+
+        <!-- Título -->
+        <Label Grid.Row="0" 
+               Text="Control de Asistencia" 
+               FontSize="20" 
+               FontAttributes="Bold" />
+
+        <!-- Selección de Comisión / Clase -->
+        <VerticalStackLayout Grid.Row="1" Spacing="4">
+            <Label Text="Seleccionar Clase / Comisión:" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding ComisionesList}"
+                    SelectedItem="{Binding ClaseSeleccionada}"
+                    ItemDisplayBinding="{Binding DescripcionCompleta}"
+                    Title="Elija una clase..." />
+        </VerticalStackLayout>
+
+        <!-- Fecha de la Toma de Asistencia (Por defecto Hoy de Windows) -->
+        <VerticalStackLayout Grid.Row="2" Spacing="4">
+            <Label Text="Fecha de Toma de Asistencia:" FontAttributes="Bold" />
+            <DatePicker Date="{Binding FechaSeleccionada}" />
+        </VerticalStackLayout>
+
+        <!-- Panel de Inscripción Rápida por DNI -->
+        <VerticalStackLayout Grid.Row="3" Spacing="4" BackgroundColor="#F2F2F2" Padding="10" Margin="0,2">
+            <Label Text="Inscribir Alumno a esta Clase (por DNI):" FontSize="13" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                <Entry Grid.Column="0" 
+                       Placeholder="Ingrese DNI del alumno..." 
+                       Text="{Binding DniIngresado}" />
+                <Button Grid.Column="1" 
+                        Text="Inscribir" 
+                        Command="{Binding InscribirAlumnoCommand}" 
+                        BackgroundColor="Navy" 
+                        TextColor="White" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="LightGray" Margin="0,2" />
+
+        <!-- Encabezado de la Lista de Alumnos -->
+        <Label Grid.Row="5" 
+               Text="Nómina de Estudiantes" 
+               FontAttributes="Bold" 
+               FontSize="18" />
+
+        <!-- CollectionView: Vacío al arrancar hasta seleccionar clase -->
+        <CollectionView Grid.Row="6" 
+                        ItemsSource="{Binding AlumnosAsistencia}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,4" 
+                            Padding="10" 
+                            BackgroundColor="#F9F9F9" 
+                            Stroke="LightGray" 
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 6">
+                        <Grid ColumnDefinitions="*, Auto, Auto" VerticalOptions="Center">
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding NombreCompleto}" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <!-- Controles de Presente / Justificada -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center" Margin="10,0">
+                                <Label Text="Presente" VerticalOptions="Center" FontSize="13" />
+                                <CheckBox IsChecked="{Binding EstaPresente}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botón de Guardado -->
+        <Button Grid.Row="7"
+                Text="Guardar Asistencia" 
+                Command="{Binding GuardarAsistenciaCommand}" 
+                BackgroundColor="DarkGreen" 
+                TextColor="White" 
+                CornerRadius="8"
+                Margin="0,5,0,0" />
+
+    </Grid>
+
+</ContentPage>

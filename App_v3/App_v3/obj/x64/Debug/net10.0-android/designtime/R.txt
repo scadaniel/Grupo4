@@ -3175,10 +3175,9 @@ int drawable notification_template_icon_bg 0x7f0700b8
 int drawable notification_template_icon_low_bg 0x7f0700b9
 int drawable notification_tile_bg 0x7f0700ba
 int drawable notify_panel_notification_icon_bg 0x7f0700bb
-int drawable splash 0x7f0700bc
-int drawable test_level_drawable 0x7f0700bd
-int drawable tooltip_frame_dark 0x7f0700be
-int drawable tooltip_frame_light 0x7f0700bf
+int drawable test_level_drawable 0x7f0700bc
+int drawable tooltip_frame_dark 0x7f0700bd
+int drawable tooltip_frame_light 0x7f0700be
 int id above 0x7f080000
 int id accelerate 0x7f080001
 int id accessibility_action_clickable_span 0x7f080002

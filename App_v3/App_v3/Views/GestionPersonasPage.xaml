@@ -44,6 +44,7 @@
 
                         <Entry Placeholder="Nombre Completo" Text="{Binding NombreCompleto}" />
                         <Entry Placeholder="Correo Electrónico" Text="{Binding Email}" Keyboard="Email" />
+                        <Entry Placeholder="DNI del Alumno" Text="{Binding DniIngresado}" Keyboard="Numeric" />
                         <Entry Placeholder="Legajo / Cátedra" Text="{Binding CampoSecundario}" />
 
                         <!-- Botón de Guardar visible y verde -->
@@ -55,6 +56,8 @@
                                 HeightRequest="45"
                                 Margin="0,5,0,0" />
                     </VerticalStackLayout>
+
+
                 </Border>
 
                 <!-- Título dinámico del listado -->

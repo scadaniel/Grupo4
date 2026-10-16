@@ -4,6 +4,52 @@
         <name>App_v3</name>
     </assembly>
     <members>
+        <member name="M:App_v3.Models.UmbralesRiesgo.Validar">
+            <summary>
+            Valida que los valores de los umbrales no sean contradictorios ni negativos.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.ResetDatabaseAsync">
+            <summary>
+            Borra el archivo físico .db3 local y reinicia la conexión para reconstruir la base de datos de cero.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.InitAsync">
+            <summary>
+            Inicializa la conexión SQLite y crea automáticamente todas las tablas necesarias si no existen.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorComisionAsync(System.String)">
+            <summary>
+            Método legacy basado en texto de comisión (mantenido por compatibilidad).
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorClaseIdAsync(System.Int32)">
+            <summary>
+            Obtiene los estudiantes inscriptos a una clase específica mediante la tabla puente de inscripciones.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteAsync(System.Int32,System.Int32)">
+            <summary>
+            Inscribe a un estudiante en una clase o cátedra específica evitando duplicados.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.InscribirEstudiantePorDniAsync(System.String,System.Int32)">
+            <summary>
+            Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
+            <summary>
+            Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32,App_v3.Models.UmbralesRiesgo)">
+            <summary>
+            CA 6.1 y CA 6.2: Evalúa inasistencias y TPs vencidos asignando el nivel general más alto.
+            (Tu método original intacto)
+            </summary>
+        </member>
         <member name="T:App_v3.Resource">
             <summary>
             Android Resource Designer class.

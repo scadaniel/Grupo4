@@ -12,7 +12,7 @@
       <CodesignDisableTimestamp>true</CodesignDisableTimestamp>
       <CodesignKeychain></CodesignKeychain>
       <CodesignUseHardenedRuntime></CodesignUseHardenedRuntime>
-      <SourceProjectPath>C:\MAUI\App_v3\App_v3</SourceProjectPath>
+      <SourceProjectPath>C:\GRUPO4\Grupo4\App_v3\App_v3</SourceProjectPath>
     </_CodesignBundle>
   </ItemGroup>
 </Project>

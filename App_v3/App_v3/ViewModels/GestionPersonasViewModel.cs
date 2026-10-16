@@ -1,8 +1,6 @@
 ﻿using App_v3.Models;
 using App_v3.Services;
-
 using System.Collections.ObjectModel;
-
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -25,6 +23,13 @@ public class GestionPersonasViewModel : INotifyPropertyChanged
     {
         get => _email;
         set { _email = value; OnPropertyChanged(); }
+    }
+
+    private string _dniIngresado = string.Empty;
+    public string DniIngresado
+    {
+        get => _dniIngresado;
+        set { _dniIngresado = value; OnPropertyChanged(); }
     }
 
     private string _campoSecundario = string.Empty;
@@ -136,6 +141,7 @@ public class GestionPersonasViewModel : INotifyPropertyChanged
         string nombre = partes[0];
         string apellido = partes.Length > 1 ? partes[1] : string.Empty;
 
+        // 1. Guardar en la tabla Persona general
         var nuevaPersona = new Persona
         {
             Nombre = nombre,
@@ -147,8 +153,25 @@ public class GestionPersonasViewModel : INotifyPropertyChanged
 
         await _databaseService.SavePersonaAsync(nuevaPersona);
 
+        // 2. Si es Estudiante, guardamos también en la tabla Estudiante para habilitar la inscripción por DNI
+        if (_modoActual == "Estudiante")
+        {
+            var nuevoEstudiante = new Estudiante
+            {
+                NombreCompleto = NombreCompleto.Trim(),
+                Email = Email,
+                Dni = DniIngresado.Trim(),
+                Legajo = CampoSecundario,
+                Activo = true
+            };
+
+            await _databaseService.SaveEstudianteAsync(nuevoEstudiante);
+        }
+
+        // Limpiar campos del formulario
         NombreCompleto = string.Empty;
         Email = string.Empty;
+        DniIngresado = string.Empty;
         CampoSecundario = string.Empty;
 
         await CargarDatos();

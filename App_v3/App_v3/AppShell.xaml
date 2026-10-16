@@ -18,6 +18,26 @@
         <Tab Title="Clases" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
         </Tab>
+
+        <!-- Pestaña para la Toma de Asistencia (Apuntando a la vista correcta AttendancePage) -->
+        <Tab Title="Asistencia" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
+        </Tab>
+
+        <!-- Pestaña para el Calendario y Trabajos Prácticos (H2) -->
+        <Tab Title="Calendario" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
+        </Tab>
+
+        <!-- Pestaña para configuración umbrales (H7) -->
+        <Tab Title="Configuración" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
+        </Tab>
+
+        <!-- Entrega de TPS-->
+        <Tab Title="Entregas TP" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
+        </Tab>
     </TabBar>
 
 </Shell>

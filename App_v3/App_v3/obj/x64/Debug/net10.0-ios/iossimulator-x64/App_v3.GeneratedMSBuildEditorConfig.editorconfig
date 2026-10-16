@@ -26,13 +26,13 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = App_v3
-build_property.ProjectDir = C:\MAUI\App_v3\App_v3\
+build_property.ProjectDir = C:\GRUPO4\Grupo4\App_v3\App_v3\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/MAUI/App_v3/App_v3/App.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
@@ -42,7 +42,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/AppShell.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
@@ -52,7 +52,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/MainPage.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
@@ -62,7 +62,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/Resources/Styles/Colors.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
@@ -72,7 +72,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/Resources/Styles/Styles.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
@@ -82,7 +82,37 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/Views/EstudianteListPage.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/AttendancePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.AttendancePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AttendancePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AttendancePage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/CalendarPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.CalendarPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CalendarPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CalendarPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ConfiguracionPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ConfiguracionPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ConfiguracionPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ConfiguracionPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/EstudianteListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.EstudianteListPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\EstudianteListPage.xaml
@@ -92,7 +122,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/Views/GestionClasesPage.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/GestionClasesPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.GestionClasesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\GestionClasesPage.xaml
@@ -102,11 +132,31 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/MAUI/App_v3/App_v3/Views/GestionPersonasPage.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/GestionPersonasPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.GestionPersonasPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\GestionPersonasPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\GestionPersonasPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/RegistroEntregasPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.RegistroEntregasPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\RegistroEntregasPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\RegistroEntregasPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/TomaAsistenciaPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.TomaAsistenciaPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\TomaAsistenciaPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\TomaAsistenciaPage.xaml
 build_metadata.AdditionalFiles.Inflator = Runtime
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 
