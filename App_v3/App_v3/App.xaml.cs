@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace App_v3;
 
-namespace App_v3
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+        // --- REGISTRO OBLIGATORIO DE RUTAS PARA NAVEGACIÓN EN MAUI ---
+        Routing.RegisterRoute(nameof(Views.MenuReportesPage), typeof(Views.MenuReportesPage));
+        Routing.RegisterRoute(nameof(Views.ReporteAsistenciasPage), typeof(Views.ReporteAsistenciasPage));
+        Routing.RegisterRoute(nameof(Views.ReporteEntregasTpPage), typeof(Views.ReporteEntregasTpPage));
+
+        MainPage = new AppShell();
     }
 }

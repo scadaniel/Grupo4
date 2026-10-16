@@ -7,6 +7,7 @@
     Title="Sistema de Alerta Temprana">
 
     <TabBar>
+        <!-- 1. BLOQUE DE GESTIÓN Y ALUMNOS -->
         <Tab Title="Personas" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
         </Tab>
@@ -15,28 +16,32 @@
             <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
         </Tab>
 
+        <!-- 2. BLOQUE ACADÉMICO Y CLASES -->
         <Tab Title="Clases" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
         </Tab>
 
-        <!-- Pestaña para la Toma de Asistencia (Apuntando a la vista correcta AttendancePage) -->
-        <Tab Title="Asistencia" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
-        </Tab>
-
-        <!-- Pestaña para el Calendario y Trabajos Prácticos (H2) -->
         <Tab Title="Calendario" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
         </Tab>
 
-        <!-- Pestaña para configuración umbrales (H7) -->
-        <Tab Title="Configuración" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
+        <!-- 3. BLOQUE DE REGISTROS DIARIOS -->
+        <Tab Title="Asistencia" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
         </Tab>
 
-        <!-- Entrega de TPS-->
         <Tab Title="Entregas TP" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
+        </Tab>
+
+        <!-- 4. BLOQUE DE REPORTES (Abre el menú con los botones) -->
+        <Tab Title="Reportes" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
+        </Tab>
+
+        <!-- 5. CONFIGURACIÓN -->
+        <Tab Title="Configuración" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
         </Tab>
     </TabBar>
 

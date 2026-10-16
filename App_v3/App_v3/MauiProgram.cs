@@ -89,6 +89,25 @@ public static class MauiProgram
         builder.Services.AddTransient<RegistroEntregasViewModel>();
         builder.Services.AddTransient<RegistroEntregasPage>();
 
+        // =========================================================
+        // reporte:  Reportes de Asistencia
+        // =========================================================
+        builder.Services.AddTransient<ReporteAsistenciasViewModel>();
+        builder.Services.AddTransient<ReporteAsistenciasPage>();
+
+        // =========================================================
+        // reporte: Entrega de trabajos prácticos 
+        // =========================================================
+
+        builder.Services.AddTransient<ReporteEntregasTpViewModel>();
+        builder.Services.AddTransient<ReporteEntregasTpPage>();
+
+
+        // =========================================================
+        // menu de reportes
+        // =========================================================
+
+        builder.Services.AddTransient<MenuReportesPage>();
 
         return builder.Build();
     }

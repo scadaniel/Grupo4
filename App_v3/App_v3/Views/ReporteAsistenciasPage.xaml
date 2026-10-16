@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:App_v3.ViewModels"
+             x:Class="App_v3.Views.ReporteAsistenciasPage"
+             Title="Historial y Reporte de Asistencias"
+             BackgroundColor="#F4F6F9">
+
+    <!-- Se cambió a 3 filas: Botón Volver (Auto), Filtros (Auto) y Listado (*) -->
+    <Grid RowDefinitions="Auto, Auto, *" Padding="15">
+
+        <!-- Botón para Volver al Menú de Reportes -->
+        <Button Grid.Row="0" 
+                Text="⬅ Volver al Menú de Reportes" 
+                Command="{Binding VolverAlMenuCommand}" 
+                BackgroundColor="#757575" 
+                TextColor="White" 
+                FontAttributes="Bold" 
+                Margin="0,0,0,10" />
+
+        <!-- Sección de Filtros -->
+        <Frame Grid.Row="1" BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" Margin="0,0,0,10" BackgroundColor="White">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Filtros de Búsqueda" FontSize="15" FontAttributes="Bold" TextColor="#1976D2" />
+
+                <!-- Filtro por DNI -->
+                <Entry Placeholder="Buscar por DNI del alumno..." 
+                       Text="{Binding DniFiltro}" 
+                       Keyboard="Numeric" 
+                       BackgroundColor="#F9F9F9" />
+
+                <!-- Filtro por Clase / Comisión -->
+                <Picker ItemsSource="{Binding Clases}"
+                        SelectedItem="{Binding ClaseSeleccionada}"
+                        Title="Filtrar por Clase / Comisión"
+                        BackgroundColor="#F9F9F9">
+                    <Picker.ItemDisplayBinding>
+                        <MultiBinding StringFormat="{}{0} - [{1}]">
+                            <Binding Path="NombreMateria" />
+                            <Binding Path="Comision" />
+                        </MultiBinding>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+
+                <!-- Rango de Fechas -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Desde:" FontSize="12" TextColor="Gray" />
+                        <DatePicker Date="{Binding FechaInicio}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Hasta:" FontSize="12" TextColor="Gray" />
+                        <DatePicker Date="{Binding FechaFin}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Botones Buscar y Limpiar -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,5,0,0">
+                    <Button Grid.Column="0" 
+                            Text="Aplicar Filtros" 
+                            Command="{Binding BuscarCommand}" 
+                            BackgroundColor="#1976D2" 
+                            TextColor="White" 
+                            FontAttributes="Bold" />
+                    <Button Grid.Column="1" 
+                            Text="Limpiar" 
+                            Command="{Binding LimpiarFiltrosCommand}" 
+                            BackgroundColor="#757575" 
+                            TextColor="White" 
+                            FontAttributes="Bold" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Listado con Tarjetas Visuales y Cuadraditos de Colores -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding ListaReporte}">
+            <CollectionView.EmptyView>
+                <Label Text="No se encontraron asistencias con los filtros seleccionados." 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray" 
+                       Margin="0,30" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#EFEFEF" 
+                           CornerRadius="8" 
+                           Padding="12" 
+                           Margin="0,4" 
+                           HasShadow="False" 
+                           BackgroundColor="White">
+                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+
+                            <!-- Cuadradito indicador de color lateral -->
+                            <BoxView Grid.Column="0" 
+                                     WidthRequest="10" 
+                                     CornerRadius="4" 
+                                     BackgroundColor="{Binding ColorEstado}" 
+                                     VerticalOptions="Fill" />
+
+                            <!-- Información del Alumno y la Clase -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding NombreEstudiante}" 
+                                           FontAttributes="Bold" 
+                                           FontSize="15" 
+                                           TextColor="#212121" />
+                                    <Label Text="{Binding Dni, StringFormat='(DNI: {0})'}" 
+                                           FontSize="12" 
+                                           TextColor="#757575" 
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding MateriaClase}" 
+                                       FontSize="12" 
+                                       TextColor="#555" />
+                                <Label Text="{Binding FechaClase, StringFormat='Fecha de Clase: {0:dd/MM/yyyy}'}" 
+                                       FontSize="11" 
+                                       TextColor="#888" />
+                            </VerticalStackLayout>
+
+                            <!-- Insignia (Badge) de Estado con Color -->
+                            <Border Grid.Column="2" 
+                                    Padding="10,6" 
+                                    BackgroundColor="{Binding ColorEstado}" 
+                                    StrokeShape="RoundRectangle 6" 
+                                    VerticalOptions="Center">
+                                <Label Text="{Binding EstadoTexto}" 
+                                       TextColor="White" 
+                                       FontSize="12" 
+                                       FontAttributes="Bold" 
+                                       HorizontalOptions="Center" />
+                            </Border>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

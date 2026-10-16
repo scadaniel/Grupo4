@@ -440,6 +440,101 @@ public class DatabaseService
 
         return true;
     }
+
+    public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, int? claseIdFiltro, DateTime? fechaInicio, DateTime? fechaFin)
+    {
+        await InitAsync();
+
+        var asistencias = await _dbConnection!.Table<Asistencia>().ToListAsync();
+        var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
+        var clases = await _dbConnection.Table<Clase>().ToListAsync();
+
+        var query = from a in asistencias
+                    join e in estudiantes on a.EstudianteId equals e.Id
+                    join c in clases on a.ClaseId equals c.Id
+                    select new ReporteAsistenciaItem
+                    {
+                        EstudianteId = e.Id,
+                        ClaseId = c.Id,
+                        NombreEstudiante = e.NombreCompleto ?? string.Empty,
+                        Dni = e.Dni ?? string.Empty,
+                        MateriaClase = $"{c.NombreMateria} (Clase #{c.NumeroClase}: {c.Tema})",
+                        Comision = c.Comision ?? string.Empty,
+                        FechaClase = c.Fecha,
+                        Presente = a.Presente,
+                        Justificada = a.Justificada
+                    };
+
+        // 1. Filtro por DNI
+        if (!string.IsNullOrWhiteSpace(dniFiltro))
+        {
+            string dniTrim = dniFiltro.Trim();
+            query = query.Where(x => x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // 2. Filtro por Clase / Comisión ID
+        if (claseIdFiltro.HasValue && claseIdFiltro.Value > 0)
+        {
+            query = query.Where(x => x.ClaseId == claseIdFiltro.Value);
+        }
+
+        // 3. Filtro por Rango de Fechas
+        if (fechaInicio.HasValue)
+        {
+            query = query.Where(x => x.FechaClase.Date >= fechaInicio.Value.Date);
+        }
+
+        if (fechaFin.HasValue)
+        {
+            query = query.Where(x => x.FechaClase.Date <= fechaFin.Value.Date);
+        }
+
+        return query.OrderByDescending(x => x.FechaClase).ToList();
+    }
+
+
+    public async Task<List<ReporteTpItem>> ObtenerReporteEntregasTpAsync(string? dniFiltro, int? trabajoPracticoIdFiltro)
+    {
+        await InitAsync();
+
+        var entregas = await _dbConnection!.Table<EntregaTp>().ToListAsync();
+        var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
+        var tps = await _dbConnection.Table<TrabajoPractico>().ToListAsync();
+
+        // Creamos una consulta cruzada para evaluar todos los alumnos activos frente a los TPs
+        var query = from e in estudiantes.Where(x => x.Activo)
+                    from tp in tps
+                    join ent in entregas on new { EstudianteId = e.Id, TrabajoPracticoId = tp.Id }
+                    equals new { ent.EstudianteId, ent.TrabajoPracticoId } into entregaJoin
+                    from subEnt in entregaJoin.DefaultIfEmpty()
+                    select new ReporteTpItem
+                    {
+                        EstudianteId = e.Id,
+                        TrabajoPracticoId = tp.Id,
+                        NombreEstudiante = e.NombreCompleto ?? string.Empty,
+                        Dni = e.Dni ?? string.Empty,
+                        NombreTp = tp.Nombre ?? string.Empty,
+                        DescripcionTp = tp.Descripcion ?? string.Empty,
+                        Entregado = subEnt != null && subEnt.Entregado,
+                        FechaEntrega = subEnt?.FechaEntrega
+                    };
+
+        // 1. Filtro por DNI
+        if (!string.IsNullOrWhiteSpace(dniFiltro))
+        {
+            string dniTrim = dniFiltro.Trim();
+            query = query.Where(x => x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // 2. Filtro por Trabajo Práctico Especifico
+        if (trabajoPracticoIdFiltro.HasValue && trabajoPracticoIdFiltro.Value > 0)
+        {
+            query = query.Where(x => x.TrabajoPracticoId == trabajoPracticoIdFiltro.Value);
+        }
+
+        return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
+    }
+
 }
 
 

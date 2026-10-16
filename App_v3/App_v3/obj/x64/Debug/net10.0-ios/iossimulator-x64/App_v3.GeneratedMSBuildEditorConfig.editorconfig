@@ -142,11 +142,41 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/MenuReportesPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.MenuReportesPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MenuReportesPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MenuReportesPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [C:/GRUPO4/Grupo4/App_v3/App_v3/Views/RegistroEntregasPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.RegistroEntregasPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\RegistroEntregasPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\RegistroEntregasPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ReporteAsistenciasPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ReporteAsistenciasPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ReporteAsistenciasPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ReporteAsistenciasPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ReporteEntregasTpPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ReporteEntregasTpPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ReporteEntregasTpPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ReporteEntregasTpPage.xaml
 build_metadata.AdditionalFiles.Inflator = Runtime
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 
