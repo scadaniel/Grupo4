@@ -7,7 +7,7 @@ namespace App_v3.ViewModels;
 public class ConfiguracionViewModel : BindableObject
 {
     private readonly ConfiguracionService _configuracionService;
-
+    //hola
     private int _inasistenciasBajo;
     public int InasistenciasBajo
     {
