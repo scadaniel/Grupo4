@@ -3,7 +3,7 @@
 namespace App_v3.Models;
 
 [Table("Asistencias")]
-public class Asistencia
+public class Asistencia : IEntidad
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }

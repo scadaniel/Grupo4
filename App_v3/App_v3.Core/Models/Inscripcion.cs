@@ -3,7 +3,7 @@
 namespace App_v3.Models;
 
 [Table("Inscripciones")]
-public class Inscripcion
+public class Inscripcion : IEntidad
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }

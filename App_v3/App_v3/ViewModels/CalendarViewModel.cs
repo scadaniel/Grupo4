@@ -16,7 +16,7 @@ namespace App_v3.ViewModels
 
     public class CalendarViewModel : BindableObject
     {
-        private readonly DatabaseService _databaseService;
+        private readonly IDatabaseService _databaseService;
 
         private string _tipoSeleccionado = "Clase";
         private string _tituloInput = string.Empty;
@@ -46,7 +46,7 @@ namespace App_v3.ViewModels
         public ICommand GuardarEventoCommand { get; }
         public ICommand CargarEventosCommand { get; }
 
-        public CalendarViewModel(DatabaseService databaseService)
+        public CalendarViewModel(IDatabaseService databaseService)
         {
             _databaseService = databaseService;
 

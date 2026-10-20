@@ -14,6 +14,7 @@ public partial class GestionPersonasViewModel : ObservableObject
     [ObservableProperty] private string nombreCompleto = string.Empty;
     [ObservableProperty] private string email = string.Empty;
     [ObservableProperty] private string campoSecundario = string.Empty;
+    [ObservableProperty] private string dniIngresado = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EsModoEstudiante))]
