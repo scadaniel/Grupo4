@@ -9,7 +9,7 @@ namespace App_v3.ViewModels;
 
 public class GestionClasesViewModel : INotifyPropertyChanged
 {
-    private readonly DatabaseService _databaseService;
+    private readonly IDatabaseService _db;
 
     private string _nombreMateria = string.Empty;
     public string NombreMateria
@@ -44,9 +44,9 @@ public class GestionClasesViewModel : INotifyPropertyChanged
     public ICommand CargarClasesCommand { get; }
     public ICommand GuardarClaseCommand { get; }
 
-    public GestionClasesViewModel(DatabaseService databaseService)
+    public GestionClasesViewModel(IDatabaseService db)
     {
-        _databaseService = databaseService;
+        _db = db;
 
         CargarClasesCommand = new Command(async () => await CargarClasesAsync());
         GuardarClaseCommand = new Command(async () => await GuardarClaseAsync());
@@ -56,7 +56,7 @@ public class GestionClasesViewModel : INotifyPropertyChanged
 
     private async Task CargarClasesAsync()
     {
-        var lista = await _databaseService.GetClasesAsync();
+        var lista = await _db.GetAllAsync<Clase>();
         Clases.Clear();
         foreach (var clase in lista)
         {
@@ -75,7 +75,7 @@ public class GestionClasesViewModel : INotifyPropertyChanged
             Comision = Comision
         };
 
-        await _databaseService.SaveClaseAsync(nuevaClase);
+        await _db.SaveAsync(nuevaClase);
         NombreMateria = string.Empty;
         Comision = string.Empty;
         await CargarClasesAsync();

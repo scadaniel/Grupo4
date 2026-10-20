@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.ConfiguracionRiesgoPage"
+             Title="Umbrales de Riesgo">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Configurar umbrales de riesgo"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Label Text="Un estudiante pasa a riesgo Medio o Alto cuando alcanza estos valores. El nivel general es el más alto de las dos señales."
+                   FontSize="14"
+                   TextColor="Gray" />
+
+            <Label Text="Inasistencias" FontSize="18" FontAttributes="Bold" />
+
+            <Label Text="Riesgo Medio a partir de:" />
+            <Entry Keyboard="Numeric" Text="{Binding InasistenciasMedio}" />
+
+            <Label Text="Riesgo Alto a partir de:" />
+            <Entry Keyboard="Numeric" Text="{Binding InasistenciasAlto}" />
+
+            <BoxView HeightRequest="1" Color="Gray" Margin="0,10" />
+
+            <Label Text="Trabajos prácticos vencidos no entregados" FontSize="18" FontAttributes="Bold" />
+
+            <Label Text="Riesgo Medio a partir de:" />
+            <Entry Keyboard="Numeric" Text="{Binding TpsNoEntregadosMedio}" />
+
+            <Label Text="Riesgo Alto a partir de:" />
+            <Entry Keyboard="Numeric" Text="{Binding TpsNoEntregadosAlto}" />
+
+            <Button Text="Guardar umbrales"
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="#512BD4"
+                    TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

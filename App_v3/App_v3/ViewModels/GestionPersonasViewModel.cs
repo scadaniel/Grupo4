@@ -1,202 +1,95 @@
-﻿using App_v3.Models;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using App_v3.Models;
 using App_v3.Services;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
 namespace App_v3.ViewModels;
 
-public class GestionPersonasViewModel : INotifyPropertyChanged
+public partial class GestionPersonasViewModel : ObservableObject
 {
-    private readonly DatabaseService _databaseService;
+    private readonly IDatabaseService _db;
+    private readonly IDialogService _dialogs;
 
-    private string _nombreCompleto = string.Empty;
-    public string NombreCompleto
+    [ObservableProperty] private string nombreCompleto = string.Empty;
+    [ObservableProperty] private string email = string.Empty;
+    [ObservableProperty] private string campoSecundario = string.Empty;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(EsModoEstudiante))]
+    [NotifyPropertyChangedFor(nameof(EsModoProfesor))]
+    [NotifyPropertyChangedFor(nameof(TituloPantalla))]
+    [NotifyPropertyChangedFor(nameof(TituloListado))]
+    private RolPersona modoActual = RolPersona.Estudiante;
+
+    public bool EsModoEstudiante => ModoActual == RolPersona.Estudiante;
+    public bool EsModoProfesor => !EsModoEstudiante;
+    public string TituloPantalla => EsModoEstudiante ? "Gestión de Estudiantes" : "Gestión de Profesores";
+    public string TituloListado => EsModoEstudiante ? "Estudiantes Registrados" : "Profesores Registrados";
+
+    public ObservableCollection<Persona> ListaEstudiantes { get; } = new();
+    public ObservableCollection<Persona> ListaProfesores { get; } = new();
+
+    public GestionPersonasViewModel(IDatabaseService db, IDialogService dialogs)
     {
-        get => _nombreCompleto;
-        set { _nombreCompleto = value; OnPropertyChanged(); }
+        _db = db;
+        _dialogs = dialogs;
     }
 
-    private string _email = string.Empty;
-    public string Email
-    {
-        get => _email;
-        set { _email = value; OnPropertyChanged(); }
-    }
-
-    private string _dniIngresado = string.Empty;
-    public string DniIngresado
-    {
-        get => _dniIngresado;
-        set { _dniIngresado = value; OnPropertyChanged(); }
-    }
-
-    private string _campoSecundario = string.Empty;
-    public string CampoSecundario
-    {
-        get => _campoSecundario;
-        set { _campoSecundario = value; OnPropertyChanged(); }
-    }
-
-    private string _modoActual = "Estudiante";
-
-    private bool _esModoEstudiante = true;
-    public bool EsModoEstudiante
-    {
-        get => _esModoEstudiante;
-        set { _esModoEstudiante = value; OnPropertyChanged(); }
-    }
-
-    private bool _esModoProfesor = false;
-    public bool EsModoProfesor
-    {
-        get => _esModoProfesor;
-        set { _esModoProfesor = value; OnPropertyChanged(); }
-    }
-
-    private string _tituloPantalla = "Gestión de Estudiantes";
-    public string TituloPantalla
-    {
-        get => _tituloPantalla;
-        set { _tituloPantalla = value; OnPropertyChanged(); }
-    }
-
-    private string _tituloListado = "Estudiantes Registrados";
-    public string TituloListado
-    {
-        get => _tituloListado;
-        set { _tituloListado = value; OnPropertyChanged(); }
-    }
-
-    public ObservableCollection<Persona> ListaEstudiantes { get; set; } = new();
-    public ObservableCollection<Persona> ListaProfesores { get; set; } = new();
-
-    public ICommand CambiarModoCommand { get; }
-    public ICommand GuardarCommand { get; }
-    public ICommand ResetDatabaseCommand { get; }
-
-    public GestionPersonasViewModel(DatabaseService databaseService)
-    {
-        _databaseService = databaseService;
-
-        CambiarModoCommand = new Command<string>(CambiarModo);
-        GuardarCommand = new Command(async () => await GuardarRegistro());
-        ResetDatabaseCommand = new Command(async () => await ResetearBD());
-
-        _ = CargarDatos();
-    }
-
+    [RelayCommand]
     private void CambiarModo(string modo)
     {
-        if (string.IsNullOrEmpty(modo)) return;
-
-        _modoActual = modo;
-        if (modo == "Estudiante")
-        {
-            EsModoEstudiante = true;
-            EsModoProfesor = false;
-            TituloPantalla = "Gestión de Estudiantes";
-            TituloListado = "Estudiantes Registrados";
-        }
-        else
-        {
-            EsModoEstudiante = false;
-            EsModoProfesor = true;
-            TituloPantalla = "Gestión de Profesores";
-            TituloListado = "Profesores Registrados";
-        }
+        if (Enum.TryParse<RolPersona>(modo, out var rol))
+            ModoActual = rol;
     }
 
-    private async Task CargarDatos()
+    [RelayCommand]
+    private async Task CargarAsync()
     {
-        var personas = await _databaseService.GetPersonasAsync();
+        var personas = await _db.GetAllAsync<Persona>();
 
         ListaEstudiantes.Clear();
         ListaProfesores.Clear();
 
         foreach (var p in personas)
-        {
-            if (p.Rol == "Profesor")
-            {
-                ListaProfesores.Add(p);
-            }
-            else
-            {
-                ListaEstudiantes.Add(p);
-            }
-        }
+            (p.Rol == RolPersona.Profesor ? ListaProfesores : ListaEstudiantes).Add(p);
     }
 
-    private async Task GuardarRegistro()
+    [RelayCommand]
+    private async Task GuardarAsync()
     {
         if (string.IsNullOrWhiteSpace(NombreCompleto))
         {
-            if (Shell.Current is not null)
-                await Shell.Current.DisplayAlert("Atención", "Ingresa al menos un nombre.", "OK");
+            await _dialogs.AlertAsync("Atención", "Ingresa al menos un nombre.");
             return;
         }
 
         var partes = NombreCompleto.Trim().Split(' ', 2);
-        string nombre = partes[0];
-        string apellido = partes.Length > 1 ? partes[1] : string.Empty;
 
-        // 1. Guardar en la tabla Persona general
-        var nuevaPersona = new Persona
+        await _db.SaveAsync(new Persona
         {
-            Nombre = nombre,
-            Apellido = apellido,
+            Nombre = partes[0],
+            Apellido = partes.Length > 1 ? partes[1] : string.Empty,
             Email = Email,
             Legajo = CampoSecundario,
-            Rol = _modoActual
-        };
-
-        await _databaseService.SavePersonaAsync(nuevaPersona);
-
-        // 2. Si es Estudiante, guardamos también en la tabla Estudiante para habilitar la inscripción por DNI
-        if (_modoActual == "Estudiante")
-        {
-            var nuevoEstudiante = new Estudiante
-            {
-                NombreCompleto = NombreCompleto.Trim(),
-                Email = Email,
-                Dni = DniIngresado.Trim(),
-                Legajo = CampoSecundario,
-                Activo = true
-            };
-
-            await _databaseService.SaveEstudianteAsync(nuevoEstudiante);
-        }
+            Rol = ModoActual
+        });
 
         // Limpiar campos del formulario
         NombreCompleto = string.Empty;
         Email = string.Empty;
-        DniIngresado = string.Empty;
         CampoSecundario = string.Empty;
 
-        await CargarDatos();
-
-        if (Shell.Current is not null)
-        {
-            await Shell.Current.DisplayAlert("¡Guardado!", $"Registro guardado como {_modoActual} en SQLite.", "OK");
-        }
+        await CargarAsync();
+        await _dialogs.AlertAsync("¡Guardado!", $"Registro guardado como {ModoActual}.");
     }
 
-    private async Task ResetearBD()
+    [RelayCommand]
+    private async Task ResetDatabaseAsync()
     {
-        await _databaseService.ResetDatabaseAsync();
+        await _db.ResetAsync();
         ListaEstudiantes.Clear();
         ListaProfesores.Clear();
-
-        if (Shell.Current is not null)
-        {
-            await Shell.Current.DisplayAlert("Base de Datos", "Base de datos borrada y recreada.", "OK");
-        }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        await _dialogs.AlertAsync("Base de Datos", "Base de datos borrada y recreada.");
     }
 }

@@ -7,17 +7,17 @@ namespace App_v3.ViewModels
 {
     public class EstudianteListViewModel : BindableObject
     {
-        private readonly DatabaseService _databaseService;
+        private readonly IDatabaseService _db;
 
-        public ObservableCollection<EstudianteItemViewModel> Estudiantes { get; set; } = new();
+        public ObservableCollection<EstudianteItemViewModel> Estudiantes { get; } = new();
 
         public ICommand CargarEstudiantesCommand { get; }
         public ICommand SeedEstudiantesCommand { get; }
         public ICommand ResetDatabaseCommand { get; }
 
-        public EstudianteListViewModel(DatabaseService databaseService)
+        public EstudianteListViewModel(IDatabaseService db)
         {
-            _databaseService = databaseService;
+            _db = db;
 
             CargarEstudiantesCommand = new Command(async () => await CargarEstudiantesAsync());
             SeedEstudiantesCommand = new Command(async () => await CargarSeedDataAsync());
@@ -28,38 +28,16 @@ namespace App_v3.ViewModels
         {
             try
             {
-                var listaBase = await _databaseService.GetEstudiantesAsync();
+                var personas = await _db.GetAllAsync<Persona>();
                 Estudiantes.Clear();
 
-                // Lista temporal para procesar y ordenar por riesgo (H8 / CA 8.1)
-                var listaTemporal = new List<EstudianteItemViewModel>();
-
-                foreach (var est in listaBase)
+                foreach (var est in personas.Where(p => p.Rol == RolPersona.Estudiante))
                 {
-                    // CA 6.4: Opcional, si agregaste la propiedad Activo, puedes filtrar con `if (!est.Activo) continue;`
+                    // Valores simulados deterministas según el Id, para probar los indicadores de riesgo
+                    double promedioSimulado = 3.5 + (est.Id * 1.3) % 6.5;
+                    int asistenciaSimulada = 50 + (est.Id * 7) % 50;
 
-                    // 1. Tomamos los valores reales o calculados de Inasistencias y TPs no entregados del estudiante
-                    // (Si tus propiedades en la entidad Estudiante se llaman distinto, se adaptan aquí)
-                    int inasistencias = est.Inasistencias;
-                    int tpsNoEntregados = est.TpsNoEntregados;
-
-                    // 2. Evaluamos el riesgo utilizando nuestro RiesgoService (H6 y H7)
-                    var resultadoRiesgo = RiesgoService.CalcularRiesgo(inasistencias, tpsNoEntregados);
-
-                    // 3. Creamos el ViewModel del ítem pasándole el riesgo calculado para la UI
-                    var itemVm = new EstudianteItemViewModel(est, resultadoRiesgo.Nivel, resultadoRiesgo.ColorHex, resultadoRiesgo.Diagnostico);
-
-                    listaTemporal.Add(itemVm);
-                }
-
-                // 4. Ordenamiento automático por nivel de riesgo: Alto (3) -> Medio (2) -> Bajo (1) (CA 8.1)
-                var listaOrdenada = listaTemporal
-                    .OrderByDescending(x => x.NivelRiesgoEnum)
-                    .ThenBy(x => x.NombreCompleto); // Desempate alfabético por prolijidad
-
-                foreach (var item in listaOrdenada)
-                {
-                    Estudiantes.Add(item);
+                    Estudiantes.Add(new EstudianteItemViewModel(est, promedioSimulado, asistenciaSimulada));
                 }
             }
             catch (Exception ex)
@@ -72,10 +50,10 @@ namespace App_v3.ViewModels
         {
             try
             {
-                // 0. Reiniciar la base de datos para evitar duplicados si se presiona varias veces
-                await _databaseService.ResetDatabaseAsync();
+                // 0. Reiniciar la base para evitar duplicados si se presiona varias veces
+                await _db.ResetAsync();
 
-                // 1. CREAR CLASES / COMISIONES DE PRUEBA
+                // 1. Clases / comisiones de prueba
                 var clasesEjemplo = new[]
                 {
                     new Clase { NombreMateria = "Robótica y Automatización", Comision = "1K1" },
@@ -85,10 +63,10 @@ namespace App_v3.ViewModels
 
                 foreach (var clase in clasesEjemplo)
                 {
-                    await _databaseService.SaveClaseAsync(clase);
+                    await _db.SaveAsync(clase);
                 }
 
-                // 2. CREAR ESTUDIANTES DE PRUEBA (con datos variados de faltas y TPs para probar el ordenamiento)
+                // 2. Estudiantes de prueba
                 var nombres = new[] { "Juan", "María", "Carlos", "Ana", "Lucas", "Sofía", "Mateo", "Lucía", "Diego", "Elena" };
                 var apellidos = new[] { "Pérez", "Gómez", "Rodríguez", "López", "Martínez", "Sánchez", "Fernández", "Díaz", "Álvarez", "Torres" };
 
@@ -99,17 +77,14 @@ namespace App_v3.ViewModels
                     string nom = nombres[random.Next(nombres.Length)];
                     string ape = apellidos[random.Next(apellidos.Length)];
 
-                    var estudiante = new Estudiante
+                    await _db.SaveAsync(new Persona
                     {
                         Legajo = $"LEG-{2000 + i}",
-                        NombreCompleto = $"{nom} {ape}",
+                        Nombre = nom,
+                        Apellido = ape,
                         Email = $"{nom.ToLower()}.{ape.ToLower()}{i}@escuela.edu.ar",
-                        // Simulamos faltas y TPs para probar el motor de riesgo inmediatamente al hacer Seed
-                        Inasistencias = random.Next(0, 6),
-                        TpsNoEntregados = random.Next(0, 4)
-                    };
-
-                    await _databaseService.SaveEstudianteAsync(estudiante);
+                        Rol = RolPersona.Estudiante
+                    });
                 }
 
                 // 3. Recargar la lista en pantalla
@@ -127,7 +102,7 @@ namespace App_v3.ViewModels
         {
             try
             {
-                await _databaseService.ResetDatabaseAsync();
+                await _db.ResetAsync();
                 Estudiantes.Clear();
             }
             catch (Exception ex)
