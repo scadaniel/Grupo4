@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using App_v3.Models;
 using App_v3.Services;
 
 namespace App_v3.ViewModels
@@ -14,9 +13,13 @@ namespace App_v3.ViewModels
         public string FechaFormateada => Fecha.ToString("dd/MM/yyyy");
     }
 
+    /// <summary>
+    /// Pantalla del calendario. Solo se ocupa de la pantalla: las reglas (validar, numerar,
+    /// guardar y ordenar) viven en CalendarioService, dentro de App_v3.Core, donde se prueban.
+    /// </summary>
     public class CalendarViewModel : BindableObject
     {
-        private readonly IDatabaseService _databaseService;
+        private readonly CalendarioService _calendario;
 
         private string _tipoSeleccionado = "Clase";
         private string _tituloInput = string.Empty;
@@ -48,7 +51,7 @@ namespace App_v3.ViewModels
 
         public CalendarViewModel(IDatabaseService databaseService)
         {
-            _databaseService = databaseService;
+            _calendario = CalendarioService.Para(databaseService);
 
             GuardarEventoCommand = new Command(async () => await GuardarEventoAsync());
             CargarEventosCommand = new Command(async () => await CargarEventosAsync());
@@ -57,48 +60,23 @@ namespace App_v3.ViewModels
             _ = CargarEventosAsync();
         }
 
+        // CA 2.3: el servicio devuelve clases y trabajos juntos, ya en orden cronológico
         public async Task CargarEventosAsync()
         {
             try
             {
-                EventosCalendario.Clear();
+                var eventos = await _calendario.ListarEventosAsync();
 
-                // 1. Cargar Clases registradas
-                var clases = await _databaseService.GetClasesAsync();
-                foreach (var c in clases)
+                EventosCalendario.Clear();
+                foreach (var evento in eventos)
                 {
                     EventosCalendario.Add(new EventoCalendarioItem
                     {
-                        Id = c.Id,
-                        Tipo = "Clase",
-                        Descripcion = string.IsNullOrWhiteSpace(c.Tema)
-                            ? $"{c.NombreMateria} (Comisión {c.Comision})"
-                            : $"Clase {c.NumeroClase}: {c.Tema}",
-                        Fecha = c.Fecha
+                        Id = evento.Id,
+                        Tipo = evento.Tipo,
+                        Descripcion = evento.Descripcion,
+                        Fecha = evento.Fecha
                     });
-                }
-
-                // 2. Cargar Trabajos Prácticos registrados
-                var tps = await _databaseService.GetTrabajosPracticosAsync();
-                foreach (var tp in tps)
-                {
-                    EventosCalendario.Add(new EventoCalendarioItem
-                    {
-                        Id = tp.Id,
-                        Tipo = "Trabajo Práctico",
-                        Descripcion = string.IsNullOrWhiteSpace(tp.Descripcion)
-                            ? tp.Nombre
-                            : $"{tp.Nombre} - {tp.Descripcion}",
-                        Fecha = tp.FechaLimite
-                    });
-                }
-
-                // 3. Ordenar por fecha para mostrar cronológicamente (CA 2.3)
-                var eventosOrdenados = EventosCalendario.OrderBy(e => e.Fecha).ToList();
-                EventosCalendario.Clear();
-                foreach (var ev in eventosOrdenados)
-                {
-                    EventosCalendario.Add(ev);
                 }
             }
             catch (Exception ex)
@@ -107,43 +85,12 @@ namespace App_v3.ViewModels
             }
         }
 
+        // CA 2.1, CA 2.2 y CA 2.4: el servicio valida y guarda; acá solo se muestra el resultado
         private async Task GuardarEventoAsync()
         {
-            // CA 2.4: Validación de datos obligatorios
-            if (string.IsNullOrWhiteSpace(TipoSeleccionado) || string.IsNullOrWhiteSpace(TituloInput))
-            {
-                if (Shell.Current != null)
-                {
-                    await Shell.Current.DisplayAlert("Error de validación", "Por favor, complete todos los campos obligatorios (Tipo y Título/Tema) antes de guardar.", "OK");
-                }
-                return;
-            }
-
             try
             {
-                // CA 2.1 y CA 2.2: Persistencia oficial en SQLite según el tipo de evento
-                if (TipoSeleccionado == "Clase")
-                {
-                    int proximoNumero = (await _databaseService.GetClasesAsync()).Count + 1;
-                    var nuevaClase = new Clase
-                    {
-                        NombreMateria = "Materia General",
-                        Comision = "Única",
-                        NumeroClase = proximoNumero,
-                        Tema = TituloInput.Trim(),
-                        Fecha = FechaInput
-                    };
-                    await _databaseService.SaveClaseAsync(nuevaClase);
-                }
-                else if (TipoSeleccionado == "Trabajo Práctico")
-                {
-                    var nuevoTp = new TrabajoPractico
-                    {
-                        Nombre = TituloInput.Trim(),
-                        FechaLimite = FechaInput
-                    };
-                    await _databaseService.SaveTrabajoPracticoAsync(nuevoTp);
-                }
+                await _calendario.AgregarEventoAsync(TipoSeleccionado, TituloInput, FechaInput);
 
                 // Limpiar campos y recargar la lista
                 TituloInput = string.Empty;
@@ -154,9 +101,20 @@ namespace App_v3.ViewModels
                     await Shell.Current.DisplayAlert("Éxito", "El evento se ha registrado correctamente en la base de datos.", "OK");
                 }
             }
+            catch (DatosInvalidosException ex)
+            {
+                if (Shell.Current != null)
+                {
+                    await Shell.Current.DisplayAlert("Error de validación", ex.Message, "OK");
+                }
+            }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[Guardar Evento Error]: {ex.Message}");
+                if (Shell.Current != null)
+                {
+                    await Shell.Current.DisplayAlert("Error", "No se pudo guardar el evento. Intente nuevamente.", "OK");
+                }
             }
         }
     }
