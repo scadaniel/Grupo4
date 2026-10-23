@@ -1,2 +1,1 @@
-Descargar HISTORIAS.odt, abrirlo con editor de texto
-Aqui vamos agregando todos las historias y podemos ir modificando todo.. 
+https://docs.google.com/document/d/1CBga8N-IKcbUX2MIVXqueNpodVdxLpZrVNXhNHVR_m0/edit?tab=t.0
