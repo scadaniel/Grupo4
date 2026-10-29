@@ -22,7 +22,7 @@ namespace App_v3.ViewModels
 
     public class RegistroEntregasViewModel : BindableObject
     {
-        private readonly IDatabaseService _databaseService;
+        private readonly DatabaseService _databaseService;
 
         public ObservableCollection<Clase> Clases { get; set; } = new();
         public ObservableCollection<TrabajoPractico> TrabajosPracticos { get; set; } = new();
@@ -54,7 +54,7 @@ namespace App_v3.ViewModels
 
         public ICommand GuardarEntregasCommand { get; }
 
-        public RegistroEntregasViewModel(IDatabaseService databaseService)
+        public RegistroEntregasViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
             GuardarEntregasCommand = new Command(async () => await GuardarEntregasAsync());

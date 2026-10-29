@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.ConfiguracionPage"
+             Title="Configuración de Umbrales">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Parámetros de Riesgo (H7)" FontSize="20" FontAttributes="Bold" />
+            <Label Text="Define los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
+                   TextColor="Gray" FontSize="14" />
+
+            <!-- Sección Inasistencias -->
+            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Criterio de Inasistencias" FontAttributes="Bold" FontSize="16" />
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
+                        <Entry Text="{Binding InasistenciasBajo}" Keyboard="Numeric" WidthRequest="80" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
+                        <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" WidthRequest="80" />
+                    </HorizontalStackLayout>
+                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Sección Trabajos Prácticos -->
+            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Criterio de Trabajos Prácticos No Entregados" FontAttributes="Bold" FontSize="16" />
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
+                        <Entry Text="{Binding TpsBajo}" Keyboard="Numeric" WidthRequest="80" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
+                        <Entry Text="{Binding TpsMedio}" Keyboard="Numeric" WidthRequest="80" />
+                    </HorizontalStackLayout>
+                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botón Guardar -->
+            <Button Text="Guardar Configuración de Umbrales" 
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="DarkBlue"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

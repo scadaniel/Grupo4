@@ -7,7 +7,7 @@ namespace App_v3.ViewModels;
 
 public class AttendanceViewModel : BindableObject
 {
-    private readonly IDatabaseService _databaseService;
+    private readonly DatabaseService _databaseService;
 
     private Clase? _claseSeleccionada;
     private DateTime _fechaSeleccionada = DateTime.Today; // Por defecto hoy de Windows
@@ -69,7 +69,7 @@ public class AttendanceViewModel : BindableObject
     public ICommand GuardarAsistenciaCommand { get; }
     public ICommand InscribirAlumnoCommand { get; }
 
-    public AttendanceViewModel(IDatabaseService databaseService)
+    public AttendanceViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
 
