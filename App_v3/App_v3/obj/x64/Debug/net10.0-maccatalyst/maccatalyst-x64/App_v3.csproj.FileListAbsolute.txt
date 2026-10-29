@@ -579,6 +579,7 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\mauifont.inputs
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\mauisplash.inputs
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\mauisplash.stamp
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\estudiantes.jpg
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\dotnet_bot.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Assets.xcassets\appicon.appiconset\appiconItunesArtwork.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Assets.xcassets\appicon.appiconset\appicon83.5x83.5@2x.png
@@ -621,4 +622,6 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\App_v3.pdb
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\App_v3.genruntimeconfig.cache
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\ref\App_v3.dll
-C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\estudiantes.jpg
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\fondo5.avif
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\fondo3.png
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\fondo2.png

@@ -2,45 +2,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.WelcomePage"
-             BackgroundColor="#0F172A"
              NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout VerticalOptions="Center" 
-                         HorizontalOptions="Center" 
-                         Spacing="25" 
-                         Padding="40">
+    <!-- Grid para superponer la imagen de fondo y los textos -->
+    <Grid>
+        <!-- 1. IMAGEN DE FONDO (Asegúrate de cambiar 'fondo_escuela.png' por el nombre de tu archivo) -->
+        <Image Source="fondo2.png" 
+               Aspect="AspectFill" />
 
-        <!-- Logo o Icono de la App -->
-        <Image Source="estudiantes.jpg." 
-               HeightRequest="120" 
-               WidthRequest="120" 
-               HorizontalOptions="Center"/>
+        <!-- 2. CAPA OSCURA SEMITRANSPARENTE (Opcional, ayuda a que se lea mejor el texto encima de la imagen) -->
+        <BoxView BackgroundColor="#0F172A" 
+                 Opacity="0.8" />
 
-        <!-- Título Institucional -->
-        <Label Text="Sistema de Alerta Temprana" 
-               TextColor="White" 
-               FontSize="26" 
-               FontAttributes="Bold" 
-               HorizontalTextAlignment="Center"/>
+        <!-- 3. CONTENIDO / TEXTOS CENTRADOS -->
+        <VerticalStackLayout VerticalOptions="Center" 
+                             HorizontalOptions="Center" 
+                             Spacing="20" 
+                             Padding="40">
 
-        <!-- Subtítulo -->
-        <Label Text="Gestión académica, asistencias y seguimiento de estudiantes." 
-               TextColor="#94A3B8" 
-               FontSize="15" 
-               HorizontalTextAlignment="Center"
-               MaximumWidthRequest="350"/>
+            <!-- Títulos institucionales -->
+            <Label Text="Sistema de Alerta Temprana" 
+                   TextColor="White" 
+                   FontSize="35" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center"/>
 
-        <!-- Botón de Inicio -->
-        <Button Text="Ingresar al Sistema" 
-                BackgroundColor="#2563EB" 
-                TextColor="White" 
-                FontSize="16" 
-                FontAttributes="Bold" 
-                CornerRadius="12" 
-                HeightRequest="50" 
-                WidthRequest="220"
-                Margin="0,20,0,0"
-                Clicked="OnIngresarClicked"/>
+            <Label Text="Gestión académica, toma de asistencias, control de entrega de TPs y seguimiento de estudiantes." 
+                   TextColor="#94A3B8" 
+                   FontSize="25" 
+                   HorizontalTextAlignment="Center"
+                   MaximumWidthRequest="350"/>
 
-    </VerticalStackLayout>
+            <!-- Línea divisoria y créditos del Grupo 4 -->
+            <BoxView HeightRequest="1" 
+                     BackgroundColor="#334155" 
+                     WidthRequest="150" 
+                     Margin="0,20,0,5"
+                     HorizontalOptions="Center"/>
+
+            <Label Text="Desarrollado por Grupo 4:" 
+                   TextColor="#64748B" 
+                   FontSize="20" 
+                   HorizontalTextAlignment="Center"/>
+
+            <Label Text="Eleonora • Mariana • Alan • Julio • Daniel" 
+                   TextColor="#38BDF8" 
+                   FontSize="20" 
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>
+
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

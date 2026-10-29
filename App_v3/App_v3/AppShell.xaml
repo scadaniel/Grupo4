@@ -9,7 +9,7 @@
 
     <!-- Cabecera del Menú Lateral -->
     <Shell.FlyoutHeader>
-        <VerticalStackLayout BackgroundColor="#1E293B" Padding="20,40,20,20">
+        <VerticalStackLayout BackgroundColor="#1E293B" Padding="20,30,20,20" Spacing="5">
             <Label Text="Sistema de Alerta" 
                    TextColor="White" 
                    FontSize="20" 
@@ -20,12 +20,14 @@
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
-    <!-- 1. PANTALLA DE BIENVENIDA (Se muestra al abrir la app de inicio) -->
-    <FlyoutItem Title="Inicio" Icon="dotnet_bot.png">
-        <ShellContent ContentTemplate="{DataTemplate views:WelcomePage}" />
-    </FlyoutItem>
+    <!-- PANTALLA DE BIENVENIDA INICIAL (Se muestra al abrir la app) -->
+    <ShellContent 
+        Title="Inicio"
+        Route="WelcomePage"
+        ContentTemplate="{DataTemplate views:WelcomePage}"
+        FlyoutItemIsVisible="False" />
 
-    <!-- 2. DEMÁS MÓDULOS DEL MENÚ LATERAL -->
+    <!-- DEMÁS MÓDULOS DEL MENÚ LATERAL -->
     <FlyoutItem Title="Personas" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
     </FlyoutItem>
@@ -57,5 +59,20 @@
     <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
     </FlyoutItem>
+
+    <!-- PIE DE PÁGINA DEL MENÚ LATERAL (GRUPO 4) -->
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout BackgroundColor="#0F172A" Padding="20,15" Spacing="4">
+            <Label Text="GRUPO 4" 
+                   TextColor="#38BDF8" 
+                   FontSize="13" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center"/>
+            <Label Text="Eleonora, Mariana, Alan, Julio, Daniel" 
+                   TextColor="#94A3B8" 
+                   FontSize="11" 
+                   HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

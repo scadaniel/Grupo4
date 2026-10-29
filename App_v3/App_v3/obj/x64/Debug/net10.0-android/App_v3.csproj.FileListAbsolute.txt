@@ -2734,6 +2734,7 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\mauifont.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\f\OpenSans-Regular.ttf
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\f\OpenSans-Semibold.ttf
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\dotnet_bot.png
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\estudiantes.jpg
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xxxhdpi\appicon_round.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xxhdpi\appicon_round.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xhdpi\appicon_round.png
@@ -5413,4 +5414,6 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ConvertResou
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GenerateJavaStubs.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ResolveLibraryProjectImports.stamp
-C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\estudiantes.jpg
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo5.avif
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo3.png
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo2.png
