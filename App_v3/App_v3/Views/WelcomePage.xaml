@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.WelcomePage"
+             BackgroundColor="#0F172A"
+             NavigationPage.HasNavigationBar="False">
+
+    <VerticalStackLayout VerticalOptions="Center" 
+                         HorizontalOptions="Center" 
+                         Spacing="25" 
+                         Padding="40">
+
+        <!-- Logo o Icono de la App -->
+        <Image Source="estudiantes.jpg." 
+               HeightRequest="120" 
+               WidthRequest="120" 
+               HorizontalOptions="Center"/>
+
+        <!-- Título Institucional -->
+        <Label Text="Sistema de Alerta Temprana" 
+               TextColor="White" 
+               FontSize="26" 
+               FontAttributes="Bold" 
+               HorizontalTextAlignment="Center"/>
+
+        <!-- Subtítulo -->
+        <Label Text="Gestión académica, asistencias y seguimiento de estudiantes." 
+               TextColor="#94A3B8" 
+               FontSize="15" 
+               HorizontalTextAlignment="Center"
+               MaximumWidthRequest="350"/>
+
+        <!-- Botón de Inicio -->
+        <Button Text="Ingresar al Sistema" 
+                BackgroundColor="#2563EB" 
+                TextColor="White" 
+                FontSize="16" 
+                FontAttributes="Bold" 
+                CornerRadius="12" 
+                HeightRequest="50" 
+                WidthRequest="220"
+                Margin="0,20,0,0"
+                Clicked="OnIngresarClicked"/>
+
+    </VerticalStackLayout>
+</ContentPage>

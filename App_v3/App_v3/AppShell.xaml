@@ -4,45 +4,58 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    Title="Sistema de Alerta Temprana">
+    Title="Sistema de Alerta Temprana"
+    FlyoutBehavior="Flyout">
 
-    <TabBar>
-        <!-- 1. BLOQUE DE GESTIÓN Y ALUMNOS -->
-        <Tab Title="Personas" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
-        </Tab>
+    <!-- Cabecera del Menú Lateral -->
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout BackgroundColor="#1E293B" Padding="20,40,20,20">
+            <Label Text="Sistema de Alerta" 
+                   TextColor="White" 
+                   FontSize="20" 
+                   FontAttributes="Bold" />
+            <Label Text="Panel de Gestión" 
+                   TextColor="#94A3B8" 
+                   FontSize="14" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
 
-        <Tab Title="Alumnos" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
-        </Tab>
+    <!-- 1. PANTALLA DE BIENVENIDA (Se muestra al abrir la app de inicio) -->
+    <FlyoutItem Title="Inicio" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:WelcomePage}" />
+    </FlyoutItem>
 
-        <!-- 2. BLOQUE ACADÉMICO Y CLASES -->
-        <Tab Title="Clases" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
-        </Tab>
+    <!-- 2. DEMÁS MÓDULOS DEL MENÚ LATERAL -->
+    <FlyoutItem Title="Personas" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
+    </FlyoutItem>
 
-        <Tab Title="Calendario" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
-        </Tab>
+    <FlyoutItem Title="Alumnos" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
+    </FlyoutItem>
 
-        <!-- 3. BLOQUE DE REGISTROS DIARIOS -->
-        <Tab Title="Asistencia" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
-        </Tab>
+    <FlyoutItem Title="Clases" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
+    </FlyoutItem>
 
-        <Tab Title="Entregas TP" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
-        </Tab>
+    <FlyoutItem Title="Calendario" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
+    </FlyoutItem>
 
-        <!-- 4. BLOQUE DE REPORTES (Abre el menú con los botones) -->
-        <Tab Title="Reportes" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
-        </Tab>
+    <FlyoutItem Title="Asistencia" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
+    </FlyoutItem>
 
-        <!-- 5. CONFIGURACIÓN -->
-        <Tab Title="Configuración" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
-        </Tab>
-    </TabBar>
+    <FlyoutItem Title="Entregas TP" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
+    </FlyoutItem>
 
 </Shell>

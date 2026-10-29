@@ -3,6 +3,33 @@
   "WorkspaceRootPath": "C:\\GRUPO4\\Grupo4\\App_v3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\welcomepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\welcomepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\welcomepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\welcomepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app_v3.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app_v3.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\reporteentregastppage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\reporteentregastppage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -31,16 +58,8 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\reporteentregastppage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\menureportespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\menureportespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -49,9 +68,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\menureportespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\menureportespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -189,11 +205,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "AttendancePage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml",
@@ -210,19 +226,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReporteAsistenciasViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAcwDYAAABbAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "WelcomePage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\WelcomePage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\WelcomePage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\WelcomePage.xaml.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\WelcomePage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-16T03:05:12.112Z"
+              "WhenOpened": "2026-10-29T05:32:54.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppShell.xaml.sg.cs",
+              "DocumentMoniker": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
+              "ToolTip": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
+              "RelativeToolTip": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-15T05:51:33.787Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
+              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
+              "RelativeToolTip": "App_v3\\AppShell.xaml",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAYwBkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-15T05:53:58.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WelcomePage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\WelcomePage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\WelcomePage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\WelcomePage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\WelcomePage.xaml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-29T05:30:54.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "ReporteEntregasTpViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
@@ -234,20 +290,71 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "App_v3",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeDocumentMoniker": "App_v3\\App_v3.csproj",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App_v3.csproj",
+              "RelativeToolTip": "App_v3\\App_v3.csproj",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-29T05:41:32.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml",
+              "RelativeDocumentMoniker": "App_v3\\App.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml",
+              "RelativeToolTip": "App_v3\\App.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-29T05:24:40.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\App.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml.cs",
+              "RelativeToolTip": "App_v3\\App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T04:09:41.75Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ReporteAsistenciasViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAcwDYAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T03:05:12.112Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ReporteEntregasTpPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
               "RelativeToolTip": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAYwHoAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAYwHoAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-10-16T03:36:29.203Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "RegistroEntregasViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
@@ -259,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "ReporteAsistenciasPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ReporteAsistenciasPage.xaml.cs",
@@ -271,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "ReporteAsistenciasPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\ReporteAsistenciasPage.xaml",
@@ -283,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "ReporteEntregasTpPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ReporteEntregasTpPage.xaml.cs",
@@ -295,19 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\App.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml.cs",
-              "RelativeToolTip": "App_v3\\App.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-16T04:09:41.75Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "MenuReportesPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml",
@@ -319,19 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
-              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
-              "RelativeToolTip": "App_v3\\AppShell.xaml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwC8AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-15T05:53:58.319Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MauiProgram.cs",
               "RelativeDocumentMoniker": "App_v3\\MauiProgram.cs",
@@ -343,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "MenuReportesPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml.cs",
@@ -355,19 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "AppShell.xaml.sg.cs",
-              "DocumentMoniker": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
-              "ToolTip": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
-              "RelativeToolTip": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAmwBMAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-15T05:51:33.787Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "ReporteTpItem.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteTpItem.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\ReporteTpItem.cs",
@@ -379,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "AppShell.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\AppShell.xaml.cs",
@@ -391,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "DatabaseService.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Services\\DatabaseService.cs",
               "RelativeDocumentMoniker": "App_v3\\Services\\DatabaseService.cs",
@@ -403,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "ReporteAsistenciaItem.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteAsistenciaItem.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\ReporteAsistenciaItem.cs",
@@ -415,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "RegistroEntregasPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\RegistroEntregasPage.xaml",
@@ -427,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "GestionPersonasViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionPersonasViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionPersonasViewModel.cs",
@@ -439,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "Clase.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Clase.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\Clase.cs",
@@ -451,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "Inscripcion.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Inscripcion.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\Inscripcion.cs",
@@ -463,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "GestionPersonasPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionPersonasPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\GestionPersonasPage.xaml",
@@ -475,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "AttendanceViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\AttendanceViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\AttendanceViewModel.cs",
@@ -487,7 +558,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 30,
               "Title": "Estudiante.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Estudiante.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\Estudiante.cs",
@@ -499,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 36,
               "Title": "TomaAsistenciaPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\TomaAsistenciaPage.xaml.cs",
@@ -511,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 34,
               "Title": "CalendarPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\CalendarPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\CalendarPage.xaml",
@@ -523,7 +594,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "AttendancePage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml.cs",
@@ -535,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "GestionClasesViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
@@ -547,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 35,
               "Title": "TomaAsistenciaPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\TomaAsistenciaPage.xaml",
@@ -559,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 32,
               "Title": "RegistroEntregasPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\RegistroEntregasPage.xaml.cs",
@@ -571,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 33,
               "Title": "CalendarPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\CalendarPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\CalendarPage.xaml.cs",
@@ -583,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 37,
               "Title": "EntregaTp.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\EntregaTp.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\EntregaTp.cs",
@@ -595,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 31,
               "Title": "TomaAsistenciaViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
@@ -607,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 38,
               "Title": "Asistencia.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Asistencia.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\Asistencia.cs",
@@ -619,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 39,
               "Title": "CalendarViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\CalendarViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\CalendarViewModel.cs",
@@ -631,7 +702,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 40,
               "Title": "TrabajoPractico.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\TrabajoPractico.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\TrabajoPractico.cs",
@@ -643,7 +714,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 41,
               "Title": "EstudianteItemViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteItemViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteItemViewModel.cs",
@@ -655,7 +726,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 44,
               "Title": "EstudianteListViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
@@ -667,7 +738,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 42,
               "Title": "ConfiguracionPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ConfiguracionPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ConfiguracionPage.xaml.cs",
@@ -679,7 +750,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 43,
               "Title": "ConfiguracionPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ConfiguracionPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\ConfiguracionPage.xaml",
@@ -691,7 +762,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 46,
               "Title": "ConfiguracionViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ConfiguracionViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\ConfiguracionViewModel.cs",
@@ -703,7 +774,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 47,
               "Title": "ConfiguracionService.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Services\\ConfiguracionService.cs",
               "RelativeDocumentMoniker": "App_v3\\Services\\ConfiguracionService.cs",
@@ -715,7 +786,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 45,
               "Title": "RiesgoService.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Services\\RiesgoService.cs",
               "RelativeDocumentMoniker": "App_v3\\Services\\RiesgoService.cs",
@@ -727,7 +798,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 48,
               "Title": "UmbralesRiesgo.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\UmbralesRiesgo.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\UmbralesRiesgo.cs",

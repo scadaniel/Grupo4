@@ -393,3 +393,4 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt.intermediate
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\MultipleQualifiersPerDimensionFound.txt
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\ProjectArchitectures.txt
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\resizetizer\r\estudiantes.scale-100.jpg
