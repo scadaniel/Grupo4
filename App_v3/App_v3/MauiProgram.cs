@@ -25,10 +25,9 @@ public static class MauiProgram
 
         // =========================================================
         // CAPA DE SERVICIOS / PERSISTENCIA (SINGLETON)
+        // Se mantiene una única instancia compartida en toda la App
         // =========================================================
-        builder.Services.AddSingleton<IDatabaseService>(_ =>
-            new DatabaseService(Path.Combine(FileSystem.AppDataDirectory, "Asistencias.db3")));
-        builder.Services.AddSingleton<IDialogService, ShellDialogService>();
+        builder.Services.AddSingleton<DatabaseService>();
 
         // =========================================================
         // MÓDULO: GESTIÓN DE PERSONAS
@@ -49,39 +48,66 @@ public static class MauiProgram
         builder.Services.AddTransient<EstudianteListPage>();
 
         // =========================================================
-        // MÓDULO: UMBRALES DE RIESGO (H7)
-        // =========================================================
-        builder.Services.AddTransient<ConfiguracionRiesgoViewModel>();
-        builder.Services.AddTransient<ConfiguracionRiesgoPage>();
-
-        // =========================================================
-        // MÓDULO: ASISTENCIA DE ALUMNOS (H3)
+        // MÓDULO: ASISTENCIA DE ALUMNOS (Historia H3)
+        // Inyección transitoria para instanciar limpia la toma de lista
         // =========================================================
         builder.Services.AddTransient<AttendanceViewModel>();
         builder.Services.AddTransient<AttendancePage>();
-        builder.Services.AddTransient<TomaAsistenciaViewModel>();
-        builder.Services.AddTransient<TomaAsistenciaPage>();
 
         // =========================================================
-        // MÓDULO: CALENDARIO Y TRABAJOS PRÁCTICOS (H2)
+        // MÓDULO: CALENDARIO Y TRABAJOS PRÁCTICOS (Historia H2)
+        // Gestión de fechas límite, clases programadas y cronograma
         // =========================================================
         builder.Services.AddTransient<CalendarViewModel>();
         builder.Services.AddTransient<CalendarPage>();
 
         // =========================================================
-        // MÓDULO: REGISTRO DE ENTREGAS DE TRABAJOS PRÁCTICOS
+        // MÓDULO: services de configuración de umbrales de riesgo (Historia H4)
         // =========================================================
+
+        builder.Services.AddSingleton<ConfiguracionService>();
+        builder.Services.AddTransient<ConfiguracionViewModel>();
+        builder.Services.AddTransient<ConfiguracionPage>();
+
+        // =========================================================
+        // MÓDULO: registro de entregas de trabajos prácticos
+        // =========================================================
+
+        builder.Services.AddTransient<RegistroEntregasViewModel>();
+
+        // =========================================================
+        // MÓDULO: toma de asistencia de alumnos (Historia H3)
+        // =========================================================
+
+        builder.Services.AddTransient<TomaAsistenciaViewModel>();
+        builder.Services.AddTransient<TomaAsistenciaPage>();
+
+        // =========================================================
+        // MÓDULO: Entrega de trabajos prácticos 
+        // =========================================================
+
         builder.Services.AddTransient<RegistroEntregasViewModel>();
         builder.Services.AddTransient<RegistroEntregasPage>();
 
         // =========================================================
-        // MÓDULO: REPORTES
+        // reporte:  Reportes de Asistencia
         // =========================================================
-        builder.Services.AddTransient<MenuReportesPage>();
         builder.Services.AddTransient<ReporteAsistenciasViewModel>();
         builder.Services.AddTransient<ReporteAsistenciasPage>();
+
+        // =========================================================
+        // reporte: Entrega de trabajos prácticos 
+        // =========================================================
+
         builder.Services.AddTransient<ReporteEntregasTpViewModel>();
         builder.Services.AddTransient<ReporteEntregasTpPage>();
+
+
+        // =========================================================
+        // menu de reportes
+        // =========================================================
+
+        builder.Services.AddTransient<MenuReportesPage>();
 
         return builder.Build();
     }

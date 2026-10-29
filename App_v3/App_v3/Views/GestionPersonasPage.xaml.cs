@@ -9,10 +9,4 @@ public partial class GestionPersonasPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        (BindingContext as GestionPersonasViewModel)?.CargarCommand.Execute(null);
-    }
 }
