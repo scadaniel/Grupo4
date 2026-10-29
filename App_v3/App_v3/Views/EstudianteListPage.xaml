@@ -4,25 +4,22 @@
              x:Class="App_v3.Views.EstudianteListPage"
              Title="Alumnos y Riesgo Académico">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="12">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="12">
 
-        <!-- BARRA DE ACCIONES PRINCIPALES -->
+        <!-- Acciones sobre la base de datos -->
         <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
-
-            <!-- Botón Borrar Base de Datos (Rojo) -->
             <Button Grid.Column="0"
-                    Text="Borrar BD" 
-                    Command="{Binding ResetDatabaseCommand}" 
+                    Text="Borrar BD"
+                    Command="{Binding ResetDatabaseCommand}"
                     BackgroundColor="#D90429"
                     TextColor="White"
                     FontAttributes="Bold"
                     CornerRadius="8"
                     Padding="12,0" />
 
-            <!-- Botón SEED (Verde) - Alineado a la derecha -->
             <Button Grid.Column="2"
-                    Text="SEED" 
-                    Command="{Binding SeedEstudiantesCommand}" 
+                    Text="SEED"
+                    Command="{Binding SeedEstudiantesCommand}"
                     BackgroundColor="#2B9348"
                     TextColor="White"
                     FontAttributes="Bold"
@@ -30,77 +27,84 @@
                     Padding="16,0" />
         </Grid>
 
-        <!-- Botón secundario para refrescar la vista -->
-        <Button Grid.Row="1"
-                Text="Actualizar Lista" 
-                Command="{Binding CargarEstudiantesCommand}" 
-                BackgroundColor="#1D3557"
-                TextColor="White"
-                CornerRadius="8"
-                Margin="0,0,0,10" />
+        <!-- Actualizar la lista y filtrar a los no contactados (historia H11) -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,0,0,10">
+            <Button Grid.Column="0"
+                    Text="Actualizar Lista"
+                    Command="{Binding CargarEstudiantesCommand}"
+                    BackgroundColor="#1D3557"
+                    TextColor="White"
+                    CornerRadius="8" />
 
-        <!-- LISTADO DE ESTUDIANTES -->
+            <Button Grid.Column="1"
+                    Text="{Binding TextoFiltro}"
+                    Command="{Binding AlternarFiltroCommand}"
+                    BackgroundColor="#1D3557"
+                    TextColor="White"
+                    CornerRadius="8" />
+        </Grid>
+
+        <!-- Listado ordenado por riesgo (historia H8) -->
         <CollectionView Grid.Row="2" ItemsSource="{Binding Estudiantes}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <!-- Reemplazo de Frame por Border moderno (Estándar .NET 10) -->
-                    <Border Margin="0,4" 
-                            Padding="12" 
-                            StrokeShape="RoundRectangle 10" 
-                            Stroke="LightGray" 
+                    <Border Margin="0,4"
+                            Padding="12"
+                            StrokeShape="RoundRectangle 10"
+                            Stroke="LightGray"
                             StrokeThickness="1"
                             BackgroundColor="White">
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
 
-                            <!-- Nombre y Legajo -->
+                            <!-- Nombre y legajo -->
                             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
-                                <Label Text="{Binding Estudiante.NombreCompleto}" 
-                                       FontAttributes="Bold" 
+                                <Label Text="{Binding NombreCompleto}"
+                                       FontAttributes="Bold"
                                        FontSize="15" />
-                                <Label Text="{Binding Estudiante.Legajo, StringFormat='({0})'}" 
-                                       TextColor="Gray" 
-                                       FontSize="13" 
+                                <Label Text="{Binding Legajo, StringFormat='({0})'}"
+                                       TextColor="Gray"
+                                       FontSize="13"
                                        VerticalOptions="Center" />
                             </HorizontalStackLayout>
 
                             <!-- Email -->
-                            <Label Grid.Row="1" Grid.Column="0" 
-                                   Text="{Binding Estudiante.Email}" 
-                                   FontSize="12" 
-                                   TextColor="DimGray" 
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   Text="{Binding Email}"
+                                   FontSize="12"
+                                   TextColor="DimGray"
                                    Margin="0,2,0,4" />
 
-                            <!-- Métricas de Rendimiento -->
+                            <!-- Datos que justifican el riesgo (criterio 8.2) -->
                             <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="15">
-                                <Label Text="{Binding Promedio, StringFormat='Promedio: {0:F1}'}" FontSize="12" />
-                                <Label Text="{Binding PorcentajeAsistencia, StringFormat='Asistencia: {0}%'}" FontSize="12" />
+                                <Label Text="{Binding Inasistencias, StringFormat='Inasistencias: {0}'}" FontSize="12" />
+                                <Label Text="{Binding TpsNoEntregados, StringFormat='TPs no entregados: {0}'}" FontSize="12" />
                             </HorizontalStackLayout>
 
-                            <!-- Badge de Estado de Riesgo Académico -->
-                            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" 
-                                    VerticalOptions="Center"
-                                    Padding="10,6" 
-                                    StrokeShape="RoundRectangle 6"
-                                    Stroke="Transparent">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding EnRiesgo}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#E63946" />
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding EnRiesgo}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="#2A9D8F" />
-                                    </DataTrigger>
-                                </Border.Triggers>
+                            <!-- Último contacto y botón para registrar uno nuevo (historias H10 y H11) -->
+                            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="12" Margin="0,6,0,0">
+                                <Label Text="{Binding TextoContacto}"
+                                       FontSize="12"
+                                       TextColor="DimGray"
+                                       VerticalOptions="Center" />
+                                <Button Text="Registrar contacto"
+                                        Command="{Binding ContactarCommand}"
+                                        FontSize="12"
+                                        Padding="10,0"
+                                        HeightRequest="32"
+                                        CornerRadius="6" />
+                            </HorizontalStackLayout>
 
-                                <Label TextColor="White" FontAttributes="Bold" FontSize="11">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding EnRiesgo}" Value="True">
-                                            <Setter Property="Text" Value="EN RIESGO" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding EnRiesgo}" Value="False">
-                                            <Setter Property="Text" Value="REGULAR" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                            <!-- Etiqueta del nivel de riesgo, con el color que calcula el sistema -->
+                            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"
+                                    VerticalOptions="Center"
+                                    Padding="10,6"
+                                    StrokeShape="RoundRectangle 6"
+                                    Stroke="Transparent"
+                                    BackgroundColor="{Binding ColorRiesgoHex}">
+                                <Label Text="{Binding NivelTexto}"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       FontSize="11" />
                             </Border>
 
                         </Grid>
@@ -108,5 +112,78 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <!-- Formulario de contacto: aparece al tocar "Registrar contacto" (historia H10) -->
+        <Border Grid.Row="3"
+                IsVisible="{Binding FormularioVisible}"
+                Margin="0,8,0,0"
+                Padding="12"
+                StrokeShape="RoundRectangle 10"
+                Stroke="LightGray"
+                StrokeThickness="1"
+                BackgroundColor="White">
+            <VerticalStackLayout Spacing="8">
+
+                <Label Text="{Binding TituloFormulario}"
+                       FontAttributes="Bold"
+                       FontSize="15" />
+
+                <!-- Cómo ubicar al estudiante: datos y accesos directos -->
+                <Label Text="{Binding TextoEmailContacto}" FontSize="12" TextColor="DimGray" />
+                <Label Text="{Binding TextoTelefonoContacto}" FontSize="12" TextColor="DimGray" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Text="Enviar email"
+                            Command="{Binding EnviarEmailCommand}"
+                            IsEnabled="{Binding TieneEmail}"
+                            BackgroundColor="#1D3557"
+                            TextColor="White"
+                            CornerRadius="8" />
+                    <Button Grid.Column="1"
+                            Text="Llamar"
+                            Command="{Binding LlamarCommand}"
+                            IsEnabled="{Binding TieneTelefono}"
+                            BackgroundColor="#1D3557"
+                            TextColor="White"
+                            CornerRadius="8" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <DatePicker Grid.Column="0" Date="{Binding FechaContacto}" />
+                    <Picker Grid.Column="1"
+                            Title="Medio"
+                            ItemsSource="{Binding Medios}"
+                            SelectedItem="{Binding MedioSeleccionado}" />
+                </Grid>
+
+                <Picker Title="Resultado del contacto"
+                        ItemsSource="{Binding Resultados}"
+                        SelectedItem="{Binding ResultadoSeleccionado}" />
+
+                <Editor Placeholder="Nota del contacto"
+                        Text="{Binding Nota}"
+                        HeightRequest="80" />
+
+                <Label Text="{Binding MensajeError}"
+                       TextColor="#D90429"
+                       FontSize="12" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Text="Registrar Contacto"
+                            Command="{Binding RegistrarContactoCommand}"
+                            BackgroundColor="#2B9348"
+                            TextColor="White"
+                            CornerRadius="8" />
+                    <Button Grid.Column="1"
+                            Text="Cancelar"
+                            Command="{Binding CancelarContactoCommand}"
+                            BackgroundColor="#1D3557"
+                            TextColor="White"
+                            CornerRadius="8" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
     </Grid>
 </ContentPage>

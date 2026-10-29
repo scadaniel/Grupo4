@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using App_v3.Core;
 using App_v3.Services;
 using App_v3.ViewModels;
 using App_v3.Views;
@@ -28,6 +29,8 @@ public static class MauiProgram
         // Se mantiene una única instancia compartida en toda la App
         // =========================================================
         builder.Services.AddSingleton<DatabaseService>();
+        builder.Services.AddSingleton<IContactoStore, ContactoStoreSqlite>();
+        builder.Services.AddSingleton(sp => new SeguimientoContactos(sp.GetRequiredService<IContactoStore>()));
 
         // =========================================================
         // MÓDULO: GESTIÓN DE PERSONAS

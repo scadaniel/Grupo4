@@ -1,67 +1,56 @@
-﻿using App_v3.Models;
-using App_v3.Services;
+using System.Windows.Input;
+using App_v3.Models;
 
 namespace App_v3.ViewModels
 {
+    // Una fila del panel de seguimiento. Historias H8 (riesgo), H10 (contacto) y H11 (último contacto).
     public class EstudianteItemViewModel : BindableObject
     {
-        public Estudiante Estudiante { get; set; }
+        public Estudiante Estudiante { get; }
 
-        // Propiedades directas expuestas para evitar errores en enlaces y ordenamientos
-        public string Legajo => Estudiante?.Legajo ?? string.Empty;
-        public string NombreCompleto => Estudiante?.NombreCompleto ?? string.Empty;
-        public string Email => Estudiante?.Email ?? string.Empty;
-        public string Dni => Estudiante?.Dni ?? string.Empty;
-        public string Telefono => Estudiante?.Telefono ?? string.Empty;
+        public string NombreCompleto => Estudiante.NombreCompleto;
+        public string Legajo => Estudiante.Legajo;
+        public string Email => Estudiante.Email;
 
-        // Propiedades anteriores conservadas por compatibilidad
-        public double Promedio { get; set; }
-        public int PorcentajeAsistencia { get; set; }
-        public bool EnRiesgo => Promedio < 6.0 || PorcentajeAsistencia < 75;
+        // Los dos datos que justifican el nivel de riesgo (criterio 8.2).
+        public int Inasistencias => Estudiante.Inasistencias;
+        public int TpsNoEntregados => Estudiante.TpsNoEntregados;
 
-        // --- Nuevas propiedades para el Motor de Riesgo (H6, H8) ---
-        private NivelRiesgo _nivelRiesgoEnum = NivelRiesgo.Bajo;
-        public NivelRiesgo NivelRiesgoEnum
+        public NivelRiesgo NivelRiesgoEnum { get; }
+        public string ColorRiesgoHex { get; }
+        public string DiagnosticoRiesgo { get; }
+
+        public string NivelTexto => NivelRiesgoEnum switch
         {
-            get => _nivelRiesgoEnum;
-            set { _nivelRiesgoEnum = value; OnPropertyChanged(); }
-        }
+            NivelRiesgo.Alto => "ALTO",
+            NivelRiesgo.Medio => "MEDIO",
+            _ => "BAJO"
+        };
 
-        private string _colorRiesgoHex = "#388E3C";
-        public string ColorRiesgoHex
-        {
-            get => _colorRiesgoHex;
-            set { _colorRiesgoHex = value; OnPropertyChanged(); }
-        }
+        // Fecha del último contacto, o null si todavía no se lo contactó (criterio 11.1).
+        public DateTime? UltimoContacto { get; }
 
-        private string _diagnosticoRiesgo = string.Empty;
-        public string DiagnosticoRiesgo
-        {
-            get => _diagnosticoRiesgo;
-            set { _diagnosticoRiesgo = value; OnPropertyChanged(); }
-        }
+        public string TextoContacto => UltimoContacto is { } fecha
+            ? $"Contactado el {fecha:dd/MM}"
+            : "Sin contacto registrado";
 
-        // --- CONSTRUCTORES ---
+        // Abre el formulario de contacto para este estudiante.
+        public ICommand ContactarCommand { get; }
 
-        // Constructor original (para no romper otras pantallas que lo usen con 3 argumentos)
-        public EstudianteItemViewModel(Estudiante estudiante, double promedio, int porcentajeAsistencia)
+        public EstudianteItemViewModel(
+            Estudiante estudiante,
+            NivelRiesgo nivelRiesgo,
+            string colorHex,
+            string diagnostico,
+            DateTime? ultimoContacto,
+            Action<EstudianteItemViewModel> alContactar)
         {
             Estudiante = estudiante;
-            Promedio = promedio;
-            PorcentajeAsistencia = porcentajeAsistencia;
-        }
-
-        // Nuevo constructor requerido por el EstudianteListViewModel actualizado (H8)
-        public EstudianteItemViewModel(Estudiante estudiante, NivelRiesgo nivelRiesgo, string colorHex, string diagnostico)
-        {
-            Estudiante = estudiante;
-            _nivelRiesgoEnum = nivelRiesgo;
-            _colorRiesgoHex = colorHex;
-            _diagnosticoRiesgo = diagnostico;
-
-            // Valores por defecto seguros para las propiedades viejas si se inicializa desde aquí
-            Promedio = 7.0;
-            PorcentajeAsistencia = 85;
+            NivelRiesgoEnum = nivelRiesgo;
+            ColorRiesgoHex = colorHex;
+            DiagnosticoRiesgo = diagnostico;
+            UltimoContacto = ultimoContacto;
+            ContactarCommand = new Command(() => alContactar(this));
         }
     }
 }
