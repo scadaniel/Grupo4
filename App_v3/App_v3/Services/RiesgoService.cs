@@ -2,13 +2,6 @@
 
 namespace App_v3.Services;
 
-public enum NivelRiesgo
-{
-    Bajo = 1,
-    Medio = 2,
-    Alto = 3
-}
-
 public class RiesgoService
 {
     /// <summary>
