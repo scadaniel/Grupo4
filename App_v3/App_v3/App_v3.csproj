@@ -79,4 +79,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\App_v3.Core\App_v3.Core.csproj" />
+	</ItemGroup>
+
 </Project>
