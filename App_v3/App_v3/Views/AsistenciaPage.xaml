@@ -1,30 +1,44 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
     xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.AsistenciaPage"
              Title="Asistencia">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="12">
             <Label Text="Toma de asistencia" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
 
-            <Picker Title="Elija la clase" ItemsSource="{Binding Clases}"
-                    ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding ClaseSeleccionada}" />
-            <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+            <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding Selector.HayComision}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Clase" Style="{StaticResource TituloTarjeta}" />
+                    <Label Text="Todavía no hay clases. Cree una en la pestaña Calendario." Style="{StaticResource Detalle}"
+                           IsVisible="{Binding SinClases}" />
+                    <Picker Title="Elija la clase" ItemsSource="{Binding Clases}"
+                            ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding ClaseSeleccionada}" />
+                    <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+                </VerticalStackLayout>
+            </Border>
 
             <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Lineas}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource Tarjeta}">
-                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding NombreCompleto}" FontAttributes="Bold" VerticalOptions="Center" />
                                 <Label Grid.Row="1" Grid.Column="0" Text="{Binding Legajo}" Style="{StaticResource Detalle}" />
-                                <Label Grid.Row="0" Grid.Column="1" Text="Presente" Style="{StaticResource Detalle}" HorizontalOptions="Center" />
-                                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Presente}" IsEnabled="{Binding Editable}" HorizontalOptions="Center" />
-                                <Label Grid.Row="0" Grid.Column="2" Text="Justificada" Style="{StaticResource Detalle}" HorizontalOptions="Center" />
-                                <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding Justificada}" IsEnabled="{Binding PuedeJustificar}" HorizontalOptions="Center" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding TextoEstado}" FontAttributes="Bold" VerticalOptions="Center"
+                                       TextColor="{Binding Presente, Converter={StaticResource EstadoColor}}" />
+                                <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" IsToggled="{Binding Presente}"
+                                        IsEnabled="{Binding Editable}" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" HorizontalOptions="End" IsVisible="{Binding Ausente}">
+                                    <CheckBox IsChecked="{Binding Justificada}" IsEnabled="{Binding PuedeJustificar}" />
+                                    <Label Text="Justificada" Style="{StaticResource Detalle}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
                             </Grid>
                         </Border>
                     </DataTemplate>

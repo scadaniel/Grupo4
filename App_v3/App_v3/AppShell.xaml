@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="App_v3.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -6,31 +6,29 @@
     xmlns:views="clr-namespace:App_v3.Views"
     Title="Seguimiento académico">
 
+    <!-- Materia/comisión fijas arriba en todas las páginas; Reportes y Configuración son rutas, no pestañas -->
+    <Shell.TitleView>
+        <views:BarraGlobalView x:Name="Barra" />
+    </Shell.TitleView>
+
     <TabBar>
-        <!-- Las pestañas siguen el recorrido del docente: ver el riesgo, cargar datos, registrar y reportar -->
-        <Tab Title="Seguimiento" Icon="dotnet_bot.png">
+        <Tab Title="Seguimiento" Route="Seguimiento">
             <ShellContent ContentTemplate="{DataTemplate views:SeguimientoPage}" />
         </Tab>
-        <Tab Title="Estudiantes" Icon="dotnet_bot.png">
+        <Tab Title="Estudiantes" Route="Estudiantes">
             <ShellContent ContentTemplate="{DataTemplate views:EstudiantesPage}" />
         </Tab>
-        <Tab Title="Materias" Icon="dotnet_bot.png">
+        <Tab Title="Materias" Route="Materias">
             <ShellContent ContentTemplate="{DataTemplate views:MateriasPage}" />
         </Tab>
-        <Tab Title="Calendario" Icon="dotnet_bot.png">
+        <Tab Title="Calendario" Route="Calendario">
             <ShellContent ContentTemplate="{DataTemplate views:CalendarioPage}" />
         </Tab>
-        <Tab Title="Asistencia" Icon="dotnet_bot.png">
+        <Tab Title="Asistencia" Route="Asistencia">
             <ShellContent ContentTemplate="{DataTemplate views:AsistenciaPage}" />
         </Tab>
-        <Tab Title="Entregas" Icon="dotnet_bot.png">
+        <Tab Title="Entregas" Route="Entregas">
             <ShellContent ContentTemplate="{DataTemplate views:EntregasPage}" />
-        </Tab>
-        <Tab Title="Reportes" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
-        </Tab>
-        <Tab Title="Configuración" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
         </Tab>
     </TabBar>
 </Shell>

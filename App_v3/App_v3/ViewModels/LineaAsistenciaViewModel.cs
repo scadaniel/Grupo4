@@ -1,4 +1,4 @@
-using App_v3.Dominio;
+﻿using App_v3.Dominio;
 
 namespace App_v3.ViewModels;
 
@@ -21,8 +21,13 @@ public class LineaAsistenciaViewModel(LineaAsistencia linea, bool editable) : No
             if (!SetProperty(ref _presente, value)) return;
             if (value) Justificada = false; // solo se justifica una ausencia
             OnPropertyChanged(nameof(PuedeJustificar));
+            OnPropertyChanged(nameof(TextoEstado));
+            OnPropertyChanged(nameof(Ausente));
         }
     }
+
+    public string TextoEstado => Presente ? "Presente" : "Ausente";
+    public bool Ausente => !Presente;
 
     public bool Justificada
     {

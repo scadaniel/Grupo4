@@ -1,30 +1,81 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.MateriasPage"
              Title="Materias">
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
-            <Label Text="Materias y comisiones" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+        <VerticalStackLayout Padding="16" Spacing="12">
 
-            <Label Text="Nueva materia" Style="{StaticResource Seccion}" />
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="6">
-                    <Entry Placeholder="Nombre de la materia" Text="{Binding NombreMateria}" />
-                    <Button Text="Crear materia" Command="{Binding CrearMateriaCommand}" />
-                </VerticalStackLayout>
-            </Border>
+            <!-- VISTA 1: lista de materias -> comisiones -->
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding MostrandoLista}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <Label Grid.Column="0" Text="Materias y comisiones" Style="{StaticResource Titulo}" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="+ Nueva materia" Command="{Binding AbrirNuevaMateriaCommand}" />
+                </Grid>
 
-            <Label Text="Nueva comisión en la materia elegida" Style="{StaticResource Seccion}" />
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="6">
-                    <Entry Placeholder="Nombre de la comisión (ej. 1K1)" Text="{Binding NombreComision}" />
-                    <Button Text="Crear comisión" Command="{Binding CrearComisionCommand}" />
-                </VerticalStackLayout>
-            </Border>
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Materias" Style="{StaticResource TituloTarjeta}" />
+                        <Label Text="Todavía no hay materias. Toque &quot;+ Nueva materia&quot; para crear la primera."
+                               Style="{StaticResource Detalle}" IsVisible="{Binding SinMaterias}" />
+                        <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding FilasMaterias}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Text="{Binding Texto}" Command="{Binding ElegirCommand}"
+                                            Style="{StaticResource BotonSecundario}" HorizontalOptions="Fill" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding HayMateria}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Label Grid.Column="0" Text="{Binding TituloComisiones}" Style="{StaticResource TituloTarjeta}" VerticalOptions="Center" />
+                            <Button Grid.Column="1" Text="+ Nueva comisión" Command="{Binding AbrirNuevaComisionCommand}"
+                                    Style="{StaticResource BotonSecundario}" />
+                        </Grid>
+                        <Label Text="Esta materia todavía no tiene comisiones." Style="{StaticResource Detalle}" IsVisible="{Binding SinComisiones}" />
+                        <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding FilasComisiones}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Text="{Binding Texto}" Command="{Binding ElegirCommand}"
+                                            Style="{StaticResource BotonSecundario}" HorizontalOptions="Fill" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- VISTA 2: panel interno "Nueva materia" -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding MostrandoNuevaMateria}">
+                <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
+                <Label Text="Nueva materia" Style="{StaticResource Titulo}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Datos de la materia" Style="{StaticResource TituloTarjeta}" />
+                        <Entry Placeholder="Nombre de la materia" Text="{Binding NombreMateria}" />
+                        <Button Text="Crear materia" Command="{Binding CrearMateriaCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- VISTA 3: panel interno "Nueva comisión" -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding MostrandoNuevaComision}">
+                <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
+                <Label Text="{Binding TituloNuevaComision}" Style="{StaticResource Titulo}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Datos de la comisión" Style="{StaticResource TituloTarjeta}" />
+                        <Entry Placeholder="Nombre de la comisión (ej. 1K1)" Text="{Binding NombreComision}" />
+                        <Button Text="Crear comisión" Command="{Binding CrearComisionCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </views:PaginaBase>

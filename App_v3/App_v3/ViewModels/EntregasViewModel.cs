@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using App_v3.Dominio;
 
@@ -65,6 +65,7 @@ public class EntregasViewModel : PaginaViewModel
     }
 
     public bool HayPlanilla => Lineas.Count > 0;
+    public bool SinTrabajos => Selector.HayComision && Trabajos.Count == 0;
 
     // CA 5.4: si el trabajo ya tiene información, se avisa y se muestra lo guardado.
     public string Aviso
@@ -92,6 +93,7 @@ public class EntregasViewModel : PaginaViewModel
             _recargando = false;
         }
 
+        OnPropertyChanged(nameof(SinTrabajos));
         _trabajoSeleccionado = Trabajos.FirstOrDefault(t => t.Trabajo?.Id == elegido);
         OnPropertyChanged(nameof(TrabajoSeleccionado));
         await CargarPlanillaAsync();

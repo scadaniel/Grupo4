@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
@@ -10,26 +10,31 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
             <Label Text="Reporte de asistencias" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
 
-            <Entry Placeholder="Filtrar por DNI" Text="{Binding Dni}" Keyboard="Numeric" />
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                <VerticalStackLayout Grid.Column="0">
-                    <Label Text="Desde" Style="{StaticResource Detalle}" />
-                    <DatePicker Date="{Binding Desde}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Filtros" Style="{StaticResource TituloTarjeta}" />
+                    <Entry Placeholder="Filtrar por DNI" Text="{Binding Dni}" Keyboard="Numeric" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Desde" Style="{StaticResource Detalle}" />
+                            <DatePicker Date="{Binding Desde}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Hasta" Style="{StaticResource Detalle}" />
+                            <DatePicker Date="{Binding Hasta}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" Text="Buscar" Command="{Binding BuscarCommand}" />
+                        <Button Grid.Column="1" Text="Limpiar" Command="{Binding LimpiarCommand}" Style="{StaticResource BotonSecundario}" />
+                    </Grid>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Column="1">
-                    <Label Text="Hasta" Style="{StaticResource Detalle}" />
-                    <DatePicker Date="{Binding Hasta}" />
-                </VerticalStackLayout>
-            </Grid>
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                <Button Grid.Column="0" Text="Buscar" Command="{Binding BuscarCommand}" />
-                <Button Grid.Column="1" Text="Limpiar" Command="{Binding LimpiarCommand}" Style="{StaticResource BotonSecundario}" />
-                <Button Grid.Column="2" Text="Volver" Command="{Binding VolverCommand}" Style="{StaticResource BotonSecundario}" />
-            </Grid>
+            </Border>
 
             <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Filas}">
                 <BindableLayout.ItemTemplate>

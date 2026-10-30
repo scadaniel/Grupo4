@@ -1,4 +1,4 @@
-namespace App_v3.ViewModels;
+﻿namespace App_v3.ViewModels;
 
 /// <summary>Mensajes al usuario. La implementación real usa las alertas de Shell; las pruebas usan una falsa.</summary>
 public interface IDialogService
@@ -33,4 +33,6 @@ public static class Rutas
 {
     public const string ReporteAsistencias = "ReporteAsistencias";
     public const string ReporteEntregas = "ReporteEntregas";
+    public const string Reportes = "Reportes";
+    public const string Configuracion = "Configuracion";
 }

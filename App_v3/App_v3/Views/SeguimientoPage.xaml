@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
@@ -12,7 +12,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="10">
             <Label Text="Panel de seguimiento" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
 
             <Button Text="{Binding TextoFiltro}" Command="{Binding AlternarFiltroCommand}" Style="{StaticResource BotonSecundario}" />
 

@@ -1,47 +1,66 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.CalendarioPage"
              Title="Calendario">
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
-            <Label Text="Calendario de la comisión" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
 
-            <Label Text="Nueva clase" Style="{StaticResource Seccion}" />
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="6">
-                    <DatePicker Date="{Binding FechaClase}" />
-                    <Entry Placeholder="Tema de la clase" Text="{Binding TemaClase}" />
-                    <Button Text="Guardar clase" Command="{Binding GuardarClaseCommand}" />
+            <!-- VISTA 1: lista de clases y trabajos prácticos -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding MostrandoLista}">
+                <Label Text="Calendario de la comisión" Style="{StaticResource Titulo}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Grid.Column="0" Text="+ Nueva clase" Command="{Binding AbrirNuevaClaseCommand}"
+                            IsEnabled="{Binding Selector.HayComision}" />
+                    <Button Grid.Column="1" Text="+ Nuevo TP" Command="{Binding AbrirNuevoTrabajoCommand}"
+                            IsEnabled="{Binding Selector.HayComision}" Style="{StaticResource BotonSecundario}" />
+                </Grid>
+                <Label Text="Todavía no hay clases ni trabajos prácticos cargados." Style="{StaticResource Detalle}"
+                       IsVisible="{Binding SinEventos}" />
+                <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Eventos}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Tarjeta}">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Tipo}" Style="{StaticResource Detalle}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Descripcion}" FontSize="16" />
+                                    <Label Text="{Binding Fecha}" Style="{StaticResource Detalle}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-            </Border>
+            </VerticalStackLayout>
 
-            <Label Text="Nuevo trabajo práctico" Style="{StaticResource Seccion}" />
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="6">
-                    <Entry Placeholder="Nombre del trabajo práctico" Text="{Binding NombreTrabajo}" />
-                    <Label Text="Fecha límite de entrega" Style="{StaticResource Detalle}" />
-                    <DatePicker Date="{Binding FechaLimite}" />
-                    <Button Text="Guardar trabajo práctico" Command="{Binding GuardarTrabajoCommand}" />
-                </VerticalStackLayout>
-            </Border>
+            <!-- VISTA 2: panel interno "Nueva clase" -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding MostrandoNuevaClase}">
+                <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
+                <Label Text="Nueva clase" Style="{StaticResource Titulo}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Datos de la clase" Style="{StaticResource TituloTarjeta}" />
+                        <DatePicker Date="{Binding FechaClase}" />
+                        <Entry Placeholder="Tema de la clase" Text="{Binding TemaClase}" />
+                        <Button Text="Guardar clase" Command="{Binding GuardarClaseCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
 
-            <Label Text="Clases y trabajos prácticos" Style="{StaticResource Seccion}" />
-            <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Eventos}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Border Style="{StaticResource Tarjeta}">
-                            <VerticalStackLayout Spacing="2">
-                                <Label Text="{Binding Tipo}" Style="{StaticResource Detalle}" FontAttributes="Bold" />
-                                <Label Text="{Binding Descripcion}" FontSize="16" />
-                                <Label Text="{Binding Fecha}" Style="{StaticResource Detalle}" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+            <!-- VISTA 3: panel interno "Nuevo trabajo práctico" -->
+            <VerticalStackLayout Spacing="10" IsVisible="{Binding MostrandoNuevoTrabajo}">
+                <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
+                <Label Text="Nuevo trabajo práctico" Style="{StaticResource Titulo}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Datos del trabajo práctico" Style="{StaticResource TituloTarjeta}" />
+                        <Entry Placeholder="Nombre del trabajo práctico" Text="{Binding NombreTrabajo}" />
+                        <Label Text="Fecha límite de entrega" Style="{StaticResource Detalle}" />
+                        <DatePicker Date="{Binding FechaLimite}" />
+                        <Button Text="Guardar trabajo práctico" Command="{Binding GuardarTrabajoCommand}" />
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

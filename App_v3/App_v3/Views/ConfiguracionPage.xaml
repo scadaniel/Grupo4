@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.ConfiguracionPage"
              Title="Configuración">
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Button Style="{StaticResource BotonVolver}" Clicked="AlVolver" />
             <Label Text="Configuración" Style="{StaticResource Titulo}" />
 
-            <Label Text="Umbrales de riesgo" Style="{StaticResource Seccion}" />
-            <Label Text="Cantidad a partir de la cual un estudiante pasa a riesgo Medio o Alto. Deben ser números enteros y el Medio menor que el Alto." Style="{StaticResource Detalle}" />
             <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Umbrales}">
                 <VerticalStackLayout Spacing="6">
+                    <Label Text="Umbrales de riesgo" Style="{StaticResource TituloTarjeta}" />
+                    <Label Text="Cantidad a partir de la cual un estudiante pasa a riesgo Medio o Alto. Números enteros, con el Medio menor que el Alto." Style="{StaticResource Detalle}" />
                     <Label Text="Inasistencias para riesgo Medio" Style="{StaticResource Detalle}" />
                     <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" />
                     <Label Text="Inasistencias para riesgo Alto" Style="{StaticResource Detalle}" />
@@ -25,9 +25,9 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="Datos" Style="{StaticResource Seccion}" />
             <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Datos}">
                 <VerticalStackLayout Spacing="8">
+                    <Label Text="Datos" Style="{StaticResource TituloTarjeta}" />
                     <Button Text="Cargar datos de ejemplo" Command="{Binding CargarEjemploCommand}" Style="{StaticResource BotonSecundario}" />
                     <Button Text="Borrar todos los datos" Command="{Binding BorrarTodoCommand}" Style="{StaticResource BotonPeligro}" />
                 </VerticalStackLayout>

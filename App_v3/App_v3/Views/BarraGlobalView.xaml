@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.BarraGlobalView">
+    <!-- Una sola línea de 32 px: la etiqueta va a la izquierda de cada selector (sin encabezado encima), así entra en la barra. -->
+    <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,Auto" ColumnSpacing="8" Padding="8,0" VerticalOptions="Center">
+        <Label Grid.Column="0" Text="Materia" Style="{StaticResource EtiquetaBarra}" />
+        <Grid Grid.Column="1" VerticalOptions="Center">
+            <Picker ItemsSource="{Binding Materias}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MateriaSeleccionada}"
+                    IsEnabled="{Binding HayMateria}"
+                    AutomationProperties.Name="Materia"
+                    HeightRequest="32" MinimumHeightRequest="32" MinimumWidthRequest="140" />
+            <Label Text="Sin materias" Style="{StaticResource MarcadorPicker}" IsVisible="{Binding SinMateria}" />
+        </Grid>
+
+        <Label Grid.Column="2" Text="Comisión" Style="{StaticResource EtiquetaBarra}" />
+        <Grid Grid.Column="3" VerticalOptions="Center">
+            <Picker ItemsSource="{Binding Comisiones}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ComisionSeleccionada}"
+                    IsEnabled="{Binding HayComision}"
+                    AutomationProperties.Name="Comisión"
+                    HeightRequest="32" MinimumHeightRequest="32" MinimumWidthRequest="140" />
+            <Label Text="Sin comisiones" Style="{StaticResource MarcadorPicker}" IsVisible="{Binding SinComision}" />
+        </Grid>
+
+        <Button Grid.Column="4" Text="Reportes" Style="{StaticResource BotonTexto}" Clicked="AlIrAReportes" />
+        <Button Grid.Column="5" Text="Configuración" Style="{StaticResource BotonTexto}" Clicked="AlIrAConfiguracion" />
+    </Grid>
+</ContentView>

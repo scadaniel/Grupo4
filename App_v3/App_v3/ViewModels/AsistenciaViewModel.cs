@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using App_v3.Dominio;
 
@@ -46,6 +46,8 @@ public class AsistenciaViewModel : PaginaViewModel
             if (SetProperty(ref _claseSeleccionada, value) && !_recargando) _ = EjecutarAsync(CargarPlanillaAsync);
         }
     }
+
+    public bool SinClases => Selector.HayComision && Clases.Count == 0;
 
     public bool HayClase => ClaseSeleccionada is not null && Lineas.Count > 0;
 
@@ -99,6 +101,7 @@ public class AsistenciaViewModel : PaginaViewModel
             _recargando = false;
         }
 
+        OnPropertyChanged(nameof(SinClases));
         _claseSeleccionada = Clases.FirstOrDefault(c => c.Clase.Id == elegida);
         OnPropertyChanged(nameof(ClaseSeleccionada));
         await CargarPlanillaAsync();

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
@@ -10,22 +10,31 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="12">
             <Label Text="Entregas de trabajos prácticos" Style="{StaticResource Titulo}" />
-            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
 
-            <Picker Title="Elija el trabajo práctico" ItemsSource="{Binding Trabajos}"
-                    ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding TrabajoSeleccionado}" />
-            <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+            <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding Selector.HayComision}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Trabajo práctico" Style="{StaticResource TituloTarjeta}" />
+                    <Label Text="Todavía no hay trabajos prácticos. Cree uno en la pestaña Calendario." Style="{StaticResource Detalle}"
+                           IsVisible="{Binding SinTrabajos}" />
+                    <Picker Title="Elija el trabajo práctico" ItemsSource="{Binding Trabajos}"
+                            ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding TrabajoSeleccionado}" />
+                    <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+                </VerticalStackLayout>
+            </Border>
 
             <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Lineas}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{StaticResource Tarjeta}">
-                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding NombreCompleto}" FontAttributes="Bold" />
                                 <Label Grid.Row="1" Grid.Column="0" Text="{Binding Legajo}" Style="{StaticResource Detalle}" />
-                                <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" IsToggled="{Binding Entregado}" VerticalOptions="Center" />
+                                <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="{Binding TextoEstado}" FontAttributes="Bold" VerticalOptions="Center"
+                                       TextColor="{Binding Entregado, Converter={StaticResource EstadoColor}}" />
+                                <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" IsToggled="{Binding Entregado}" VerticalOptions="Center" />
                             </Grid>
                         </Border>
                     </DataTemplate>

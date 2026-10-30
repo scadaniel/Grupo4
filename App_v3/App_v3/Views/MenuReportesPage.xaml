@@ -1,14 +1,26 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.MenuReportesPage"
              Title="Reportes">
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <Label Text="Reportes" Style="{StaticResource Titulo}" />
-        <Label Text="Elija el reporte que quiere ver. Se arma con la materia y la comisión elegidas." Style="{StaticResource Detalle}" />
-        <Button Text="Reporte de asistencias" Command="{Binding IrAsistenciasCommand}" />
-        <Button Text="Reporte de entregas de trabajos prácticos" Command="{Binding IrEntregasCommand}" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Button Style="{StaticResource BotonVolver}" Clicked="AlVolver" />
+            <Label Text="Reportes" Style="{StaticResource Titulo}" />
+            <Label Text="Se arman con la materia y la comisión elegidas arriba." Style="{StaticResource Detalle}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Asistencias" Style="{StaticResource TituloTarjeta}" />
+                    <Button Text="Ver reporte de asistencias" Command="{Binding IrAsistenciasCommand}" Style="{StaticResource BotonSecundario}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Entregas de trabajos prácticos" Style="{StaticResource TituloTarjeta}" />
+                    <Button Text="Ver reporte de entregas" Command="{Binding IrEntregasCommand}" Style="{StaticResource BotonSecundario}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </views:PaginaBase>

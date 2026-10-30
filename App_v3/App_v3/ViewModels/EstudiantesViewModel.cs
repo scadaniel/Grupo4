@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using App_v3.Dominio;
 
@@ -24,6 +24,10 @@ public class EstudiantesViewModel : PaginaViewModel
     private string _telefono = string.Empty;
     private string _dniExistente = string.Empty;
     private string _filtro = TodosLosEstados;
+    private string _busqueda = string.Empty;
+    private bool _mostrandoAgregar;
+    private bool _nominaVacia;
+    private List<InscriptoEnComision> _inscriptos = [];
     private FichaEstudianteViewModel? _ficha;
 
     public EstudiantesViewModel(
@@ -43,6 +47,8 @@ public class EstudiantesViewModel : PaginaViewModel
         Contacto.AlRegistrar = RecargarFichaAsync;
         GuardarCommand = Comando(GuardarAsync);
         InscribirExistenteCommand = Comando(InscribirExistenteAsync);
+        AbrirAgregarCommand = Comando(() => { MostrandoAgregar = true; return Task.CompletedTask; });
+        VolverCommand = Comando(() => { MostrandoAgregar = false; return Task.CompletedTask; });
     }
 
     public ObservableCollection<FilaNominaViewModel> Nomina { get; } = [];
@@ -51,6 +57,8 @@ public class EstudiantesViewModel : PaginaViewModel
 
     public ICommand GuardarCommand { get; }
     public ICommand InscribirExistenteCommand { get; }
+    public ICommand AbrirAgregarCommand { get; }
+    public ICommand VolverCommand { get; }
 
     public string Legajo { get => _legajo; set => SetProperty(ref _legajo, value); }
     public string Dni { get => _dni; set => SetProperty(ref _dni, value); }
@@ -69,6 +77,16 @@ public class EstudiantesViewModel : PaginaViewModel
         }
     }
 
+    /// <summary>Texto de la búsqueda: filtra la nómina ya leída, sin volver a la base de datos.</summary>
+    public string Busqueda
+    {
+        get => _busqueda;
+        set
+        {
+            if (SetProperty(ref _busqueda, value ?? string.Empty)) AplicarFiltros();
+        }
+    }
+
     public FichaEstudianteViewModel? Ficha
     {
         get => _ficha;
@@ -76,22 +94,58 @@ public class EstudiantesViewModel : PaginaViewModel
         {
             if (!SetProperty(ref _ficha, value)) return;
             OnPropertyChanged(nameof(HayFicha));
+            OnPropertyChanged(nameof(MostrandoLista));
         }
     }
 
     public bool HayFicha => Ficha is not null;
 
+    /// <summary>Panel interno "Agregar estudiante" (nuevo / inscribir ya cargado), dentro de la misma ventana.</summary>
+    public bool MostrandoAgregar
+    {
+        get => _mostrandoAgregar;
+        private set
+        {
+            if (!SetProperty(ref _mostrandoAgregar, value)) return;
+            OnPropertyChanged(nameof(MostrandoLista));
+        }
+    }
+
+    /// <summary>La nómina se ve cuando no hay ni ficha ni panel de alta abiertos.</summary>
+    public bool MostrandoLista => !MostrandoAgregar && !HayFicha;
+
+    public bool NominaVacia { get => _nominaVacia; private set => SetProperty(ref _nominaVacia, value); }
+
+    public string TextoNominaVacia => _inscriptos.Count == 0
+        ? "Esta comisión todavía no tiene estudiantes."
+        : "Ningún estudiante coincide con la búsqueda.";
+
     public override async Task CargarAsync()
     {
         Nomina.Clear();
+        _inscriptos = [];
         Ficha = null;
+        MostrandoAgregar = false;
         Contacto.Cerrar();
-        if (Selector.ComisionId is not { } comisionId) return;
+        if (Selector.ComisionId is not { } comisionId)
+        {
+            NominaVacia = false;
+            return;
+        }
 
-        var nomina = await _inscripciones.ListarNominaAsync(comisionId);
-        foreach (var inscripto in nomina.Where(PasaElFiltro))
+        _inscriptos = (await _inscripciones.ListarNominaAsync(comisionId)).ToList();
+        AplicarFiltros();
+    }
+
+    private void AplicarFiltros()
+    {
+        Nomina.Clear();
+        foreach (var inscripto in _inscriptos.Where(i => PasaElFiltro(i) && PasaLaBusqueda(i)))
             Nomina.Add(new FilaNominaViewModel(
                 inscripto, fila => EjecutarAsync(() => VerFichaAsync(fila)), fila => EjecutarAsync(() => CambiarEstadoAsync(fila))));
+
+        NominaVacia = Selector.HayComision && Nomina.Count == 0;
+        OnPropertyChanged(nameof(TextoNominaVacia));
     }
 
     private bool PasaElFiltro(InscriptoEnComision inscripto) => Filtro switch
@@ -100,6 +154,16 @@ public class EstudiantesViewModel : PaginaViewModel
         SoloInactivos => !inscripto.Activo,
         _ => true
     };
+
+    private bool PasaLaBusqueda(InscriptoEnComision inscripto)
+    {
+        var texto = Busqueda.Trim();
+        if (texto.Length == 0) return true;
+
+        var e = inscripto.Estudiante;
+        return new[] { e.Apellido, e.Nombre, e.Dni, e.Legajo }
+            .Any(campo => campo?.Contains(texto, StringComparison.CurrentCultureIgnoreCase) == true);
+    }
 
     // CA 1.1 y CA 1.2: el alta valida los datos y rechaza legajo o DNI repetidos; después inscribe en la comisión elegida.
     private async Task GuardarAsync()

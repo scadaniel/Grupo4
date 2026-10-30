@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using App_v3.Dominio;
 
 namespace App_v3.ViewModels;
@@ -24,6 +24,9 @@ public class SelectorComisionViewModel(
 
     public int? ComisionId => ComisionSeleccionada?.Id;
     public bool HayComision => ComisionSeleccionada is not null;
+    public bool SinComision => !HayComision;
+    public bool HayMateria => MateriaSeleccionada is not null;
+    public bool SinMateria => !HayMateria;
 
     public string Resumen => ComisionSeleccionada is null
         ? "No hay ninguna comisión. Cree una materia y una comisión en la pestaña Materias."
@@ -34,7 +37,10 @@ public class SelectorComisionViewModel(
         get => _materiaSeleccionada;
         set
         {
-            if (!SetProperty(ref _materiaSeleccionada, value) || _cargando) return;
+            if (!SetProperty(ref _materiaSeleccionada, value)) return;
+            OnPropertyChanged(nameof(HayMateria));
+            OnPropertyChanged(nameof(SinMateria));
+            if (_cargando) return;
             _ = EjecutarAsync(CambiarMateriaAsync);
         }
     }
@@ -107,6 +113,9 @@ public class SelectorComisionViewModel(
     {
         OnPropertyChanged(nameof(ComisionId));
         OnPropertyChanged(nameof(HayComision));
+        OnPropertyChanged(nameof(SinComision));
+        OnPropertyChanged(nameof(HayMateria));
+        OnPropertyChanged(nameof(SinMateria));
         OnPropertyChanged(nameof(Resumen));
     }
 
