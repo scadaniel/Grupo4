@@ -32,8 +32,8 @@ public static class MauiProgram
         // =========================================================
         // MÓDULO: GESTIÓN DE PERSONAS
         // =========================================================
-        builder.Services.AddTransient<GestionPersonasViewModel>();
-        builder.Services.AddTransient<GestionPersonasPage>();
+        //builder.Services.AddTransient<GestionPersonasViewModel>();
+        //builder.Services.AddTransient<GestionPersonasPage>();
 
         // =========================================================
         // MÓDULO: GESTIÓN DE CLASES Y CÁTEDRAS
@@ -108,6 +108,24 @@ public static class MauiProgram
         // =========================================================
 
         builder.Services.AddTransient<MenuReportesPage>();
+
+
+        // =========================================================
+        // menu de Estudiantes
+        //  Registro de Vistas y ViewModels para Gestión de Personas
+        // =========================================================
+
+        builder.Services.AddTransient<GestionPersonasMenuPage>();
+        builder.Services.AddTransient<GestionPersonasMenuViewModel>();
+
+        builder.Services.AddTransient<ListadoEstudiantesPage>();
+        builder.Services.AddTransient<ListadoEstudiantesViewModel>();
+
+        builder.Services.AddTransient<ComisionesNominaPage>();
+        builder.Services.AddTransient<ComisionesNominaViewModel>();
+
+        builder.Services.AddTransient<NuevoEstudiantePage>();
+        builder.Services.AddTransient<NuevoEstudianteViewModel>();
 
         return builder.Build();
     }

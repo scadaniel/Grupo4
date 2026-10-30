@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.NuevoEstudiantePage"
+             Title="Nuevo Estudiante"
+             BackgroundColor="#F4F6F9">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Botón Volver -->
+            <Button Text="⬅️ Volver al Menú"
+                    Command="{Binding VolverAlMenuCommand}"
+                    BackgroundColor="#78909C"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    HeightRequest="40"
+                    HorizontalOptions="Start"
+                    WidthRequest="150" />
+
+            <!-- Formulario de Alta -->
+            <Frame BorderColor="#E0E0E0" CornerRadius="12" Padding="20" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Registrar Nuevo Estudiante" FontSize="18" FontAttributes="Bold" TextColor="#1976D2" />
+
+                    <Label Text="Nombre" FontSize="13" TextColor="Gray" Margin="0,5,0,-8" />
+                    <Entry Placeholder="Ej: Juan" Text="{Binding Nombre}" />
+
+                    <Label Text="Apellido" FontSize="13" TextColor="Gray" Margin="0,5,0,-8" />
+                    <Entry Placeholder="Ej: Pérez" Text="{Binding Apellido}" />
+
+                    <Label Text="Correo Electrónico" FontSize="13" TextColor="Gray" Margin="0,5,0,-8" />
+                    <Entry Placeholder="correo@ejemplo.com" Text="{Binding Email}" Keyboard="Email" />
+
+                    <Label Text="DNI" FontSize="13" TextColor="Gray" Margin="0,5,0,-8" />
+                    <Entry Placeholder="Número de DNI" Text="{Binding Dni}" Keyboard="Numeric" />
+
+                    <Label Text="Legajo" FontSize="13" TextColor="Gray" Margin="0,5,0,-8" />
+                    <Entry Placeholder="Número de legajo" Text="{Binding Legajo}" />
+
+                    <!-- Botón Guardar -->
+                    <Button Text="Guardar Estudiante" 
+                            Command="{Binding GuardarCommand}"
+                            BackgroundColor="#2E7D32" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            HeightRequest="50"
+                            CornerRadius="8"
+                            Margin="0,15,0,0" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

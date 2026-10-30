@@ -102,6 +102,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ComisionesNominaPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ComisionesNominaPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ComisionesNominaPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ComisionesNominaPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ConfiguracionPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ConfiguracionPage.xaml
@@ -132,11 +142,21 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/GestionPersonasPage.xaml]
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/GestionPersonasMenuPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.GestionPersonasPage.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\GestionPersonasPage.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\GestionPersonasPage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.GestionPersonasMenuPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\GestionPersonasMenuPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\GestionPersonasMenuPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/ListadoEstudiantesPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.ListadoEstudiantesPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ListadoEstudiantesPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ListadoEstudiantesPage.xaml
 build_metadata.AdditionalFiles.Inflator = Runtime
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 
@@ -147,6 +167,16 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.MenuReportesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\MenuReportesPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MenuReportesPage.xaml
+build_metadata.AdditionalFiles.Inflator = Runtime
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/GRUPO4/Grupo4/App_v3/App_v3/Views/NuevoEstudiantePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = App_v3.Views.NuevoEstudiantePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\NuevoEstudiantePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\NuevoEstudiantePage.xaml
 build_metadata.AdditionalFiles.Inflator = Runtime
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 

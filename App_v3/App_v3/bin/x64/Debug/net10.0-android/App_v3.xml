@@ -39,6 +39,9 @@
             Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
             </summary>
         </member>
+        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
+            Inscribe o asigna un estudiante a una comisión específica actualizando su registro en la base de datos.
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
@@ -50,11 +53,186 @@
             (Tu método original intacto)
             </summary>
         </member>
+        <member name="T:App_v3.ViewModels.ComisionesNominaViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada">
+            <inheritdoc cref="F:App_v3.ViewModels.ComisionesNominaViewModel._comisionActualSeleccionada"/>
+        </member>
+        <member name="M:App_v3.ViewModels.ComisionesNominaViewModel.OnComisionActualSeleccionadaChanged(App_v3.Models.Comision)">
+            <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada"/> is changed.</remarks>
+        </member>
+        <member name="F:App_v3.ViewModels.ComisionesNominaViewModel.volverAlMenuCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuAsync"/>.</summary>
+        </member>
+        <member name="T:App_v3.ViewModels.GestionPersonasMenuViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="F:App_v3.ViewModels.GestionPersonasMenuViewModel.irAListadoCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAListadoCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAListadoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAListadoAsync"/>.</summary>
+        </member>
+        <member name="F:App_v3.ViewModels.GestionPersonasMenuViewModel.irAComisionesCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAComisionesCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAComisionesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.GestionPersonasMenuViewModel.IrAComisionesAsync"/>.</summary>
+        </member>
+        <member name="F:App_v3.ViewModels.GestionPersonasMenuViewModel.irANuevoEstudianteCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrANuevoEstudianteCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.GestionPersonasMenuViewModel.IrANuevoEstudianteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.GestionPersonasMenuViewModel.IrANuevoEstudianteAsync"/>.</summary>
+        </member>
+        <member name="T:App_v3.ViewModels.ListadoEstudiantesViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroApellido">
+            <inheritdoc cref="F:App_v3.ViewModels.ListadoEstudiantesViewModel._filtroApellido"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroDni">
+            <inheritdoc cref="F:App_v3.ViewModels.ListadoEstudiantesViewModel._filtroDni"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ListadoEstudiantesViewModel.ComisionSeleccionada">
+            <inheritdoc cref="F:App_v3.ViewModels.ListadoEstudiantesViewModel._comisionSeleccionada"/>
+        </member>
+        <member name="M:App_v3.ViewModels.ListadoEstudiantesViewModel.OnFiltroApellidoChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroApellido"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroApellido"/> is changed.</remarks>
+        </member>
+        <member name="M:App_v3.ViewModels.ListadoEstudiantesViewModel.OnFiltroDniChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroDni"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.FiltroDni"/> is changed.</remarks>
+        </member>
+        <member name="F:App_v3.ViewModels.ListadoEstudiantesViewModel.inscribirComisionCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.InscribirComisionCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.ListadoEstudiantesViewModel.InscribirComisionCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:App_v3.ViewModels.ListadoEstudiantesViewModel.InscribirComisionAsync(App_v3.Models.Estudiante)"/>.</summary>
+        </member>
+        <member name="F:App_v3.ViewModels.ListadoEstudiantesViewModel.volverAlMenuCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.ListadoEstudiantesViewModel.VolverAlMenuCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.ListadoEstudiantesViewModel.VolverAlMenuCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.ListadoEstudiantesViewModel.VolverAlMenuAsync"/>.</summary>
+        </member>
+        <member name="T:App_v3.ViewModels.NuevoEstudianteViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.Nombre">
+            <inheritdoc cref="F:App_v3.ViewModels.NuevoEstudianteViewModel._nombre"/>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.Apellido">
+            <inheritdoc cref="F:App_v3.ViewModels.NuevoEstudianteViewModel._apellido"/>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.Email">
+            <inheritdoc cref="F:App_v3.ViewModels.NuevoEstudianteViewModel._email"/>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.Dni">
+            <inheritdoc cref="F:App_v3.ViewModels.NuevoEstudianteViewModel._dni"/>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.Legajo">
+            <inheritdoc cref="F:App_v3.ViewModels.NuevoEstudianteViewModel._legajo"/>
+        </member>
+        <member name="F:App_v3.ViewModels.NuevoEstudianteViewModel.guardarCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.NuevoEstudianteViewModel.GuardarCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.GuardarCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.NuevoEstudianteViewModel.GuardarAsync"/>.</summary>
+        </member>
+        <member name="F:App_v3.ViewModels.NuevoEstudianteViewModel.volverAlMenuCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.NuevoEstudianteViewModel.VolverAlMenuCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.VolverAlMenuCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.NuevoEstudianteViewModel.VolverAlMenuAsync"/>.</summary>
+        </member>
         <member name="T:App_v3.Resource">
             <summary>
             Android Resource Designer class.
             Exposes the Android Resource designer assembly into the project Namespace.
             </summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ComisionActualSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ComisionActualSeleccionada" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroApellido">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroDni">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroDni" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ComisionSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nombre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nombre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Apellido">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Apellido" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Email">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Email" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Dni">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Dni" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Legajo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Legajo" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ComisionActualSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ComisionActualSeleccionada" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroApellido">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroDni">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroDni" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ComisionSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nombre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nombre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Apellido">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Apellido" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Email">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Email" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Dni">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Dni" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Legajo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Legajo" generated properties.</summary>
         </member>
     </members>
 </doc>

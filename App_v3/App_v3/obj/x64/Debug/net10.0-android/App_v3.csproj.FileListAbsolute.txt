@@ -2705,14 +2705,6 @@ C:\MAUI\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ConvertResourcesCases
 C:\MAUI\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GenerateJavaStubs.stamp
 C:\MAUI\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\MAUI\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ResolveLibraryProjectImports.stamp
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.runtimeconfig.json
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.dll
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.pdb
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3.apk
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3.aab
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.aab
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.apk
-C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.apk.idsig
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\build.props
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\adb.props
@@ -2735,6 +2727,9 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\f\OpenS
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\f\OpenSans-Semibold.ttf
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\dotnet_bot.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\estudiantes.jpg
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo3.png
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo5.avif
+C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo2.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xxxhdpi\appicon_round.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xxhdpi\appicon_round.png
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\mipmap-xhdpi\appicon_round.png
@@ -2830,6 +2825,14 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.AssemblyInfo
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.AssemblyInfo.cs
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.csproj.CoreCompileInputs.cache
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.sourcelink.json
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.runtimeconfig.json
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.dll
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\App_v3.pdb
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3.apk
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3.aab
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.aab
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.apk
+C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-android\com.companyname.appv3-Signed.apk.idsig
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\XamlC.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.dll
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\App_v3.pdb
@@ -5414,6 +5417,3 @@ C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ConvertResou
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GenerateJavaStubs.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\stamp\_ResolveLibraryProjectImports.stamp
-C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo5.avif
-C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo3.png
-C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-android\resizetizer\r\drawable\fondo2.png

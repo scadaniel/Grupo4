@@ -52,6 +52,7 @@ public class DatabaseService
         await _dbConnection.CreateTableAsync<TrabajoPractico>();
         await _dbConnection.CreateTableAsync<EntregaTp>();
         await _dbConnection.CreateTableAsync<Inscripcion>(); // Tabla intermedia para relación M:N (Alumnos <-> Clases)
+        await _dbConnection.CreateTableAsync<Comision>();//tabla comisiones
 
         // Cargar datos iniciales de prueba si las tablas están vacías
         await InicializarDatosPruebaAsync();
@@ -534,6 +535,35 @@ public class DatabaseService
 
         return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
     }
+
+    // ==========================================
+    // --- MÓDULO COMISIONES (MENÚ PERSONAS) ---
+    // ==========================================
+
+    public async Task<List<Comision>> GetComisionesAsync()
+    {
+        await InitAsync();
+        // Usamos _dbConnection! tal como el resto de los métodos de tu clase
+        return await _dbConnection!.Table<Comision>().ToListAsync();
+    }
+
+
+    //==========================================
+    /// Inscribe o asigna un estudiante a una comisión específica actualizando su registro en la base de datos.
+    //==========================================
+    public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
+    {
+        await InitAsync();
+
+        var estudiante = await _dbConnection!.Table<Estudiante>().FirstOrDefaultAsync(e => e.Id == estudianteId);
+        if (estudiante != null)
+        {
+            // Actualizamos el registro del estudiante con la nueva comisión en la base de datos local
+            return await _dbConnection.UpdateAsync(estudiante);
+        }
+        return 0;
+    }
+
 
 }
 

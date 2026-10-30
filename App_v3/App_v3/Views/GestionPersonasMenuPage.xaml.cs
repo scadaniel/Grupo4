@@ -2,9 +2,9 @@
 
 namespace App_v3.Views;
 
-public partial class GestionPersonasPage : ContentPage
+public partial class GestionPersonasMenuPage : ContentPage
 {
-    public GestionPersonasPage(GestionPersonasViewModel viewModel)
+    public GestionPersonasMenuPage(GestionPersonasMenuViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

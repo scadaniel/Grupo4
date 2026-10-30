@@ -28,15 +28,15 @@
         FlyoutItemIsVisible="False" />
 
     <!-- DEMÁS MÓDULOS DEL MENÚ LATERAL -->
-    <FlyoutItem Title="Personas" Icon="dotnet_bot.png">
-        <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
+    <FlyoutItem Title="Datos de Estudiantes" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasMenuPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Alumnos" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Control de Riezgo" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Clases" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Gestion de Clases" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
     </FlyoutItem>
 
@@ -44,7 +44,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Asistencia" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Toma de Asistencia" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
     </FlyoutItem>
 

@@ -10,6 +10,9 @@ namespace App_v3
 
             // REGISTRAR LA RUTA AQUÍ:
             Routing.RegisterRoute(nameof(EstudianteListPage), typeof(EstudianteListPage));
+            Routing.RegisterRoute(nameof(ListadoEstudiantesPage), typeof(ListadoEstudiantesPage));
+            Routing.RegisterRoute(nameof(ComisionesNominaPage), typeof(ComisionesNominaPage));
+            Routing.RegisterRoute(nameof(NuevoEstudiantePage), typeof(NuevoEstudiantePage));
         }
     }
 }
