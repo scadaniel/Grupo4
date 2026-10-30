@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="App_v3" mvid="d66d4ab7577d4016a8d7022d5b7c7e36">
+<api type="debug" assembly-name="App_v3" mvid="9bc4fe563a3d4bf9b9e57227fd0c7de7">
   <java-to-managed>
     <entry java-name="crc646fe1d05f14225027/MainActivity" managed-name="App_v3.MainActivity, App_v3" managed-type-token-id="33554447" />
     <entry java-name="crc646fe1d05f14225027/MainApplication" managed-name="App_v3.MainApplication, App_v3" managed-type-token-id="33554448" />

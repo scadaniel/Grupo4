@@ -1,66 +1,99 @@
-﻿using App_v3.Models;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using App_v3.Models;
 using App_v3.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace App_v3.ViewModels
 {
-    public partial class ComisionesNominaViewModel : ObservableObject
+    public class ComisionesNominaViewModel : INotifyPropertyChanged
     {
         private readonly DatabaseService _databaseService;
 
-        [ObservableProperty]
-        private Comision? _comisionActualSeleccionada;
+        public ObservableCollection<Comision> ListaComisiones { get; } = new();
 
-        public ObservableCollection<Comision> ListaComisiones { get; set; } = new();
-        public ObservableCollection<Estudiante> AlumnosDeComisionSeleccionada { get; set; } = new();
+        private Comision? _comisionSeleccionada;
+        public Comision? ComisionSeleccionada
+        {
+            get => _comisionSeleccionada;
+            set
+            {
+                if (_comisionSeleccionada != value)
+                {
+                    _comisionSeleccionada = value;
+                    OnPropertyChanged();
+                    _ = CargarAlumnosDeComisionAsync(_comisionSeleccionada);
+                }
+            }
+        }
+
+        public ObservableCollection<Estudiante> AlumnosDeComisionSeleccionada { get; } = new();
+
+        public ICommand VolverAlMenuCommand { get; }
 
         public ComisionesNominaViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
+            VolverAlMenuCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
             _ = CargarComisionesAsync();
         }
 
         private async Task CargarComisionesAsync()
         {
-            var comisiones = await _databaseService.GetComisionesAsync();
-            ListaComisiones.Clear();
-            if (comisiones != null)
+            try
             {
-                foreach (var c in comisiones)
+                ListaComisiones.Clear();
+                var comisiones = await _databaseService.GetComisionesAsync();
+
+                if (comisiones != null)
                 {
-                    ListaComisiones.Add(c);
+                    foreach (var comision in comisiones)
+                    {
+                        ListaComisiones.Add(comision);
+                    }
                 }
             }
-        }
-
-        partial void OnComisionActualSeleccionadaChanged(Comision? value)
-        {
-            _ = CargarAlumnosDeComisionAsync(value);
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[Error Comisiones]: {ex.Message}");
+            }
         }
 
         private async Task CargarAlumnosDeComisionAsync(Comision? comision)
         {
             AlumnosDeComisionSeleccionada.Clear();
-            if (comision == null) return;
+            if (comision == null || string.IsNullOrWhiteSpace(comision.Nombre)) return;
 
-            // Cambiamos comision.Id por comision.Nombre para que coincida con el método string del DatabaseService
-            var alumnos = await _databaseService.GetEstudiantesPorComisionAsync(comision.Nombre);
-
-            if (alumnos != null)
+            try
             {
-                foreach (var alumno in alumnos)
+                var todosLosEstudiantes = await _databaseService.GetEstudiantesAsync();
+
+                if (todosLosEstudiantes != null)
                 {
-                    AlumnosDeComisionSeleccionada.Add(alumno);
+                    string nombreLimpio = comision.Nombre.Trim();
+
+                    var alumnosFiltrados = todosLosEstudiantes.Where(e =>
+                        !string.IsNullOrWhiteSpace(e.Comision) &&
+                        e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase)
+                    ).ToList();
+
+                    foreach (var alumno in alumnosFiltrados)
+                    {
+                        AlumnosDeComisionSeleccionada.Add(alumno);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[Error Nómina]: {ex.Message}");
             }
         }
 
-        [RelayCommand]
-        private async Task VolverAlMenuAsync()
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            await Shell.Current.GoToAsync("..");
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

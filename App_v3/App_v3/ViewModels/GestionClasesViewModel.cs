@@ -64,6 +64,23 @@ public class GestionClasesViewModel : INotifyPropertyChanged
         }
     }
 
+    //private async Task GuardarClaseAsync()   // viejo modelo
+    //{
+    //    if (string.IsNullOrWhiteSpace(NombreMateria))
+    //        return;
+
+    //    var nuevaClase = new Clase
+    //    {
+    //        NombreMateria = NombreMateria,
+    //        Comision = Comision
+    //    };
+
+    //    await _databaseService.SaveClaseAsync(nuevaClase);
+    //    NombreMateria = string.Empty;
+    //    Comision = string.Empty;
+    //    await CargarClasesAsync();
+    //}
+
     private async Task GuardarClaseAsync()
     {
         if (string.IsNullOrWhiteSpace(NombreMateria))
@@ -75,7 +92,11 @@ public class GestionClasesViewModel : INotifyPropertyChanged
             Comision = Comision
         };
 
-        await _databaseService.SaveClaseAsync(nuevaClase);
+        // 🚀 AQUÍ ESTÁ EL CAMBIO: 
+        // Usamos el nuevo método seguro que guarda la clase Y a la vez 
+        // registra la comisión en la tabla nueva para que lo use el otro módulo.
+        await _databaseService.SaveClaseYComisionNuevaAsync(nuevaClase);
+
         NombreMateria = string.Empty;
         Comision = string.Empty;
         await CargarClasesAsync();

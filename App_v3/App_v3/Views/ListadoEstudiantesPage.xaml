@@ -1,97 +1,101 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:App_v3.Models"
              x:Class="App_v3.Views.ListadoEstudiantesPage"
              Title="Listado y Filtros de Estudiantes"
              BackgroundColor="#F4F6F9">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+    <!-- Usamos un Grid con filas automáticas para los filtros y una fila expandible (*) para la lista -->
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *" Padding="20" RowSpacing="15">
 
-            <!-- Botón Volver -->
-            <Button Text="⬅️ Volver al Menú"
-                    Command="{Binding VolverAlMenuCommand}"
-                    BackgroundColor="#78909C"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="8"
-                    HeightRequest="40"
-                    HorizontalOptions="Start"
-                    WidthRequest="150" />
+        <!-- Fila 0: Botón Volver -->
+        <Button Grid.Row="0"
+                Text="⬅️ Volver al Menú"
+                Command="{Binding VolverAlMenuCommand}"
+                BackgroundColor="#78909C"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                HeightRequest="40"
+                HorizontalOptions="Start"
+                WidthRequest="150" />
 
-            <!-- Tarjeta de Filtros -->
-            <Frame BorderColor="#E0E0E0" CornerRadius="12" Padding="15" HasShadow="True" BackgroundColor="White">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Criterios de Búsqueda" FontSize="15" FontAttributes="Bold" TextColor="#1A252C" />
+        <!-- Fila 1: Selector General de Comisión -->
+        <Frame Grid.Row="1" BorderColor="#E0E0E0" CornerRadius="12" Padding="15" HasShadow="True" BackgroundColor="White">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="SELECCIONE LA COMISION A MATRICULAR" 
+                       FontSize="15" 
+                       FontAttributes="Bold" 
+                       TextColor="#1A252C" />
 
-                    <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
-                        <Entry Grid.Column="0" 
-                               Placeholder="Filtrar por Apellido..." 
-                               Text="{Binding FiltroApellido}" 
-                               FontSize="14" />
-                        <Entry Grid.Column="1" 
-                               Placeholder="Filtrar por DNI..." 
-                               Text="{Binding FiltroDni}" 
-                               Keyboard="Numeric" 
-                               FontSize="14" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Frame>
+                <Picker ItemsSource="{Binding ListaComisiones}"
+                        SelectedItem="{Binding ComisionSeleccionada}"
+                        ItemDisplayBinding="{Binding Nombre}"
+                        Title="Elija una comisión..."
+                        FontSize="15"
+                        BackgroundColor="#FFFFFF" />
+            </VerticalStackLayout>
+        </Frame>
 
-            <!-- Lista de Estudiantes -->
-            <CollectionView ItemsSource="{Binding ListaEstudiantesFiltrada}">
-                <CollectionView.EmptyView>
-                    <Label Text="No se encontraron estudiantes con los filtros especificados." 
-                           HorizontalOptions="Center" 
-                           TextColor="Gray" 
-                           Margin="0,20" />
-                </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BorderColor="#EFEFEF" CornerRadius="10" Padding="15" Margin="0,5" HasShadow="False" BackgroundColor="White">
-                            <VerticalStackLayout Spacing="10">
+        <!-- Fila 2: Criterios de Búsqueda -->
+        <Frame Grid.Row="2" BorderColor="#E0E0E0" CornerRadius="12" Padding="15" HasShadow="True" BackgroundColor="White">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Criterios de Búsqueda" FontSize="15" FontAttributes="Bold" TextColor="#1A252C" />
+                <Entry Placeholder="Filtrar por apellido..." Text="{Binding FiltroApellido}" />
+                <Entry Placeholder="Filtrar por DNI..." Text="{Binding FiltroDni}" Keyboard="Numeric" />
+            </VerticalStackLayout>
+        </Frame>
 
-                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                                    <VerticalStackLayout Grid.Column="0">
-                                        <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#212121" />
-                                        <Label Text="{Binding Email}" FontSize="12" TextColor="#757575" />
-                                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="#1976D2" FontAttributes="Bold" />
-                                    </VerticalStackLayout>
+        <!-- Fila 3: Título de la lista -->
+        <Label Grid.Row="3" 
+               Text="Estudiantes Encontrados" 
+               FontSize="16" 
+               FontAttributes="Bold" 
+               TextColor="#1A252C" 
+               Margin="0,5,0,0" />
 
-                                    <!-- Switch Activo / Inactivo con OnColor para .NET 10 -->
-                                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Spacing="2">
-                                        <Label Text="Activo" FontSize="11" TextColor="Gray" HorizontalOptions="Center" />
-                                        <Switch IsToggled="{Binding Activo}" OnColor="#2E7D32" />
-                                    </VerticalStackLayout>
-                                </Grid>
+        <!-- Fila 4: Listado de Estudiantes con scroll nativo y mouse habilitado -->
+        <CollectionView Grid.Row="4"
+                        ItemsSource="{Binding ListaEstudiantesFiltrada}">
+            <CollectionView.EmptyView>
+                <Label Text="No se encontraron estudiantes con los filtros aplicados." 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray" 
+                       Margin="0,20" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Estudiante">
+                    <Frame BorderColor="#EFEFEF" CornerRadius="10" Padding="15" Margin="0,5" HasShadow="False" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="5">
 
-                                <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" Margin="0,2" />
-
-                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
-                                    <Picker Grid.Column="0"
-                                            ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ListaComisiones}"
-                                            SelectedItem="{Binding ComisionSeleccionada}"
-                                            Title="Asignar a comisión..."
-                                            FontSize="13"
-                                            ItemDisplayBinding="{Binding Nombre}" />
-
-                                    <Button Grid.Column="1"
-                                            Text="Inscribir"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.InscribirComisionCommand}"
-                                            CommandParameter="{Binding}"
-                                            BackgroundColor="#1976D2"
-                                            TextColor="White"
-                                            FontSize="12"
-                                            HeightRequest="36"
-                                            CornerRadius="6" />
-                                </Grid>
-
+                            <!-- Datos del estudiante -->
+                            <VerticalStackLayout Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center">
+                                <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#212121" />
+                                <Label Text="{Binding Email}" FontSize="12" TextColor="Gray" />
+                                <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="Gray" />
                             </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                            <!-- Comisión actual -->
+                            <Label Grid.Column="0" Grid.Row="2" Text="{Binding Comision, StringFormat='Comisión actual: {0}'}" FontSize="12" FontAttributes="Bold" TextColor="#1976D2" VerticalOptions="Center" />
+
+                            <!-- Botón Inscribir individual -->
+                            <Button Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
+                                    Text="Inscribir"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.InscribirComisionCommand}"
+                                    CommandParameter="{Binding}"
+                                    BackgroundColor="#2E7D32"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="8"
+                                    VerticalOptions="Center"
+                                    HeightRequest="45"
+                                    WidthRequest="100" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentPage>

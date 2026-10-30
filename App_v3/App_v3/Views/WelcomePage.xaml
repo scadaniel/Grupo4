@@ -4,53 +4,77 @@
              x:Class="App_v3.Views.WelcomePage"
              NavigationPage.HasNavigationBar="False">
 
-    <!-- Grid para superponer la imagen de fondo y los textos -->
+    <!-- Grid general para superponer fondo, capa de contraste y el contenido principal -->
     <Grid>
-        <!-- 1. IMAGEN DE FONDO (Asegúrate de cambiar 'fondo_escuela.png' por el nombre de tu archivo) -->
+        <!-- 1. IMAGEN DE FONDO -->
         <Image Source="fondo2.png" 
                Aspect="AspectFill" />
 
-        <!-- 2. CAPA OSCURA SEMITRANSPARENTE (Opcional, ayuda a que se lea mejor el texto encima de la imagen) -->
+        <!-- 2. CAPA OSCURA SEMITRANSPARENTE -->
         <BoxView BackgroundColor="#0F172A" 
                  Opacity="0.8" />
 
-        <!-- 3. CONTENIDO / TEXTOS CENTRADOS -->
-        <VerticalStackLayout VerticalOptions="Center" 
-                             HorizontalOptions="Center" 
-                             Spacing="20" 
-                             Padding="40">
+        <!-- 3. ESTRUCTURA CON PIE DE PÁGINA (FILA 0: CONTENIDO, FILA 1: COPYRIGHT) -->
+        <Grid RowDefinitions="*, Auto" Padding="20">
 
-            <!-- Títulos institucionales -->
-            <Label Text="Sistema de Alerta Temprana" 
-                   TextColor="White" 
-                   FontSize="35" 
-                   FontAttributes="Bold" 
-                   HorizontalTextAlignment="Center"/>
+            <!-- CONTENIDO CENTRADO -->
+            <VerticalStackLayout Grid.Row="0"
+                                 VerticalOptions="Center" 
+                                 HorizontalOptions="Center" 
+                                 Spacing="20" 
+                                 Padding="20">
 
-            <Label Text="Gestión académica, toma de asistencias, control de entrega de TPs y seguimiento de estudiantes." 
-                   TextColor="#94A3B8" 
-                   FontSize="25" 
-                   HorizontalTextAlignment="Center"
-                   MaximumWidthRequest="350"/>
+                <!-- Títulos institucionales -->
+                <Label Text="Sistema de Alerta Temprana" 
+                       TextColor="White" 
+                       FontSize="35" 
+                       FontAttributes="Bold" 
+                       HorizontalTextAlignment="Center"/>
 
-            <!-- Línea divisoria y créditos del Grupo 4 -->
-            <BoxView HeightRequest="1" 
-                     BackgroundColor="#334155" 
-                     WidthRequest="150" 
-                     Margin="0,20,0,5"
-                     HorizontalOptions="Center"/>
+                <Label Text="Gestión académica, toma de asistencias, control de entrega de TPs y seguimiento de estudiantes." 
+                       TextColor="#94A3B8" 
+                       FontSize="25" 
+                       HorizontalTextAlignment="Center"
+                       MaximumWidthRequest="350"/>
 
-            <Label Text="Desarrollado por Grupo 4:" 
-                   TextColor="#64748B" 
-                   FontSize="20" 
-                   HorizontalTextAlignment="Center"/>
+                <!-- Línea divisoria y créditos del Grupo 4 -->
+                <BoxView HeightRequest="1" 
+                         BackgroundColor="#334155" 
+                         WidthRequest="150" 
+                         Margin="0,20,0,5"
+                         HorizontalOptions="Center"/>
 
-            <Label Text="Eleonora • Mariana • Alan • Julio • Daniel" 
-                   TextColor="#38BDF8" 
-                   FontSize="20" 
-                   FontAttributes="Bold"
-                   HorizontalTextAlignment="Center"/>
+                <Label Text="Desarrollado por Grupo 4:" 
+                       TextColor="#64748B" 
+                       FontSize="20" 
+                       HorizontalTextAlignment="Center"/>
 
-        </VerticalStackLayout>
+                <Label Text="Eleonora • Mariana • Alan • Julio • Daniel" 
+                       TextColor="#38BDF8" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+
+            </VerticalStackLayout>
+
+            <!-- PIE DE PÁGINA CON COPYRIGHT -->
+            <VerticalStackLayout Grid.Row="1" 
+                                 Spacing="4" 
+                                 HorizontalOptions="Center" 
+                                 Margin="0,10,0,10">
+
+                <Label Text="© 2026 Sistema de Alerta Temprana — Grupo 4" 
+                       TextColor="#64748B" 
+                       FontSize="12" 
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+
+                <Label Text="Todos los derechos reservados." 
+                       TextColor="#475569" 
+                       FontSize="11" 
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+        </Grid>
     </Grid>
 </ContentPage>

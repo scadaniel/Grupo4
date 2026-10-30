@@ -20,12 +20,12 @@
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
-    <!-- PANTALLA DE BIENVENIDA INICIAL (Se muestra al abrir la app) -->
-    <ShellContent 
-        Title="Inicio"
-        Route="WelcomePage"
-        ContentTemplate="{DataTemplate views:WelcomePage}"
-        FlyoutItemIsVisible="False" />
+    <!-- PANTALLA DE BIENVENIDA INICIAL (Ahora visible en el menú lateral) -->
+    <FlyoutItem Title="Inicio" Icon="dotnet_bot.png">
+        <ShellContent 
+            Route="WelcomePage"
+            ContentTemplate="{DataTemplate views:WelcomePage}" />
+    </FlyoutItem>
 
     <!-- DEMÁS MÓDULOS DEL MENÚ LATERAL -->
     <FlyoutItem Title="Datos de Estudiantes" Icon="dotnet_bot.png">

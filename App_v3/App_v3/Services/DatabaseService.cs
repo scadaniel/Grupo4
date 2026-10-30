@@ -195,17 +195,20 @@ public class DatabaseService
     /// <summary>
     /// Método legacy basado en texto de comisión (mantenido por compatibilidad).
     /// </summary>
-    public async Task<List<Estudiante>> GetEstudiantesPorComisionAsync(string comision)
+    public async Task<List<Estudiante>> GetEstudiantesPorComisionAsync(string nombreComision)
     {
         await InitAsync();
-        if (string.IsNullOrWhiteSpace(comision))
-        {
-            return await GetEstudiantesAsync();
-        }
 
-        return await _dbConnection!.Table<Estudiante>()
-            .Where(e => e.Activo && e.Comision == comision)
-            .ToListAsync();
+        if (string.IsNullOrWhiteSpace(nombreComision))
+            return new List<Estudiante>();
+
+        string nombreLimpio = nombreComision.Trim();
+
+        // Traemos la lista y comparamos ignorando mayúsculas/minúsculas
+        var estudiantes = await _dbConnection!.Table<Estudiante>().ToListAsync();
+        return estudiantes
+            .Where(e => !string.IsNullOrWhiteSpace(e.Comision) && e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase))
+            .ToList();
     }
 
     /// <summary>
@@ -556,12 +559,48 @@ public class DatabaseService
         await InitAsync();
 
         var estudiante = await _dbConnection!.Table<Estudiante>().FirstOrDefaultAsync(e => e.Id == estudianteId);
-        if (estudiante != null)
+        var comision = await _dbConnection!.Table<Comision>().FirstOrDefaultAsync(c => c.Id == comisionId);
+
+        if (estudiante != null && comision != null)
         {
-            // Actualizamos el registro del estudiante con la nueva comisión en la base de datos local
+            // 🚀 Asignamos el nombre de la comisión al estudiante antes de actualizar
+            estudiante.Comision = comision.Nombre;
             return await _dbConnection.UpdateAsync(estudiante);
         }
         return 0;
+    }
+
+
+
+    //===========================================
+    /// Guarda una clase de manera tradicional y opcionalmente asegura que su comisión quede registrada en la tabla Comision.
+    //===========================================
+    public async Task<int> SaveClaseYComisionNuevaAsync(Clase clase)
+    {
+        await InitAsync();
+
+        // Si viene un nombre de comisión, aseguramos que exista en la tabla Comision (sin pisar el flujo viejo)
+        if (!string.IsNullOrWhiteSpace(clase.Comision))
+        {
+            string nombreLimpio = clase.Comision.Trim();
+            var comisionExistente = await _dbConnection!.Table<Comision>()
+                .FirstOrDefaultAsync(c => c.Nombre == nombreLimpio);
+
+            if (comisionExistente == null)
+            {
+                await _dbConnection.InsertAsync(new Comision { Nombre = nombreLimpio });
+            }
+        }
+
+        // Usamos la lógica de guardado estándar de clases
+        if (clase.Id != 0)
+        {
+            return await _dbConnection!.UpdateAsync(clase);
+        }
+        else
+        {
+            return await _dbConnection!.InsertAsync(clase);
+        }
     }
 
 

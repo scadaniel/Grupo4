@@ -31,12 +31,10 @@ namespace App_v3.ViewModels
 
         private async Task CargarDatosAsync()
         {
-            // Cargar estudiantes desde SQLite
             var estudiantes = await _databaseService.GetEstudiantesAsync();
             _todosLosEstudiantes = estudiantes ?? new List<Estudiante>();
             AplicarFiltros();
 
-            // Cargar comisiones (asumiendo que tienes un método en tu DatabaseService o servicio equivalente)
             var comisiones = await _databaseService.GetComisionesAsync();
             ListaComisiones.Clear();
             if (comisiones != null)
@@ -76,18 +74,46 @@ namespace App_v3.ViewModels
         [RelayCommand]
         private async Task InscribirComisionAsync(Estudiante estudiante)
         {
-            if (estudiante == null || ComisionSeleccionada == null)
+            if (estudiante == null) return;
+
+            // Validación: Si no hay comisión seleccionada, muestra error claro y permite reintentar al cerrar
+            if (ComisionSeleccionada == null)
             {
                 if (Shell.Current is not null)
-                    await Shell.Current.DisplayAlert("Atención", "Seleccione un estudiante y una comisión.", "OK");
+                {
+                    await Shell.Current.DisplayAlert("Error", "Debe seleccionar una comisión antes de inscribir al estudiante.", "Aceptar");
+                }
                 return;
             }
 
-            // Lógica para guardar la inscripción en la base de datos
-            await _databaseService.InscribirEstudianteEnComisionAsync(estudiante.Id, ComisionSeleccionada.Id);
+            try
+            {
+                // 1. Verificamos si ya estaba inscripto en esta misma comisión
+                if (!string.IsNullOrEmpty(estudiante.Comision) &&
+                    estudiante.Comision.Equals(ComisionSeleccionada.Nombre, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (Shell.Current is not null)
+                        await Shell.Current.DisplayAlert("Información", $"{estudiante.NombreCompleto} ya se encuentra previamente inscripto en la comisión {ComisionSeleccionada.Nombre}.", "Aceptar");
+                    return;
+                }
 
-            if (Shell.Current is not null)
-                await Shell.Current.DisplayAlert("Éxito", $"{estudiante.NombreCompleto} inscripto en {ComisionSeleccionada.Nombre}.", "OK");
+                // 2. Guardamos en la base de datos SQLite
+                await _databaseService.InscribirEstudianteEnComisionAsync(estudiante.Id, ComisionSeleccionada.Id);
+
+                // Actualizamos localmente para reflejarlo en la interfaz
+                estudiante.Comision = ComisionSeleccionada.Nombre;
+
+                // 3. Pop-up de Éxito confirmando el impacto correcto
+                if (Shell.Current is not null)
+                    await Shell.Current.DisplayAlert("Éxito", $"¡Se inscribió correctamente a {estudiante.NombreCompleto} en la comisión {ComisionSeleccionada.Nombre}!", "Aceptar");
+            }
+            catch (Exception ex)
+            {
+                if (Shell.Current is not null)
+                    await Shell.Current.DisplayAlert("Error", $"No se pudo completar la inscripción: {ex.Message}", "Aceptar");
+
+                System.Diagnostics.Debug.WriteLine($"[Error de Inscripción]: {ex.Message}");
+            }
         }
 
         [RelayCommand]

@@ -42,6 +42,9 @@
         <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
             Inscribe o asigna un estudiante a una comisión específica actualizando su registro en la base de datos.
         </member>
+        <member name="M:App_v3.Services.DatabaseService.SaveClaseYComisionNuevaAsync(App_v3.Models.Clase)">
+            Guarda una clase de manera tradicional y opcionalmente asegura que su comisión quede registrada en la tabla Comision.
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
@@ -52,24 +55,6 @@
             CA 6.1 y CA 6.2: Evalúa inasistencias y TPs vencidos asignando el nivel general más alto.
             (Tu método original intacto)
             </summary>
-        </member>
-        <member name="T:App_v3.ViewModels.ComisionesNominaViewModel">
-            <inheritdoc/>
-            <inheritdoc/>
-        </member>
-        <member name="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada">
-            <inheritdoc cref="F:App_v3.ViewModels.ComisionesNominaViewModel._comisionActualSeleccionada"/>
-        </member>
-        <member name="M:App_v3.ViewModels.ComisionesNominaViewModel.OnComisionActualSeleccionadaChanged(App_v3.Models.Comision)">
-            <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada"/> just changed.</summary>
-            <param name="value">The new property value that was set.</param>
-            <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.ComisionActualSeleccionada"/> is changed.</remarks>
-        </member>
-        <member name="F:App_v3.ViewModels.ComisionesNominaViewModel.volverAlMenuCommand">
-            <summary>The backing field for <see cref="P:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuCommand"/>.</summary>
-        </member>
-        <member name="P:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.ComisionesNominaViewModel.VolverAlMenuAsync"/>.</summary>
         </member>
         <member name="T:App_v3.ViewModels.GestionPersonasMenuViewModel">
             <inheritdoc/>
@@ -174,9 +159,6 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ComisionActualSeleccionada">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ComisionActualSeleccionada" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroApellido">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>
         </member>
@@ -206,9 +188,6 @@
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ComisionActualSeleccionada">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ComisionActualSeleccionada" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroApellido">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>

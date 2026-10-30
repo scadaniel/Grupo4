@@ -1,9 +1,7 @@
-﻿using App_v3.Models;
-using App_v3.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Net;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using App_v3.Models;
+using App_v3.Services;
 
 namespace App_v3.ViewModels
 {
@@ -34,47 +32,51 @@ namespace App_v3.ViewModels
         [RelayCommand]
         private async Task GuardarAsync()
         {
-            if (string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Apellido) || string.IsNullOrWhiteSpace(Dni))
+            try
             {
-                if (Shell.Current is not null)
-                    await Shell.Current.DisplayAlert("Atención", "Por favor completa Nombre, Apellido y DNI.", "OK");
-                return;
+                // Validación básica de campos obligatorios
+                if (string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Apellido))
+                {
+                    if (Shell.Current is not null)
+                        await Shell.Current.DisplayAlert("Atención", "El nombre y el apellido son obligatorios.", "OK");
+                    return;
+                }
+
+                // Creamos la instancia del estudiante
+                var nuevoEstudiante = new Estudiante
+                {
+                    NombreCompleto = $"{Nombre.Trim()} {Apellido.Trim()}",
+                    Email = Email?.Trim(),
+                    Dni = Dni?.Trim(),
+                    Legajo = Legajo?.Trim()
+                };
+
+                // Guardamos en la base de datos local
+                int resultado = await _databaseService.SaveEstudianteAsync(nuevoEstudiante);
+
+                if (resultado > 0)
+                {
+                    // Pop-up de Éxito confirmando el impacto en SQLite
+                    if (Shell.Current is not null)
+                        await Shell.Current.DisplayAlert("Éxito", "El estudiante se ha registrado correctamente en la base de datos.", "OK");
+
+                    // Regresamos a la pantalla anterior automáticamente
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    // Pop-up de Advertencia si no se afectaron filas
+                    if (Shell.Current is not null)
+                        await Shell.Current.DisplayAlert("Error", "No se pudo guardar el registro en la base de datos.", "OK");
+                }
             }
-
-            string nombreCompleto = $"{Nombre.Trim()} {Apellido.Trim()}";
-
-            // 1. Guardar en la tabla Persona general
-            var nuevaPersona = new Persona
+            catch (Exception ex)
             {
-                Nombre = Nombre.Trim(),
-                Apellido = Apellido.Trim(),
-                Email = Email.Trim(),
-                Legajo = Legajo.Trim(),
-                Rol = "Estudiante"
-            };
-            await _databaseService.SavePersonaAsync(nuevaPersona);
+                // Pop-up ante cualquier excepción inesperada
+                if (Shell.Current is not null)
+                    await Shell.Current.DisplayAlert("Error Crítico", $"Ocurrió un error inesperado: {ex.Message}", "OK");
 
-            // 2. Guardar en la tabla Estudiante para la inscripción y búsqueda por DNI
-            var nuevoEstudiante = new Estudiante
-            {
-                NombreCompleto = nombreCompleto,
-                Email = Email.Trim(),
-                Dni = Dni.Trim(),
-                Legajo = Legajo.Trim(),
-                Activo = true
-            };
-            await _databaseService.SaveEstudianteAsync(nuevoEstudiante);
-
-            // Limpiar campos
-            Nombre = string.Empty;
-            Apellido = string.Empty;
-            Email = string.Empty;
-            Dni = string.Empty;
-            Legajo = string.Empty;
-
-            if (Shell.Current is not null)
-            {
-                await Shell.Current.DisplayAlert("¡Guardado!", "Estudiante registrado correctamente en la base de datos.", "OK");
+                System.Diagnostics.Debug.WriteLine($"[Error al guardar estudiante]: {ex.Message}");
             }
         }
 
