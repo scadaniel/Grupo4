@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.FormularioContactoView">
+    <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding FormularioVisible}">
+        <VerticalStackLayout Spacing="8">
+            <Label Text="{Binding TituloFormulario}" Style="{StaticResource Seccion}" />
+            <Label Text="{Binding TextoEmail}" Style="{StaticResource Detalle}" />
+            <Button Text="Enviar email" Command="{Binding EnviarEmailCommand}" IsEnabled="{Binding TieneEmail}" Style="{StaticResource BotonSecundario}" />
+            <Label Text="{Binding TextoTelefono}" Style="{StaticResource Detalle}" />
+            <Button Text="Llamar" Command="{Binding LlamarCommand}" IsEnabled="{Binding TieneTelefono}" Style="{StaticResource BotonSecundario}" />
+            <Label Text="Fecha del contacto" Style="{StaticResource Detalle}" />
+            <DatePicker Date="{Binding FechaContacto}" />
+            <Picker Title="Medio" ItemsSource="{Binding Medios}" SelectedItem="{Binding MedioSeleccionado}" />
+            <Picker Title="Resultado" ItemsSource="{Binding Resultados}" SelectedItem="{Binding ResultadoSeleccionado}" />
+            <Editor Placeholder="Nota" Text="{Binding Nota}" HeightRequest="80" AutoSize="TextChanges" />
+            <Label Text="{Binding MensajeError}" Style="{StaticResource MensajeError}" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0" Text="Registrar contacto" Command="{Binding RegistrarContactoCommand}" />
+                <Button Grid.Column="1" Text="Cancelar" Command="{Binding CancelarContactoCommand}" Style="{StaticResource BotonSecundario}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

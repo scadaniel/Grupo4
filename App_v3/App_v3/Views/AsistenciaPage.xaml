@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.AsistenciaPage"
+             Title="Asistencia">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Toma de asistencia" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <Picker Title="Elija la clase" ItemsSource="{Binding Clases}"
+                    ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding ClaseSeleccionada}" />
+            <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+
+            <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Lineas}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Tarjeta}">
+                            <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding NombreCompleto}" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Legajo}" Style="{StaticResource Detalle}" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="Presente" Style="{StaticResource Detalle}" HorizontalOptions="Center" />
+                                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Presente}" IsEnabled="{Binding Editable}" HorizontalOptions="Center" />
+                                <Label Grid.Row="0" Grid.Column="2" Text="Justificada" Style="{StaticResource Detalle}" HorizontalOptions="Center" />
+                                <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding Justificada}" IsEnabled="{Binding PuedeJustificar}" HorizontalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="Guardar asistencia" Command="{Binding GuardarCommand}" IsVisible="{Binding MostrarGuardar}" />
+            <Button Text="Modificar asistencia" Command="{Binding ModificarCommand}" IsVisible="{Binding MostrarModificar}" Style="{StaticResource BotonSecundario}" />
+            <Button Text="Guardar cambios" Command="{Binding GuardarCambiosCommand}" IsVisible="{Binding MostrarGuardarCambios}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

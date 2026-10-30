@@ -1,27 +1,12 @@
-﻿using App_v3.ViewModels;
-using App_v3.Services;
+using App_v3.ViewModels;
 
 namespace App_v3.Views;
 
-public partial class ReporteAsistenciasPage : ContentPage
+public partial class ReporteAsistenciasPage : PaginaBase
 {
-    private readonly ReporteAsistenciasViewModel _viewModel;
-
-    public ReporteAsistenciasPage(DatabaseService databaseService)
+    public ReporteAsistenciasPage(ReporteAsistenciasViewModel viewModel)
     {
         InitializeComponent();
-
-        _viewModel = new ReporteAsistenciasViewModel(databaseService);
-        BindingContext = _viewModel;
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-
-        if (_viewModel != null)
-        {
-            await _viewModel.CargarReporteAsync();
-        }
+        BindingContext = viewModel;
     }
 }

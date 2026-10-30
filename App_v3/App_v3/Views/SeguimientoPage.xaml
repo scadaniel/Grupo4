@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.SeguimientoPage"
+             Title="Seguimiento">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Panel de seguimiento" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <Button Text="{Binding TextoFiltro}" Command="{Binding AlternarFiltroCommand}" Style="{StaticResource BotonSecundario}" />
+
+            <!-- Formulario de contacto (H10) -->
+            <views:FormularioContactoView BindingContext="{Binding Contacto}" />
+
+            <!-- Panel ordenado de mayor a menor riesgo (H8) -->
+            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Filas}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Tarjeta}">
+                            <VerticalStackLayout Spacing="4">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" />
+                                        <Label Text="{Binding Legajo}" Style="{StaticResource Detalle}" />
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="1" Style="{StaticResource Etiqueta}"
+                                            BackgroundColor="{Binding Nivel, Converter={StaticResource EstadoColor}}">
+                                        <Label Text="{Binding TextoNivel}" Style="{StaticResource TextoEtiqueta}" />
+                                    </Border>
+                                </Grid>
+                                <Label Text="{Binding Inasistencias}" FontSize="14" />
+                                <Label Text="{Binding TpsVencidos}" FontSize="14" />
+                                <Label Text="{Binding Motivo}" Style="{StaticResource Detalle}" />
+                                <Label Text="{Binding TextoContacto}" FontSize="13"
+                                       TextColor="{Binding Contactado, Converter={StaticResource EstadoColor}}" />
+                                <Button Text="Contactar" Command="{Binding ContactarCommand}" HorizontalOptions="Start" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

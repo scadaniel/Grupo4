@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.EstudiantesPage"
+             Title="Estudiantes">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Estudiantes" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <!-- Ficha del estudiante (H9, H12, H13) -->
+            <VerticalStackLayout IsVisible="{Binding HayFicha}">
+            <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Ficha}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="{Binding NombreCompleto}" Style="{StaticResource Titulo}" />
+                    <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" />
+                    <Label Text="{Binding Dni, StringFormat='DNI: {0}'}" />
+                    <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
+                    <Label Text="{Binding Telefono, StringFormat='Teléfono: {0}'}" />
+                    <Label Text="{Binding TextoEstado}" FontAttributes="Bold"
+                           TextColor="{Binding EsActivo, Converter={StaticResource EstadoColor}}" />
+                    <Label Text="{Binding TextoNivel, StringFormat='Nivel de riesgo: {0}'}" FontAttributes="Bold"
+                           TextColor="{Binding Nivel, Converter={StaticResource EstadoColor}}" IsVisible="{Binding TieneNivel}" />
+                    <Label Text="{Binding Motivo}" Style="{StaticResource Detalle}" />
+                    <Label Text="{Binding Resumen}" FontAttributes="Bold" />
+
+                    <Label Text="Historial de asistencia" Style="{StaticResource Seccion}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Asistencias}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="{Binding Texto}" FontSize="13" />
+                                    <Label Grid.Column="1" Text="{Binding TextoEstado}" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{Binding Estado, Converter={StaticResource EstadoColor}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Label Text="Historial de entregas" Style="{StaticResource Seccion}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Entregas}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="{Binding Texto}" FontSize="13" />
+                                    <Label Grid.Column="1" Text="{Binding TextoEstado}" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{Binding Estado, Converter={StaticResource EstadoColor}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Label Text="Contactos registrados" Style="{StaticResource Seccion}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Contactos}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding .}" FontSize="13" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Button Text="Registrar contacto" Command="{Binding ContactarCommand}" IsVisible="{Binding PuedeContactar}" />
+                    <Button Text="Cerrar ficha" Command="{Binding CerrarCommand}" Style="{StaticResource BotonSecundario}" />
+                </VerticalStackLayout>
+            </Border>
+            </VerticalStackLayout>
+
+            <!-- Formulario de contacto (H10 CA 10.1: también desde la ficha) -->
+            <views:FormularioContactoView BindingContext="{Binding Contacto}" />
+
+            <!-- Nómina de la comisión (H13) -->
+            <Label Text="Nómina de la comisión" Style="{StaticResource Seccion}" />
+            <Picker Title="Mostrar" ItemsSource="{Binding Filtros}" SelectedItem="{Binding Filtro}" />
+            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Nomina}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Tarjeta}">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" />
+                                <Label Text="{Binding Datos}" Style="{StaticResource Detalle}" />
+                                <Label Text="{Binding Contacto}" Style="{StaticResource Detalle}" />
+                                <Label Text="{Binding TextoEstado}" FontSize="13" FontAttributes="Bold"
+                                       TextColor="{Binding Activo, Converter={StaticResource EstadoColor}}" />
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                    <Button Grid.Column="0" Text="Ver ficha" Command="{Binding VerFichaCommand}" />
+                                    <Button Grid.Column="1" Text="{Binding TextoAccion}" Command="{Binding CambiarEstadoCommand}" Style="{StaticResource BotonSecundario}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- Alta (H1) -->
+            <Label Text="Nuevo estudiante" Style="{StaticResource Seccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="6">
+                    <Entry Placeholder="Legajo" Text="{Binding Legajo}" />
+                    <Entry Placeholder="DNI (solo números)" Text="{Binding Dni}" Keyboard="Numeric" />
+                    <Entry Placeholder="Nombre" Text="{Binding Nombre}" />
+                    <Entry Placeholder="Apellido" Text="{Binding Apellido}" />
+                    <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" />
+                    <Entry Placeholder="Teléfono (opcional)" Text="{Binding Telefono}" Keyboard="Telephone" />
+                    <Button Text="Guardar e inscribir en la comisión" Command="{Binding GuardarCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Inscribir un estudiante ya cargado" Style="{StaticResource Seccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="6">
+                    <Entry Placeholder="DNI del estudiante" Text="{Binding DniExistente}" Keyboard="Numeric" />
+                    <Button Text="Inscribir en la comisión" Command="{Binding InscribirExistenteCommand}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

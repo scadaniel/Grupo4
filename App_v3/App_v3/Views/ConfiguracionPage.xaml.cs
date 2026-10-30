@@ -1,9 +1,8 @@
-﻿using App_v3.ViewModels;
-
+using App_v3.ViewModels;
 
 namespace App_v3.Views;
 
-public partial class ConfiguracionPage : ContentPage
+public partial class ConfiguracionPage : PaginaBase
 {
     public ConfiguracionPage(ConfiguracionViewModel viewModel)
     {

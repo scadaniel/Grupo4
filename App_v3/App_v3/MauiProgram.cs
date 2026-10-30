@@ -1,13 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-using App_v3.Core;
-using App_v3.Services;
+using App_v3.Dominio;
+using App_v3.Plataforma;
 using App_v3.ViewModels;
 using App_v3.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace App_v3;
 
 public static class MauiProgram
 {
+    private const string NombreBaseDeDatos = "SeguimientoAcademico.db3";
+
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -20,98 +23,74 @@ public static class MauiProgram
             });
 
 #if DEBUG
-        // Configuración de registros/logs para entorno de depuración
         builder.Logging.AddDebug();
 #endif
 
-        // =========================================================
-        // CAPA DE SERVICIOS / PERSISTENCIA (SINGLETON)
-        // Se mantiene una única instancia compartida en toda la App
-        // =========================================================
-        builder.Services.AddSingleton<DatabaseService>();
-        builder.Services.AddSingleton<IContactoStore, ContactoStoreSqlite>();
-        builder.Services.AddSingleton(sp => new SeguimientoContactos(sp.GetRequiredService<IContactoStore>()));
-
-        // =========================================================
-        // MÓDULO: GESTIÓN DE PERSONAS
-        // =========================================================
-        builder.Services.AddTransient<GestionPersonasViewModel>();
-        builder.Services.AddTransient<GestionPersonasPage>();
-
-        // =========================================================
-        // MÓDULO: GESTIÓN DE CLASES Y CÁTEDRAS
-        // =========================================================
-        builder.Services.AddTransient<GestionClasesViewModel>();
-        builder.Services.AddTransient<GestionClasesPage>();
-
-        // =========================================================
-        // MÓDULO: ESTUDIANTES / RIESGO ACADÉMICO
-        // =========================================================
-        builder.Services.AddTransient<EstudianteListViewModel>();
-        builder.Services.AddTransient<EstudianteListPage>();
-
-        // =========================================================
-        // MÓDULO: ASISTENCIA DE ALUMNOS (Historia H3)
-        // Inyección transitoria para instanciar limpia la toma de lista
-        // =========================================================
-        builder.Services.AddTransient<AttendanceViewModel>();
-        builder.Services.AddTransient<AttendancePage>();
-
-        // =========================================================
-        // MÓDULO: CALENDARIO Y TRABAJOS PRÁCTICOS (Historia H2)
-        // Gestión de fechas límite, clases programadas y cronograma
-        // =========================================================
-        builder.Services.AddTransient<CalendarViewModel>();
-        builder.Services.AddTransient<CalendarPage>();
-
-        // =========================================================
-        // MÓDULO: services de configuración de umbrales de riesgo (Historia H4)
-        // =========================================================
-
-        builder.Services.AddSingleton<ConfiguracionService>();
-        builder.Services.AddTransient<ConfiguracionViewModel>();
-        builder.Services.AddTransient<ConfiguracionPage>();
-
-        // =========================================================
-        // MÓDULO: registro de entregas de trabajos prácticos
-        // =========================================================
-
-        builder.Services.AddTransient<RegistroEntregasViewModel>();
-
-        // =========================================================
-        // MÓDULO: toma de asistencia de alumnos (Historia H3)
-        // =========================================================
-
-        builder.Services.AddTransient<TomaAsistenciaViewModel>();
-        builder.Services.AddTransient<TomaAsistenciaPage>();
-
-        // =========================================================
-        // MÓDULO: Entrega de trabajos prácticos 
-        // =========================================================
-
-        builder.Services.AddTransient<RegistroEntregasViewModel>();
-        builder.Services.AddTransient<RegistroEntregasPage>();
-
-        // =========================================================
-        // reporte:  Reportes de Asistencia
-        // =========================================================
-        builder.Services.AddTransient<ReporteAsistenciasViewModel>();
-        builder.Services.AddTransient<ReporteAsistenciasPage>();
-
-        // =========================================================
-        // reporte: Entrega de trabajos prácticos 
-        // =========================================================
-
-        builder.Services.AddTransient<ReporteEntregasTpViewModel>();
-        builder.Services.AddTransient<ReporteEntregasTpPage>();
-
-
-        // =========================================================
-        // menu de reportes
-        // =========================================================
-
-        builder.Services.AddTransient<MenuReportesPage>();
+        RegistrarPersistenciaYPlataforma(builder.Services);
+        RegistrarServiciosDeDominio(builder.Services);
+        RegistrarViewModels(builder.Services);
+        RegistrarPaginas(builder.Services);
 
         return builder.Build();
+    }
+
+    // Lo único que sabe de SQLite y de Shell. El dominio recibe estas piezas por sus interfaces.
+    private static void RegistrarPersistenciaYPlataforma(IServiceCollection servicios)
+    {
+        servicios.AddSingleton<IRepositorio>(_ =>
+            new RepositorioSqlite(Path.Combine(FileSystem.AppDataDirectory, NombreBaseDeDatos)));
+        servicios.AddSingleton(TimeProvider.System);
+        servicios.AddSingleton<IDialogService, ShellDialogService>();
+        servicios.AddSingleton<INavegacionService, ShellNavegacionService>();
+        servicios.AddSingleton<IEnlaceService, LauncherEnlaceService>();
+    }
+
+    private static void RegistrarServiciosDeDominio(IServiceCollection servicios)
+    {
+        servicios.AddSingleton<MateriaService>();
+        servicios.AddSingleton<ComisionService>();
+        servicios.AddSingleton<EstudianteService>();
+        servicios.AddSingleton<InscripcionService>();
+        servicios.AddSingleton<UmbralesService>();
+        servicios.AddSingleton<CalendarioService>();
+        servicios.AddSingleton<AsistenciaService>();
+        servicios.AddSingleton<EntregaService>();
+        servicios.AddSingleton<SeguimientoService>();
+        servicios.AddSingleton<ContactoService>();
+        servicios.AddSingleton<ReporteService>();
+        servicios.AddSingleton<DatosDeEjemplo>();
+    }
+
+    // El selector de materia y comisión es uno solo para toda la app; el resto se arma de nuevo en cada uso.
+    private static void RegistrarViewModels(IServiceCollection servicios)
+    {
+        servicios.AddSingleton<SelectorComisionViewModel>();
+        servicios.AddTransient<FormularioContactoViewModel>();
+        servicios.AddTransient<SeguimientoViewModel>();
+        servicios.AddTransient<EstudiantesViewModel>();
+        servicios.AddTransient<MateriasViewModel>();
+        servicios.AddTransient<CalendarioViewModel>();
+        servicios.AddTransient<AsistenciaViewModel>();
+        servicios.AddTransient<EntregasViewModel>();
+        servicios.AddTransient<MenuReportesViewModel>();
+        servicios.AddTransient<ReporteAsistenciasViewModel>();
+        servicios.AddTransient<ReporteEntregasViewModel>();
+        servicios.AddTransient<UmbralesViewModel>();
+        servicios.AddTransient<DatosViewModel>();
+        servicios.AddTransient<ConfiguracionViewModel>();
+    }
+
+    private static void RegistrarPaginas(IServiceCollection servicios)
+    {
+        servicios.AddTransient<SeguimientoPage>();
+        servicios.AddTransient<EstudiantesPage>();
+        servicios.AddTransient<MateriasPage>();
+        servicios.AddTransient<CalendarioPage>();
+        servicios.AddTransient<AsistenciaPage>();
+        servicios.AddTransient<EntregasPage>();
+        servicios.AddTransient<MenuReportesPage>();
+        servicios.AddTransient<ReporteAsistenciasPage>();
+        servicios.AddTransient<ReporteEntregasPage>();
+        servicios.AddTransient<ConfiguracionPage>();
     }
 }

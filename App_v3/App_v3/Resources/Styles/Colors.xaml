@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
@@ -27,6 +27,13 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
+    <!-- Colores con significado. Son los únicos lugares donde está el código de color de cada estado:
+         PaletaSemantica decide cuál corresponde a cada estado y EstadoAColorConverter lo busca por nombre. -->
+    <Color x:Key="ColorExito">#2E7D32</Color>
+    <Color x:Key="ColorPeligro">#D32F2F</Color>
+    <Color x:Key="ColorAdvertencia">#F57C00</Color>
+    <Color x:Key="ColorNeutro">#757575</Color>
+
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
@@ -41,4 +48,4 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
-</ResourceDictionary>
+</ResourceDictionary>

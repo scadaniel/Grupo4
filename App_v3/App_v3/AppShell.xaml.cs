@@ -1,15 +1,16 @@
-﻿using App_v3.Views;
+using App_v3.ViewModels;
+using App_v3.Views;
 
-namespace App_v3
+namespace App_v3;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // REGISTRAR LA RUTA AQUÍ:
-            Routing.RegisterRoute(nameof(EstudianteListPage), typeof(EstudianteListPage));
-        }
+        // Páginas a las que se llega desde otra página (no son pestañas).
+        Routing.RegisterRoute(Rutas.ReporteAsistencias, typeof(ReporteAsistenciasPage));
+        Routing.RegisterRoute(Rutas.ReporteEntregas, typeof(ReporteEntregasPage));
     }
 }

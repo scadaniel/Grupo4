@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace App_v3.Dominio;
 
@@ -59,6 +59,6 @@ internal static class ValidacionEstudiante
     }
 
     // Se aceptan DNI escritos como 30.123.456 o con espacios.
-    private static string LimpiarDni(string dni) =>
+    public static string LimpiarDni(string dni) =>
         dni.Replace(".", string.Empty).Replace(" ", string.Empty).Trim();
 }

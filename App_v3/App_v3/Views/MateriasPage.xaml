@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.MateriasPage"
+             Title="Materias">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Materias y comisiones" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <Label Text="Nueva materia" Style="{StaticResource Seccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="6">
+                    <Entry Placeholder="Nombre de la materia" Text="{Binding NombreMateria}" />
+                    <Button Text="Crear materia" Command="{Binding CrearMateriaCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Nueva comisión en la materia elegida" Style="{StaticResource Seccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="6">
+                    <Entry Placeholder="Nombre de la comisión (ej. 1K1)" Text="{Binding NombreComision}" />
+                    <Button Text="Crear comisión" Command="{Binding CrearComisionCommand}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.ReporteEntregasPage"
+             Title="Reporte de entregas">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Reporte de entregas" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <Entry Placeholder="Filtrar por DNI" Text="{Binding Dni}" Keyboard="Numeric" />
+            <Picker Title="Trabajo práctico" ItemsSource="{Binding Trabajos}"
+                    ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding Trabajo}" />
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <Button Grid.Column="0" Text="Buscar" Command="{Binding BuscarCommand}" />
+                <Button Grid.Column="1" Text="Limpiar" Command="{Binding LimpiarCommand}" Style="{StaticResource BotonSecundario}" />
+                <Button Grid.Column="2" Text="Volver" Command="{Binding VolverCommand}" Style="{StaticResource BotonSecundario}" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Filas}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Tarjeta}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding Titulo}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Detalle}" Style="{StaticResource Detalle}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding TextoEstado}" FontAttributes="Bold" VerticalOptions="Center"
+                                       TextColor="{Binding Estado, Converter={StaticResource EstadoColor}}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

@@ -1,60 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
              x:Class="App_v3.Views.ConfiguracionPage"
-             Title="Configuración de Umbrales">
-
+             Title="Configuración">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Configuración" Style="{StaticResource Titulo}" />
 
-            <Label Text="Parámetros de Riesgo (H7)" FontSize="20" FontAttributes="Bold" />
-            <Label Text="Define los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
-                   TextColor="Gray" FontSize="14" />
-
-            <!-- Sección Inasistencias -->
-            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Criterio de Inasistencias" FontAttributes="Bold" FontSize="16" />
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding InasistenciasBajo}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
+            <Label Text="Umbrales de riesgo" Style="{StaticResource Seccion}" />
+            <Label Text="Cantidad a partir de la cual un estudiante pasa a riesgo Medio o Alto. Deben ser números enteros y el Medio menor que el Alto." Style="{StaticResource Detalle}" />
+            <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Umbrales}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Inasistencias para riesgo Medio" Style="{StaticResource Detalle}" />
+                    <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" />
+                    <Label Text="Inasistencias para riesgo Alto" Style="{StaticResource Detalle}" />
+                    <Entry Text="{Binding InasistenciasAlto}" Keyboard="Numeric" />
+                    <Label Text="TPs vencidos sin entregar para riesgo Medio" Style="{StaticResource Detalle}" />
+                    <Entry Text="{Binding TpsMedio}" Keyboard="Numeric" />
+                    <Label Text="TPs vencidos sin entregar para riesgo Alto" Style="{StaticResource Detalle}" />
+                    <Entry Text="{Binding TpsAlto}" Keyboard="Numeric" />
+                    <Button Text="Guardar umbrales" Command="{Binding GuardarCommand}" />
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Sección Trabajos Prácticos -->
-            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Criterio de Trabajos Prácticos No Entregados" FontAttributes="Bold" FontSize="16" />
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding TpsBajo}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding TpsMedio}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
+            <Label Text="Datos" Style="{StaticResource Seccion}" />
+            <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Datos}">
+                <VerticalStackLayout Spacing="8">
+                    <Button Text="Cargar datos de ejemplo" Command="{Binding CargarEjemploCommand}" Style="{StaticResource BotonSecundario}" />
+                    <Button Text="Borrar todos los datos" Command="{Binding BorrarTodoCommand}" Style="{StaticResource BotonPeligro}" />
                 </VerticalStackLayout>
             </Border>
-
-            <!-- Botón Guardar -->
-            <Button Text="Guardar Configuración de Umbrales" 
-                    Command="{Binding GuardarCommand}"
-                    BackgroundColor="DarkBlue"
-                    TextColor="White"
-                    CornerRadius="8"
-                    Margin="0,10,0,0" />
-
         </VerticalStackLayout>
     </ScrollView>
-</ContentPage>
+</views:PaginaBase>

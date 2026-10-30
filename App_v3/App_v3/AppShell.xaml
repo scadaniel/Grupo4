@@ -4,45 +4,33 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
-    Title="Sistema de Alerta Temprana">
+    Title="Seguimiento académico">
 
     <TabBar>
-        <!-- 1. BLOQUE DE GESTIÓN Y ALUMNOS -->
-        <Tab Title="Personas" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasPage}" />
+        <!-- Las pestañas siguen el recorrido del docente: ver el riesgo, cargar datos, registrar y reportar -->
+        <Tab Title="Seguimiento" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:SeguimientoPage}" />
         </Tab>
-
-        <Tab Title="Alumnos" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
+        <Tab Title="Estudiantes" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:EstudiantesPage}" />
         </Tab>
-
-        <!-- 2. BLOQUE ACADÉMICO Y CLASES -->
-        <Tab Title="Clases" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
+        <Tab Title="Materias" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MateriasPage}" />
         </Tab>
-
         <Tab Title="Calendario" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:CalendarioPage}" />
         </Tab>
-
-        <!-- 3. BLOQUE DE REGISTROS DIARIOS -->
         <Tab Title="Asistencia" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:AsistenciaPage}" />
         </Tab>
-
-        <Tab Title="Entregas TP" Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
+        <Tab Title="Entregas" Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate views:EntregasPage}" />
         </Tab>
-
-        <!-- 4. BLOQUE DE REPORTES (Abre el menú con los botones) -->
         <Tab Title="Reportes" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
         </Tab>
-
-        <!-- 5. CONFIGURACIÓN -->
         <Tab Title="Configuración" Icon="dotnet_bot.png">
             <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
         </Tab>
     </TabBar>
-
 </Shell>

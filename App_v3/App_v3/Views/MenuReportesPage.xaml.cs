@@ -1,24 +1,12 @@
-﻿using Microsoft.Maui.Controls;
+using App_v3.ViewModels;
 
 namespace App_v3.Views;
 
-public partial class MenuReportesPage : ContentPage
+public partial class MenuReportesPage : PaginaBase
 {
-    public MenuReportesPage()
+    public MenuReportesPage(MenuReportesViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new MenuReportesViewModel();
-    }
-}
-
-public class MenuReportesViewModel
-{
-    public System.Windows.Input.ICommand IrAsistenciasCommand { get; }
-    public System.Windows.Input.ICommand IrEntregasTpCommand { get; }
-
-    public MenuReportesViewModel()
-    {
-        IrAsistenciasCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(ReporteAsistenciasPage)));
-        IrEntregasTpCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(ReporteEntregasTpPage)));
+        BindingContext = viewModel;
     }
 }

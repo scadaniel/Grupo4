@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using App_v3.Dominio;
 
 namespace App_v3.Tests;
@@ -11,10 +11,10 @@ public sealed class RepositorioEnMemoria : IRepositorio
 {
     private readonly Dictionary<Type, List<IEntidad>> _tablas = [];
 
-    public Task<List<T>> ListarAsync<T>() where T : class, IEntidad =>
+    public Task<List<T>> ListarAsync<T>() where T : class, IEntidad, new() =>
         Task.FromResult(Tabla<T>().Select(e => Copiar((T)e)).ToList());
 
-    public Task GuardarAsync<T>(T entidad) where T : class, IEntidad
+    public Task GuardarAsync<T>(T entidad) where T : class, IEntidad, new()
     {
         var tabla = Tabla<T>();
         if (entidad.Id == 0)
@@ -22,6 +22,12 @@ public sealed class RepositorioEnMemoria : IRepositorio
 
         tabla.RemoveAll(e => e.Id == entidad.Id);
         tabla.Add(Copiar(entidad));
+        return Task.CompletedTask;
+    }
+
+    public Task VaciarAsync()
+    {
+        _tablas.Clear();
         return Task.CompletedTask;
     }
 

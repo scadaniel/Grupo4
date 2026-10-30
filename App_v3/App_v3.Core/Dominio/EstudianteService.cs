@@ -1,4 +1,4 @@
-﻿namespace App_v3.Dominio;
+namespace App_v3.Dominio;
 
 /// <summary>H1: alta y consulta de estudiantes. Legajo y DNI son únicos en todo el sistema (CA 1.2).</summary>
 public class EstudianteService(IRepositorio repositorio)
@@ -21,6 +21,15 @@ public class EstudianteService(IRepositorio repositorio)
 
     public async Task<Estudiante?> ObtenerAsync(int id) =>
         (await repositorio.ListarAsync<Estudiante>()).FirstOrDefault(e => e.Id == id);
+
+    /// <summary>Busca por DNI tal como lo escribe el usuario (con o sin puntos). Sirve para inscribir a quien ya está cargado.</summary>
+    public async Task<Estudiante?> ObtenerPorDniAsync(string? dni)
+    {
+        if (string.IsNullOrWhiteSpace(dni)) return null;
+
+        var buscado = ValidacionEstudiante.LimpiarDni(dni);
+        return (await repositorio.ListarAsync<Estudiante>()).FirstOrDefault(e => e.Dni == buscado);
+    }
 
     // CA 1.2
     private async Task ExigirQueNoExistaAsync(Estudiante nuevo)

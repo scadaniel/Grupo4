@@ -1,4 +1,4 @@
-﻿namespace App_v3.Dominio;
+namespace App_v3.Dominio;
 
 /// <summary>
 /// Lo único que el dominio necesita saber de la persistencia.
@@ -7,8 +7,11 @@
 /// </summary>
 public interface IRepositorio
 {
-    Task<List<T>> ListarAsync<T>() where T : class, IEntidad;
+    Task<List<T>> ListarAsync<T>() where T : class, IEntidad, new();
 
     /// <summary>Si Id es 0 inserta y completa el Id; si no, reemplaza el registro con ese Id.</summary>
-    Task GuardarAsync<T>(T entidad) where T : class, IEntidad;
+    Task GuardarAsync<T>(T entidad) where T : class, IEntidad, new();
+
+    /// <summary>Borra todos los registros de todas las tablas (datos de ejemplo, reinicio).</summary>
+    Task VaciarAsync();
 }

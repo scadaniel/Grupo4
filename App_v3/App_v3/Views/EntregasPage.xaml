@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+    xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.EntregasPage"
+             Title="Entregas">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Label Text="Entregas de trabajos prácticos" Style="{StaticResource Titulo}" />
+            <views:SelectorComisionView BindingContext="{Binding Selector}" />
+
+            <Picker Title="Elija el trabajo práctico" ItemsSource="{Binding Trabajos}"
+                    ItemDisplayBinding="{Binding Texto}" SelectedItem="{Binding TrabajoSeleccionado}" />
+            <Label Text="{Binding Aviso}" Style="{StaticResource Aviso}" />
+
+            <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Lineas}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Tarjeta}">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding NombreCompleto}" FontAttributes="Bold" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Legajo}" Style="{StaticResource Detalle}" />
+                                <Switch Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" IsToggled="{Binding Entregado}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="Guardar entregas" Command="{Binding GuardarCommand}" IsVisible="{Binding HayPlanilla}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>
