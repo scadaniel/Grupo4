@@ -5,92 +5,102 @@
              Title="Control de Riesgo por Comisión"
              BackgroundColor="#F4F6F9">
 
-    <!-- Estructura en Grid para mantener el picker arriba y dar scroll nativo a la lista -->
-    <Grid RowDefinitions="Auto, Auto, *" Padding="20" RowSpacing="15">
+    <!-- Estructura principal en Grid -->
+    <Grid RowDefinitions="Auto, Auto, *" Padding="15">
 
         <!-- Fila 0: Selector General de Comisión -->
-        <Border Grid.Row="0" Padding="15" StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E0E0E0">
+        <Frame Grid.Row="0" BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" Margin="0,0,0,10" BackgroundColor="White">
             <VerticalStackLayout Spacing="8">
-                <Label Text="SELECCIONE LA COMISIÓN A ANALIZAR" FontSize="14" FontAttributes="Bold" TextColor="#1A252C" />
-
+                <Label Text="SELECCIONE LA COMISIÓN A ANALIZAR" FontSize="13" FontAttributes="Bold" TextColor="#1976D2" />
                 <Picker ItemsSource="{Binding ListaComisiones}"
                         SelectedItem="{Binding ComisionSeleccionada}"
                         ItemDisplayBinding="{Binding Nombre}"
                         Title="Elija una comisión..."
-                        FontSize="15"
                         BackgroundColor="#F9F9F9" />
             </VerticalStackLayout>
-        </Border>
+        </Frame>
 
-        <!-- Fila 1: Título informativo del ordenamiento -->
-        <HorizontalStackLayout Grid.Row="1" Spacing="10" VerticalOptions="Center">
-            <Label Text="⚠️ Alumnos ordenados de mayor a menor gravedad" 
-                   FontSize="14" 
-                   FontAttributes="Bold" 
-                   TextColor="#64748B" />
+        <!-- Fila 1: Título informativo -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="5" Margin="0,0,0,10">
+            <Label Text="⚠️" FontSize="14" />
+            <Label Text="Alumnos ordenados de mayor a menor gravedad de riesgo" FontSize="12" TextColor="Gray" VerticalOptions="Center" />
         </HorizontalStackLayout>
 
-        <!-- Fila 2: Listado de Estudiantes (CollectionView con scroll fluido) -->
+        <!-- Fila 2: Listado de Estudiantes -->
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Estudiantes}"
                         SelectedItem="{Binding EstudianteSeleccionado}"
                         SelectionMode="Single">
 
             <CollectionView.EmptyView>
-                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,40">
-                    <Label Text="📁" FontSize="36" HorizontalOptions="Center" />
-                    <Label Text="Seleccione una comisión en el menú superior para ver el análisis de riesgo." 
-                           HorizontalOptions="Center" 
-                           TextColor="Gray" 
-                           FontSize="14" />
-                </VerticalStackLayout>
+                <Label Text="Seleccione una comisión en el menú superior para visualizar el análisis de riesgo." 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray" 
+                       Margin="0,30" 
+                       HorizontalTextAlignment="Center" />
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border StrokeShape="RoundRectangle 10" 
-                            BackgroundColor="White" 
-                            Stroke="#EFEFEF" 
-                            Padding="15" 
-                            Margin="0,4">
+                    <Frame BorderColor="#EFEFEF" 
+                           CornerRadius="8" 
+                           Padding="12" 
+                           Margin="0,4" 
+                           HasShadow="False" 
+                           BackgroundColor="White">
+                        <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="12" RowSpacing="4">
 
-                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto" RowSpacing="6" ColumnSpacing="10">
+                            <!-- Cuadradito indicador de color de riesgo -->
+                            <BoxView Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" 
+                                     WidthRequest="10" 
+                                     CornerRadius="4" 
+                                     BackgroundColor="{Binding ColorHex}" 
+                                     VerticalOptions="Fill" />
 
                             <!-- Datos principales del estudiante -->
-                            <VerticalStackLayout Grid.Column="0" Grid.Row="0">
-                                <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#212121" />
-                                <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="Gray" />
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="2">
+                                <Label Text="{Binding NombreCompleto}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="15" 
+                                       TextColor="#212121" />
+                                <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" 
+                                       FontSize="11" 
+                                       TextColor="#757575" />
                             </VerticalStackLayout>
 
-                            <!-- Badge indicador de Nivel de Riesgo (Color dinámico inyectado desde el VM) -->
-                            <Border Grid.Column="1" Grid.Row="0" 
+                            <!-- Badge de Nivel de Riesgo -->
+                            <Border Grid.Column="2" Grid.Row="0" 
+                                    Padding="10,6" 
                                     BackgroundColor="{Binding ColorHex}" 
                                     StrokeShape="RoundRectangle 6" 
-                                    Padding="12,4" 
-                                    HorizontalOptions="End" 
-                                    VerticalOptions="Start">
-                                <Label Text="{Binding NivelRiesgo}" 
+                                    VerticalOptions="Center">
+                                <Label Text="{Binding NivelRiesgoText}" 
                                        TextColor="White" 
+                                       FontSize="12" 
                                        FontAttributes="Bold" 
-                                       FontSize="12" />
+                                       HorizontalOptions="Center" />
                             </Border>
 
-                            <!-- Indicadores numéricos rápidos (Inasistencias y TPs) -->
-                            <HorizontalStackLayout Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Spacing="20" Margin="0,2,0,0">
-                                <Label Text="{Binding Inasistencias, StringFormat='❌ Inasistencias: {0}'}" FontSize="13" TextColor="#D32F2F" FontAttributes="Bold" />
-                                <Label Text="{Binding TpsNoEntregados, StringFormat='⚠️ TPs Pendientes: {0}'}" FontSize="13" TextColor="#F57C00" FontAttributes="Bold" />
+                            <!-- Indicadores numéricos -->
+                            <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Spacing="15">
+                                <Label Text="{Binding Inasistencias, StringFormat='Inasistencias: {0}'}" 
+                                       FontSize="11" 
+                                       TextColor="#D32F2F" 
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding TpsNoEntregados, StringFormat='TPs Pendientes: {0}'}" 
+                                       FontSize="11" 
+                                       TextColor="#F57C00" 
+                                       FontAttributes="Bold" />
                             </HorizontalStackLayout>
 
-                            <!-- Detalle / Diagnóstico explicativo del motivo del riesgo -->
-                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                            <!-- Diagnóstico -->
+                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
                                    Text="{Binding Diagnostico}" 
-                                   FontSize="12" 
-                                   TextColor="#475569" 
-                                   LineBreakMode="WordWrap" 
-                                   Margin="0,4,0,0" />
+                                   FontSize="11" 
+                                   TextColor="#555" />
 
                         </Grid>
-                    </Border>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -52,7 +52,7 @@ public class DatabaseService
         await _dbConnection.CreateTableAsync<TrabajoPractico>();
         await _dbConnection.CreateTableAsync<EntregaTp>();
         await _dbConnection.CreateTableAsync<Inscripcion>(); // Tabla intermedia para relación M:N (Alumnos <-> Clases)
-        await _dbConnection.CreateTableAsync<Comision>();//tabla comisiones
+        await _dbConnection.CreateTableAsync<Comision>(); //tabla comisiones
 
         // Cargar datos iniciales de prueba si las tablas están vacías
         await InicializarDatosPruebaAsync();
@@ -204,7 +204,6 @@ public class DatabaseService
 
         string nombreLimpio = nombreComision.Trim();
 
-        // Traemos la lista y comparamos ignorando mayúsculas/minúsculas
         var estudiantes = await _dbConnection!.Table<Estudiante>().ToListAsync();
         return estudiantes
             .Where(e => !string.IsNullOrWhiteSpace(e.Comision) && e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase))
@@ -218,28 +217,22 @@ public class DatabaseService
     {
         await InitAsync();
 
-        // Buscar las inscripciones asociadas al ID de la clase
         var inscripciones = await _dbConnection!.Table<Inscripcion>()
             .Where(i => i.ClaseId == claseId)
             .ToListAsync();
 
         var estudianteIds = inscripciones.Select(i => i.EstudianteId).ToList();
 
-        // Si no hay alumnos inscriptos en esta clase, retornar lista vacía
         if (!estudianteIds.Any())
         {
             return new List<Estudiante>();
         }
 
-        // Devolver la lista de estudiantes activos que coincidan con esos IDs
         return await _dbConnection.Table<Estudiante>()
             .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Inscribe a un estudiante en una clase o cátedra específica evitando duplicados.
-    /// </summary>
     public async Task<int> InscribirEstudianteAsync(int estudianteId, int claseId)
     {
         await InitAsync();
@@ -324,6 +317,11 @@ public class DatabaseService
         foreach (var ast in asistencias)
         {
             ast.ClaseId = claseId;
+            // Aseguramos que la asistencia guarde la fecha actual de la clase si no tiene una asignada
+            if (ast.Fecha == default)
+            {
+                ast.Fecha = DateTime.Today;
+            }
 
             if (ast.Id != 0)
             {
@@ -334,7 +332,6 @@ public class DatabaseService
                 await _dbConnection!.InsertAsync(ast);
             }
 
-            // Recalcular inasistencias acumuladas del estudiante
             await RecalcularInasistenciasEstudianteAsync(ast.EstudianteId);
         }
     }
@@ -384,7 +381,6 @@ public class DatabaseService
                 await _dbConnection!.InsertAsync(entrega);
             }
 
-            // Recalcular TPs pendientes del estudiante
             await RecalcularTpsNoEntregadosEstudianteAsync(entrega.EstudianteId);
         }
     }
@@ -405,7 +401,6 @@ public class DatabaseService
         }
     }
 
-
     /// <summary>
     /// Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
     /// </summary>
@@ -418,7 +413,6 @@ public class DatabaseService
         if (string.IsNullOrWhiteSpace(dniLimpio))
             return false;
 
-        // 1. Buscamos al estudiante usando el ORM de la tabla (resuelve el nombre de la tabla automáticamente)
         var estudiante = await _dbConnection!.Table<Estudiante>()
             .FirstOrDefaultAsync(e => e.Dni == dniLimpio);
 
@@ -428,14 +422,12 @@ public class DatabaseService
             return false;
         }
 
-        // 2. Verificar si ya está inscripto en esta clase
         var existente = await _dbConnection.Table<Inscripcion>()
             .FirstOrDefaultAsync(i => i.EstudianteId == estudiante.Id && i.ClaseId == claseId);
 
         if (existente != null)
-            return true; // Ya se encuentra inscripto
+            return true;
 
-        // 3. Crear el registro en la tabla de inscripciones
         await _dbConnection.InsertAsync(new Inscripcion
         {
             EstudianteId = estudiante.Id,
@@ -445,7 +437,10 @@ public class DatabaseService
         return true;
     }
 
-    public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, int? claseIdFiltro, DateTime? fechaInicio, DateTime? fechaFin)
+    /// <summary>
+    /// Obtiene el reporte de asistencias filtrado por DNI, Comisión y Rango de Fechas de forma segura.
+    /// </summary>
+    public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, string? comisionFiltro, DateTime? fechaInicio, DateTime? fechaFin)
     {
         await InitAsync();
 
@@ -453,33 +448,36 @@ public class DatabaseService
         var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
         var clases = await _dbConnection.Table<Clase>().ToListAsync();
 
-        var query = from a in asistencias
-                    join e in estudiantes on a.EstudianteId equals e.Id
-                    join c in clases on a.ClaseId equals c.Id
-                    select new ReporteAsistenciaItem
-                    {
-                        EstudianteId = e.Id,
-                        ClaseId = c.Id,
-                        NombreEstudiante = e.NombreCompleto ?? string.Empty,
-                        Dni = e.Dni ?? string.Empty,
-                        MateriaClase = $"{c.NombreMateria} (Clase #{c.NumeroClase}: {c.Tema})",
-                        Comision = c.Comision ?? string.Empty,
-                        FechaClase = c.Fecha,
-                        Presente = a.Presente,
-                        Justificada = a.Justificada
-                    };
+        var listaCruda = from a in asistencias
+                         join e in estudiantes on a.EstudianteId equals e.Id
+                         join c in clases on a.ClaseId equals c.Id
+                         select new ReporteAsistenciaItem
+                         {
+                             EstudianteId = e.Id,
+                             ClaseId = c.Id,
+                             NombreEstudiante = e.NombreCompleto ?? string.Empty,
+                             Dni = e.Dni ?? string.Empty,
+                             MateriaClase = $"{c.NombreMateria} (Clase #{c.NumeroClase}: {c.Tema})",
+                             Comision = c.Comision ?? string.Empty,
+                             // Prioriza la fecha propia de la asistencia; si no tiene, usa la de la clase
+                             FechaClase = (a.Fecha != default(DateTime) && a.Fecha.Year > 2000) ? a.Fecha : c.Fecha,
+                             Presente = a.Presente,
+                             Justificada = a.Justificada
+                         };
+
+        var query = listaCruda.AsQueryable();
 
         // 1. Filtro por DNI
         if (!string.IsNullOrWhiteSpace(dniFiltro))
         {
             string dniTrim = dniFiltro.Trim();
-            query = query.Where(x => x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) && x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
         }
 
-        // 2. Filtro por Clase / Comisión ID
-        if (claseIdFiltro.HasValue && claseIdFiltro.Value > 0)
+        // 2. Filtro por Comisión
+        if (!string.IsNullOrWhiteSpace(comisionFiltro) && comisionFiltro != "Todas las comisiones" && comisionFiltro != "General")
         {
-            query = query.Where(x => x.ClaseId == claseIdFiltro.Value);
+            query = query.Where(x => !string.IsNullOrEmpty(x.Comision) && x.Comision.Trim().Equals(comisionFiltro.Trim(), StringComparison.OrdinalIgnoreCase));
         }
 
         // 3. Filtro por Rango de Fechas
@@ -496,7 +494,6 @@ public class DatabaseService
         return query.OrderByDescending(x => x.FechaClase).ToList();
     }
 
-
     public async Task<List<ReporteTpItem>> ObtenerReporteEntregasTpAsync(string? dniFiltro, int? trabajoPracticoIdFiltro)
     {
         await InitAsync();
@@ -505,32 +502,31 @@ public class DatabaseService
         var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
         var tps = await _dbConnection.Table<TrabajoPractico>().ToListAsync();
 
-        // Creamos una consulta cruzada para evaluar todos los alumnos activos frente a los TPs
-        var query = from e in estudiantes.Where(x => x.Activo)
-                    from tp in tps
-                    join ent in entregas on new { EstudianteId = e.Id, TrabajoPracticoId = tp.Id }
-                    equals new { ent.EstudianteId, ent.TrabajoPracticoId } into entregaJoin
-                    from subEnt in entregaJoin.DefaultIfEmpty()
-                    select new ReporteTpItem
-                    {
-                        EstudianteId = e.Id,
-                        TrabajoPracticoId = tp.Id,
-                        NombreEstudiante = e.NombreCompleto ?? string.Empty,
-                        Dni = e.Dni ?? string.Empty,
-                        NombreTp = tp.Nombre ?? string.Empty,
-                        DescripcionTp = tp.Descripcion ?? string.Empty,
-                        Entregado = subEnt != null && subEnt.Entregado,
-                        FechaEntrega = subEnt?.FechaEntrega
-                    };
+        var listaCruda = from e in estudiantes.Where(x => x.Activo)
+                         from tp in tps
+                         join ent in entregas on new { EstudianteId = e.Id, TrabajoPracticoId = tp.Id }
+                         equals new { ent.EstudianteId, ent.TrabajoPracticoId } into entregaJoin
+                         from subEnt in entregaJoin.DefaultIfEmpty()
+                         select new ReporteTpItem
+                         {
+                             EstudianteId = e.Id,
+                             TrabajoPracticoId = tp.Id,
+                             NombreEstudiante = e.NombreCompleto ?? string.Empty,
+                             Dni = e.Dni ?? string.Empty,
+                             NombreTp = tp.Nombre ?? string.Empty,
+                             DescripcionTp = tp.Descripcion ?? string.Empty,
+                             Entregado = subEnt != null && subEnt.Entregado,
+                             FechaEntrega = subEnt?.FechaEntrega
+                         };
 
-        // 1. Filtro por DNI
+        var query = listaCruda.AsQueryable();
+
         if (!string.IsNullOrWhiteSpace(dniFiltro))
         {
             string dniTrim = dniFiltro.Trim();
-            query = query.Where(x => x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) && x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
         }
 
-        // 2. Filtro por Trabajo Práctico Especifico
         if (trabajoPracticoIdFiltro.HasValue && trabajoPracticoIdFiltro.Value > 0)
         {
             query = query.Where(x => x.TrabajoPracticoId == trabajoPracticoIdFiltro.Value);
@@ -539,9 +535,8 @@ public class DatabaseService
         return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
     }
 
-   
     // ==========================================
-    // --- MÓDULO COMISIONES Y UMBRALES ---
+    // --- MÓDULO COMISIONES Y UMBRALES DE RIESGO ---
     // ==========================================
 
     public async Task<List<Comision>> GetComisionesAsync()
@@ -553,14 +548,16 @@ public class DatabaseService
     public async Task<int> GuardarUmbralesComisionAsync(Comision comision)
     {
         await InitAsync();
-        // Actualiza los umbrales de la comisión seleccionada en la base de datos usando _dbConnection
-        return await _dbConnection!.UpdateAsync(comision);
+        if (comision.Id != 0)
+        {
+            return await _dbConnection!.UpdateAsync(comision);
+        }
+        else
+        {
+            return await _dbConnection!.InsertAsync(comision);
+        }
     }
 
-
-    //==========================================
-    /// Inscribe o asigna un estudiante a una comisión específica actualizando su registro en la base de datos.
-    //==========================================
     public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
     {
         await InitAsync();
@@ -570,23 +567,16 @@ public class DatabaseService
 
         if (estudiante != null && comision != null)
         {
-            // 🚀 Asignamos el nombre de la comisión al estudiante antes de actualizar
             estudiante.Comision = comision.Nombre;
             return await _dbConnection.UpdateAsync(estudiante);
         }
         return 0;
     }
 
-
-
-    //===========================================
-    /// Guarda una clase de manera tradicional y opcionalmente asegura que su comisión quede registrada en la tabla Comision.
-    //===========================================
     public async Task<int> SaveClaseYComisionNuevaAsync(Clase clase)
     {
         await InitAsync();
 
-        // Si viene un nombre de comisión, aseguramos que exista en la tabla Comision (sin pisar el flujo viejo)
         if (!string.IsNullOrWhiteSpace(clase.Comision))
         {
             string nombreLimpio = clase.Comision.Trim();
@@ -599,7 +589,6 @@ public class DatabaseService
             }
         }
 
-        // Usamos la lógica de guardado estándar de clases
         if (clase.Id != 0)
         {
             return await _dbConnection!.UpdateAsync(clase);
@@ -609,16 +598,4 @@ public class DatabaseService
             return await _dbConnection!.InsertAsync(clase);
         }
     }
-
-    
-
-
 }
-
-
-
-
-
-
-
-

@@ -44,11 +44,14 @@ namespace App_v3.ViewModels
         }
 
         public ICommand GuardarCommand { get; }
+        public ICommand ResetDatabaseCommand { get; } // 🛠️ Comando para borrar la BD
 
         public ConfiguracionViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
             GuardarCommand = new Command(async () => await GuardarAsync());
+            ResetDatabaseCommand = new Command(async () => await BorrarBaseDeDatosAsync()); // 🛠️ Inicialización del comando
+
             _ = CargarComisionesAsync();
         }
 
@@ -128,6 +131,40 @@ namespace App_v3.ViewModels
             {
                 if (Shell.Current is not null)
                     await Shell.Current.DisplayAlert("Error", $"Ocurrió un error al guardar: {ex.Message}", "OK");
+            }
+        }
+
+        // 🛠️ Método que ejecuta el reseteo completo de SQLite y limpia la UI local
+        private async Task BorrarBaseDeDatosAsync()
+        {
+            if (Shell.Current is null) return;
+
+            bool confirmar = await Shell.Current.DisplayAlert(
+                "⚠️ Advertencia de Sistema",
+                "¿Estás seguro de restablecer la base de datos? Se borrarán todas las comisiones, alumnos y asistencias actuales para arrancar de cero.",
+                "Sí, borrar todo",
+                "Cancelar");
+
+            if (confirmar)
+            {
+                try
+                {
+                    await _databaseService.ResetDatabaseAsync();
+
+                    // Limpiamos los campos en pantalla
+                    ListaComisiones.Clear();
+                    ComisionSeleccionada = null;
+                    InasistenciasBajo = 0;
+                    InasistenciasMedio = 0;
+                    TpsBajo = 0;
+                    TpsMedio = 0;
+
+                    await Shell.Current.DisplayAlert("Éxito", "La base de datos se ha reiniciado desde cero correctamente.", "OK");
+                }
+                catch (Exception ex)
+                {
+                    await Shell.Current.DisplayAlert("Error", $"No se pudo restablecer la base de datos: {ex.Message}", "OK");
+                }
             }
         }
     }

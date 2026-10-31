@@ -1,5 +1,4 @@
 ﻿using App_v3.Models;
-using App_v3.Services;
 
 namespace App_v3.ViewModels
 {
@@ -19,7 +18,7 @@ namespace App_v3.ViewModels
         public int PorcentajeAsistencia { get; set; }
         public bool EnRiesgo => Promedio < 6.0 || PorcentajeAsistencia < 75;
 
-        // --- Nuevas propiedades para el Motor de Riesgo (H6, H8) ---
+        // --- Propiedades para el Motor de Riesgo ---
         private NivelRiesgo _nivelRiesgoEnum = NivelRiesgo.Bajo;
         public NivelRiesgo NivelRiesgoEnum
         {
@@ -41,9 +40,14 @@ namespace App_v3.ViewModels
             set { _diagnosticoRiesgo = value; OnPropertyChanged(); }
         }
 
+        // --- ALIAS DE COMPATIBILIDAD PARA EL XAML ---
+        public string ColorHex => ColorRiesgoHex;
+        public string Diagnostico => DiagnosticoRiesgo;
+        public string NivelRiesgoText => NivelRiesgoEnum.ToString().ToUpper();
+
         // --- CONSTRUCTORES ---
 
-        // Constructor original (para no romper otras pantallas que lo usen con 3 argumentos)
+        // Constructor 1: Para otras pantallas que pasen promedio y porcentaje
         public EstudianteItemViewModel(Estudiante estudiante, double promedio, int porcentajeAsistencia)
         {
             Estudiante = estudiante;
@@ -51,7 +55,7 @@ namespace App_v3.ViewModels
             PorcentajeAsistencia = porcentajeAsistencia;
         }
 
-        // Nuevo constructor requerido por el EstudianteListViewModel actualizado (H8)
+        // Constructor 2: Requerido por el EstudianteListViewModel (Riesgo personalizado)
         public EstudianteItemViewModel(Estudiante estudiante, NivelRiesgo nivelRiesgo, string colorHex, string diagnostico)
         {
             Estudiante = estudiante;
@@ -59,9 +63,16 @@ namespace App_v3.ViewModels
             _colorRiesgoHex = colorHex;
             _diagnosticoRiesgo = diagnostico;
 
-            // Valores por defecto seguros para las propiedades viejas si se inicializa desde aquí
             Promedio = 7.0;
             PorcentajeAsistencia = 85;
         }
+    }
+
+    // Definición del Enum NivelRiesgo para evitar errores de tipo no encontrado
+    public enum NivelRiesgo
+    {
+        Bajo,
+        Medio,
+        Alto
     }
 }

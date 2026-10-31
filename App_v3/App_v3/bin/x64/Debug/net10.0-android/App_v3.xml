@@ -29,21 +29,15 @@
             Obtiene los estudiantes inscriptos a una clase específica mediante la tabla puente de inscripciones.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteAsync(System.Int32,System.Int32)">
-            <summary>
-            Inscribe a un estudiante en una clase o cátedra específica evitando duplicados.
-            </summary>
-        </member>
         <member name="M:App_v3.Services.DatabaseService.InscribirEstudiantePorDniAsync(System.String,System.Int32)">
             <summary>
             Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
-            Inscribe o asigna un estudiante a una comisión específica actualizando su registro en la base de datos.
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.SaveClaseYComisionNuevaAsync(App_v3.Models.Clase)">
-            Guarda una clase de manera tradicional y opcionalmente asegura que su comisión quede registrada en la tabla Comision.
+        <member name="M:App_v3.Services.DatabaseService.ObtenerReporteAsistenciasAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Obtiene el reporte de asistencias filtrado por DNI, Comisión y Rango de Fechas de forma segura.
+            </summary>
         </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
@@ -66,28 +60,6 @@
             <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ConfiguracionViewModel.ComisionSeleccionada"/> just changed.</summary>
             <param name="value">The new property value that was set.</param>
             <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ConfiguracionViewModel.ComisionSeleccionada"/> is changed.</remarks>
-        </member>
-        <member name="M:App_v3.ViewModels.EstudianteListViewModel.CargarEstudiantesAsync">
-            <summary>
-            Método de compatibilidad requerido por el code-behind de la vista (EstudianteListPage.xaml.cs).
-            Redirige al flujo de filtrado y cálculo de riesgo por comisión.
-            </summary>
-        </member>
-        <member name="M:App_v3.ViewModels.EstudianteListViewModel.FiltrarYCalcularRiesgoPorComisionAsync">
-            <summary>
-            Filtra los estudiantes por la comisión seleccionada utilizando el servicio oficial 
-            y evalúa su riesgo usando los umbrales específicos de esa comisión, ordenándolos por gravedad.
-            </summary>
-        </member>
-        <member name="M:App_v3.ViewModels.EstudianteListViewModel.ObtenerPesoGravedad(App_v3.Services.NivelRiesgo)">
-            <summary>
-            Asigna un peso numérico al nivel de riesgo para ordenarlos de mayor a menor gravedad.
-            </summary>
-        </member>
-        <member name="M:App_v3.ViewModels.EstudianteListViewModel.CalcularRiesgoPersonalizado(System.Int32,System.Int32,App_v3.Models.Comision)">
-            <summary>
-            Evalúa el riesgo comparando las inasistencias y TPs del alumno con los umbrales de la comisión.
-            </summary>
         </member>
         <member name="T:App_v3.ViewModels.GestionPersonasMenuViewModel">
             <inheritdoc/>

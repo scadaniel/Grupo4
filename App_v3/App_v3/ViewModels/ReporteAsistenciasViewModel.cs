@@ -2,22 +2,30 @@
 using System.Windows.Input;
 using App_v3.Models;
 using App_v3.Services;
-using App_v3.Views;
 
 namespace App_v3.ViewModels;
 
 public class ReporteAsistenciasViewModel : BindableObject
 {
     private readonly DatabaseService _databaseService;
+    private bool _isBusy;
 
-    public ObservableCollection<Clase> Clases { get; set; } = new();
+    public ObservableCollection<Comision> Comisiones { get; set; } = new();
     public ObservableCollection<ReporteAsistenciaItem> ListaReporte { get; set; } = new();
 
-    private Clase? _claseSeleccionada;
-    public Clase? ClaseSeleccionada
+    private Comision? _comisionSeleccionada;
+    public Comision? ComisionSeleccionada
     {
-        get => _claseSeleccionada;
-        set { _claseSeleccionada = value; OnPropertyChanged(); }
+        get => _comisionSeleccionada;
+        set
+        {
+            if (_comisionSeleccionada != value)
+            {
+                _comisionSeleccionada = value;
+                OnPropertyChanged();
+                _ = CargarReporteAsync(); // Filtra automáticamente al cambiar de comisión
+            }
+        }
     }
 
     private string _dniFiltro = string.Empty;
@@ -27,31 +35,44 @@ public class ReporteAsistenciasViewModel : BindableObject
         set { _dniFiltro = value; OnPropertyChanged(); }
     }
 
-    private DateTime _fechaInicio = DateTime.Today.AddMonths(-2);
+    private DateTime _fechaInicio = DateTime.Today.AddMonths(-6);
     public DateTime FechaInicio
     {
         get => _fechaInicio;
-        set { _fechaInicio = value; OnPropertyChanged(); }
+        set
+        {
+            if (_fechaInicio != value)
+            {
+                _fechaInicio = value;
+                OnPropertyChanged();
+                _ = CargarReporteAsync(); // Filtra automáticamente al cambiar fecha inicio
+            }
+        }
     }
 
-    private DateTime _fechaFin = DateTime.Today;
+    private DateTime _fechaFin = DateTime.Today.AddDays(1);
     public DateTime FechaFin
     {
         get => _fechaFin;
-        set { _fechaFin = value; OnPropertyChanged(); }
+        set
+        {
+            if (_fechaFin != value)
+            {
+                _fechaFin = value;
+                OnPropertyChanged();
+                _ = CargarReporteAsync(); // Filtra automáticamente al cambiar fecha fin
+            }
+        }
     }
 
     public ICommand BuscarCommand { get; }
-    public ICommand LimpiarFiltrosCommand { get; }
     public ICommand VolverAlMenuCommand { get; }
 
     public ReporteAsistenciasViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
-        BuscarCommand = new Command(async () => await CargarReporteAsync());
-        LimpiarFiltrosCommand = new Command(async () => await LimpiarFiltrosAsync());
 
-        // Inicializamos el comando de retorno absoluto al menú de reportes
+        BuscarCommand = new Command(async () => await CargarReporteAsync());
         VolverAlMenuCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
 
         _ = InicializarAsync();
@@ -59,44 +80,83 @@ public class ReporteAsistenciasViewModel : BindableObject
 
     private async Task InicializarAsync()
     {
-        await CargarClasesAsync();
-        await CargarReporteAsync();
+        if (_isBusy) return;
+        _isBusy = true;
+
+        try
+        {
+            await CargarComisionesAsync();
+            await CargarReporteAsync();
+        }
+        finally
+        {
+            _isBusy = false;
+        }
     }
 
-    private async Task CargarClasesAsync()
+    private async Task CargarComisionesAsync()
     {
-        var clases = await _databaseService.GetClasesAsync();
-        Clases.Clear();
-
-        // Opción comodín para ver todas las clases
-        Clases.Add(new Clase { Id = 0, NombreMateria = "Todas las clases / comisiones", Comision = "General" });
-
-        foreach (var c in clases)
+        try
         {
-            Clases.Add(c);
+            var comisionesDb = await _databaseService.GetComisionesAsync();
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                Comisiones.Clear();
+                Comisiones.Add(new Comision { Id = 0, Nombre = "Todas las comisiones" });
+
+                if (comisionesDb != null)
+                {
+                    foreach (var com in comisionesDb)
+                    {
+                        Comisiones.Add(com);
+                    }
+                }
+
+                if (Comisiones.Count > 0 && ComisionSeleccionada == null)
+                {
+                    ComisionSeleccionada = Comisiones.First();
+                }
+            });
         }
-        ClaseSeleccionada = Clases.First();
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Error al cargar comisiones]: {ex.Message}");
+        }
     }
 
     public async Task CargarReporteAsync()
     {
-        int? claseId = (ClaseSeleccionada != null && ClaseSeleccionada.Id > 0) ? ClaseSeleccionada.Id : (int?)null;
+        if (_isBusy) return;
+        _isBusy = true;
 
-        var resultados = await _databaseService.ObtenerReporteAsistenciasAsync(DniFiltro, claseId, FechaInicio, FechaFin);
-
-        ListaReporte.Clear();
-        foreach (var item in resultados)
+        try
         {
-            ListaReporte.Add(item);
-        }
-    }
+            // Extraemos el nombre de la comisión si se seleccionó una válida (Id > 0)
+            string? comisionFiltro = (ComisionSeleccionada != null && ComisionSeleccionada.Id > 0) ? ComisionSeleccionada.Nombre : null;
 
-    private async Task LimpiarFiltrosAsync()
-    {
-        DniFiltro = string.Empty;
-        if (Clases.Count > 0) ClaseSeleccionada = Clases.First();
-        FechaInicio = DateTime.Today.AddMonths(-2);
-        FechaFin = DateTime.Today;
-        await CargarReporteAsync();
+            // Se pasa el comisionFiltro (string?) como segundo parámetro en lugar de un int?
+            var resultados = await _databaseService.ObtenerReporteAsistenciasAsync(DniFiltro, comisionFiltro, FechaInicio, FechaFin);
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                ListaReporte.Clear();
+                if (resultados != null)
+                {
+                    foreach (var item in resultados)
+                    {
+                        ListaReporte.Add(item);
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Error al cargar reporte]: {ex.Message}");
+        }
+        finally
+        {
+            _isBusy = false;
+        }
     }
 }
