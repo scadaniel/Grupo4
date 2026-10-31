@@ -8,8 +8,22 @@
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <Label Text="Parámetros de Riesgo (H7)" FontSize="20" FontAttributes="Bold" />
-            <Label Text="Define los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
+            <Label Text="Seleccione la comisión y defina los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
                    TextColor="Gray" FontSize="14" />
+
+            <!-- Sección Selector de Comisión -->
+            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Stroke="#E0E0E0">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="SELECCIONE LA COMISIÓN A CONFIGURAR" FontAttributes="Bold" FontSize="15" TextColor="#1976D2" />
+
+                    <Picker ItemsSource="{Binding ListaComisiones}"
+                            SelectedItem="{Binding ComisionSeleccionada}"
+                            ItemDisplayBinding="{Binding Nombre}"
+                            Title="Elija una comisión..."
+                            FontSize="15"
+                            BackgroundColor="#F9F9F9" />
+                </VerticalStackLayout>
+            </Border>
 
             <!-- Sección Inasistencias -->
             <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">

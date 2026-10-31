@@ -10,11 +10,24 @@ namespace App_v3.ViewModels
         private readonly DatabaseService _databaseService;
 
         public ObservableCollection<EstudianteItemViewModel> Estudiantes { get; set; } = new();
-
-        // 🚀 NUEVO: Colección para llenar el Picker de comisiones en la vista
         public ObservableCollection<Comision> ListaComisiones { get; set; } = new();
 
-        // 🚀 NUEVO: Propiedad para el estudiante seleccionado en la lista
+        private Comision? _comisionSeleccionada;
+        public Comision? ComisionSeleccionada
+        {
+            get => _comisionSeleccionada;
+            set
+            {
+                if (_comisionSeleccionada != value)
+                {
+                    _comisionSeleccionada = value;
+                    OnPropertyChanged();
+                    // Al cambiar de comisión, recalculamos y filtramos los alumnos automáticamente
+                    _ = FiltrarYCalcularRiesgoPorComisionAsync();
+                }
+            }
+        }
+
         private EstudianteItemViewModel? _estudianteSeleccionado;
         public EstudianteItemViewModel? EstudianteSeleccionado
         {
@@ -29,47 +42,29 @@ namespace App_v3.ViewModels
             }
         }
 
-        // 🚀 NUEVO: Propiedad para la comisión seleccionada en el Picker
-        private Comision? _comisionSeleccionada;
-        public Comision? ComisionSeleccionada
-        {
-            get => _comisionSeleccionada;
-            set
-            {
-                if (_comisionSeleccionada != value)
-                {
-                    _comisionSeleccionada = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ICommand CargarEstudiantesCommand { get; }
-        public ICommand SeedEstudiantesCommand { get; }
+        public ICommand CargarComisionesCommand { get; }
         public ICommand ResetDatabaseCommand { get; }
-
-        // 🚀 NUEVO: Comando enlazado al botón "Inscribir" de tu interfaz
-        public ICommand InscribirCommand { get; }
 
         public EstudianteListViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
 
-            CargarEstudiantesCommand = new Command(async () => await CargarEstudiantesAsync());
-            SeedEstudiantesCommand = new Command(async () => await CargarSeedDataAsync());
+            CargarComisionesCommand = new Command(async () => await CargarComisionesAsync());
             ResetDatabaseCommand = new Command(async () => await BorrarBaseDeDatosAsync());
 
-            // Inicializamos el comando de inscripción
-            InscribirCommand = new Command(async () => await InscribirEstudianteAsync());
-
-            // Cargamos datos al iniciar
-            _ = CargarDatosInicialesAsync();
+            // Inicializamos cargando las comisiones
+            _ = InicializarVistaAsync();
         }
 
-        private async Task CargarDatosInicialesAsync()
+        private async Task InicializarVistaAsync()
         {
-            await CargarEstudiantesAsync();
             await CargarComisionesAsync();
+
+            // Si hay comisiones, seleccionamos la primera por defecto para que la vista no arranque vacía
+            if (ListaComisiones.Count > 0 && ComisionSeleccionada == null)
+            {
+                ComisionSeleccionada = ListaComisiones[0];
+            }
         }
 
         public async Task CargarComisionesAsync()
@@ -78,10 +73,14 @@ namespace App_v3.ViewModels
             {
                 ListaComisiones.Clear();
                 var comisiones = await _databaseService.GetComisionesAsync();
-                foreach (var com in comisiones)
+                if (comisiones != null)
                 {
-                    ListaComisiones.Add(com);
+                    foreach (var com in comisiones)
+                    {
+                        ListaComisiones.Add(com);
+                    }
                 }
+                System.Diagnostics.Debug.WriteLine($"[Comisiones Cargadas]: {ListaComisiones.Count} comisiones encontradas.");
             }
             catch (Exception ex)
             {
@@ -89,127 +88,145 @@ namespace App_v3.ViewModels
             }
         }
 
-        // 🚀 NUEVO: Lógica que valida y ejecuta la inscripción evitando el error que te salía
-        private async Task InscribirEstudianteAsync()
-        {
-            if (EstudianteSeleccionado == null || ComisionSeleccionada == null)
-            {
-                await Application.Current!.MainPage!.DisplayAlert("Atención", "Seleccione un estudiante y una comisión.", "OK");
-                return;
-            }
-
-            try
-            {
-                // Dependiendo de cómo tengas nombrada la propiedad interna en EstudianteItemViewModel, 
-                // probamos accediendo al modelo o actualizando su propiedad de comisión directamente:
-
-                // Opción A: Si EstudianteItemViewModel guarda la entidad en una propiedad llamada "Estudiante" o similar,
-                // o si prefieres buscar el estudiante original por ID o Legajo en la base de datos:
-
-                // Buscamos el estudiante real en la base de datos usando el Legajo o Nombre del item seleccionado
-                var listaBase = await _databaseService.GetEstudiantesAsync();
-                var estudianteReal = listaBase.FirstOrDefault(e => e.NombreCompleto == EstudianteSeleccionado.NombreCompleto);
-                // (O si tu EstudianteItemViewModel tiene otra propiedad de identificación, la usamos aquí)
-
-                if (estudianteReal != null)
-                {
-                    estudianteReal.Comision = ComisionSeleccionada.Nombre;
-                    await _databaseService.SaveEstudianteAsync(estudianteReal);
-
-                    await Application.Current.MainPage.DisplayAlert("Éxito", $"Estudiante {estudianteReal.NombreCompleto} asignado a {ComisionSeleccionada.Nombre} correctamente.", "OK");
-
-                    // Refrescamos la lista
-                    await CargarEstudiantesAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current!.MainPage!.DisplayAlert("Error", $"No se pudo realizar la inscripción: {ex.Message}", "OK");
-            }
-        }
+        /// <summary>
+        /// Método de compatibilidad requerido por el code-behind de la vista (EstudianteListPage.xaml.cs).
+        /// Redirige al flujo de filtrado y cálculo de riesgo por comisión.
+        /// </summary>
         public async Task CargarEstudiantesAsync()
         {
+            await CargarComisionesAsync();
+            await FiltrarYCalcularRiesgoPorComisionAsync();
+        }
+
+        /// <summary>
+        /// Filtra los estudiantes por la comisión seleccionada utilizando el servicio oficial 
+        /// y evalúa su riesgo usando los umbrales específicos de esa comisión, ordenándolos por gravedad.
+        /// </summary>
+        public async Task FiltrarYCalcularRiesgoPorComisionAsync()
+        {
             try
             {
-                var listaBase = await _databaseService.GetEstudiantesAsync();
                 Estudiantes.Clear();
+
+                if (ComisionSeleccionada == null || string.IsNullOrWhiteSpace(ComisionSeleccionada.Nombre))
+                {
+                    System.Diagnostics.Debug.WriteLine("[Riesgo]: No hay comisión seleccionada o su nombre es nulo.");
+                    return;
+                }
+
+                string nombreComision = ComisionSeleccionada.Nombre.Trim();
+                System.Diagnostics.Debug.WriteLine($"[Riesgo]: Buscando alumnos para la comisión '{nombreComision}'...");
+
+                // Obtenemos los estudiantes usando el método oficial del servicio (igual que TomaAsistenciaViewModel)
+                var alumnosDeComision = await _databaseService.GetEstudiantesPorComisionAsync(nombreComision);
+
+                if (alumnosDeComision == null || !alumnosDeComision.Any())
+                {
+                    System.Diagnostics.Debug.WriteLine($"[Riesgo]: No se encontraron alumnos asociados a la comisión '{nombreComision}'.");
+                    return;
+                }
 
                 var listaTemporal = new List<EstudianteItemViewModel>();
 
-                foreach (var est in listaBase)
+                foreach (var est in alumnosDeComision)
                 {
                     int inasistencias = est.Inasistencias;
                     int tpsNoEntregados = est.TpsNoEntregados;
 
-                    var resultadoRiesgo = RiesgoService.CalcularRiesgo(inasistencias, tpsNoEntregados);
-                    var itemVm = new EstudianteItemViewModel(est, resultadoRiesgo.Nivel, resultadoRiesgo.ColorHex, resultadoRiesgo.Diagnostico);
+                    // Evaluamos el riesgo utilizando los umbrales personalizados de la comisión actual
+                    var resultadoRiesgo = CalcularRiesgoPersonalizado(inasistencias, tpsNoEntregados, ComisionSeleccionada);
+
+                    var itemVm = new EstudianteItemViewModel(
+                        est,
+                        resultadoRiesgo.NivelEnum,
+                        resultadoRiesgo.ColorHex,
+                        resultadoRiesgo.Diagnostico
+                    );
 
                     listaTemporal.Add(itemVm);
                 }
 
+                // Ordenar de mayor gravedad a menor gravedad (Alto -> Medio -> Bajo) y luego alfabéticamente
                 var listaOrdenada = listaTemporal
-                    .OrderByDescending(x => x.NivelRiesgoEnum)
+                    .OrderByDescending(x => ObtenerPesoGravedad(x.NivelRiesgoEnum))
                     .ThenBy(x => x.NombreCompleto);
 
                 foreach (var item in listaOrdenada)
                 {
                     Estudiantes.Add(item);
                 }
+
+                System.Diagnostics.Debug.WriteLine($"[Riesgo]: Se cargaron y evaluaron {Estudiantes.Count} estudiantes con éxito.");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[DB Error]: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[Error Filtrado Riesgo]: {ex.Message}");
             }
         }
 
-        public async Task CargarSeedDataAsync()
+        /// <summary>
+        /// Asigna un peso numérico al nivel de riesgo para ordenarlos de mayor a menor gravedad.
+        /// </summary>
+        private int ObtenerPesoGravedad(NivelRiesgo nivelRiesgo)
         {
-            try
+            return nivelRiesgo switch
             {
-                await _databaseService.ResetDatabaseAsync();
+                NivelRiesgo.Alto => 3,
+                NivelRiesgo.Medio => 2,
+                NivelRiesgo.Bajo => 1,
+                _ => 0
+            };
+        }
 
-                var clasesEjemplo = new[]
-                {
-                    new Clase { NombreMateria = "Robótica y Automatización", Comision = "1K1" },
-                    new Clase { NombreMateria = "Microcontroladores PIC", Comision = "2K1" },
-                    new Clase { NombreMateria = "Sistemas de Control de Acceso", Comision = "3K1" }
-                };
+        /// <summary>
+        /// Evalúa el riesgo comparando las inasistencias y TPs del alumno con los umbrales de la comisión.
+        /// </summary>
+        private (string NivelTexto, NivelRiesgo NivelEnum, string ColorHex, string Diagnostico) CalcularRiesgoPersonalizado(int inasistencias, int tpsNoEntregados, Comision comision)
+        {
+            int limiteInasBajo = comision.InasistenciasBajo;
+            int limiteInasMedio = comision.InasistenciasMedio;
+            int limiteTpsBajo = comision.TpsBajo;
+            int limiteTpsMedio = comision.TpsMedio;
 
-                foreach (var clase in clasesEjemplo)
-                {
-                    await _databaseService.SaveClaseYComisionNuevaAsync(clase);
-                }
+            bool inasAlto = inasistencias > limiteInasMedio;
+            bool inasMedio = inasistencias > limiteInasBajo && inasistencias <= limiteInasMedio;
 
-                var nombres = new[] { "Juan", "María", "Carlos", "Ana", "Lucas", "Sofía", "Mateo", "Lucía", "Diego", "Elena" };
-                var apellidos = new[] { "Pérez", "Gómez", "Rodríguez", "López", "Martínez", "Sánchez", "Fernández", "Díaz", "Álvarez", "Torres" };
+            bool tpsAlto = tpsNoEntregados > limiteTpsMedio;
+            bool tpsMedio = tpsNoEntregados > limiteTpsBajo && tpsNoEntregados <= limiteTpsMedio;
 
-                var random = new Random(12345);
+            string nivelTexto;
+            NivelRiesgo nivelEnum;
+            string colorHex;
+            List<string> razones = new();
 
-                for (int i = 1; i <= 20; i++)
-                {
-                    string nom = nombres[random.Next(nombres.Length)];
-                    string ape = apellidos[random.Next(apellidos.Length)];
-
-                    var estudiante = new Estudiante
-                    {
-                        Legajo = $"LEG-{2000 + i}",
-                        NombreCompleto = $"{nom} {ape}",
-                        Email = $"{nom.ToLower()}.{ape.ToLower()}{i}@escuela.edu.ar",
-                        Inasistencias = random.Next(0, 6),
-                        TpsNoEntregados = random.Next(0, 4),
-                        Comision = "1K1"
-                    };
-
-                    await _databaseService.SaveEstudianteAsync(estudiante);
-                }
-
-                await CargarDatosInicialesAsync();
-                System.Diagnostics.Debug.WriteLine("[Seed Exitoso]: Clases y Estudiantes cargados correctamente.");
-            }
-            catch (Exception ex)
+            if (inasAlto || tpsAlto)
             {
-                System.Diagnostics.Debug.WriteLine($"[Seed Error]: {ex.Message}");
+                nivelTexto = "ALTO";
+                nivelEnum = NivelRiesgo.Alto;
+                colorHex = "#D32F2F"; // Rojo fuerte de alerta
+
+                if (inasAlto) razones.Add($"Inasistencias críticas ({inasistencias} > límite medio {limiteInasMedio})");
+                if (tpsAlto) razones.Add($"Exceso grave de TPs sin entregar ({tpsNoEntregados} > límite medio {limiteTpsMedio})");
             }
+            else if (inasMedio || tpsMedio)
+            {
+                nivelTexto = "MEDIO";
+                nivelEnum = NivelRiesgo.Medio;
+                colorHex = "#F57C00"; // Amarillo / Naranja de precaución
+
+                if (inasMedio) razones.Add($"Inasistencias moderadas ({inasistencias} en rango {limiteInasBajo}-{limiteInasMedio})");
+                if (tpsMedio) razones.Add($"TPs pendientes moderados ({tpsNoEntregados} en rango {limiteTpsBajo}-{limiteTpsMedio})");
+            }
+            else
+            {
+                nivelTexto = "BAJO";
+                nivelEnum = NivelRiesgo.Bajo;
+                colorHex = "#388E3C"; // Verde institucional de normalidad
+                razones.Add("Cumple con los parámetros normales de asistencia y entrega de TPs.");
+            }
+
+            string diagnostico = string.Join(" • ", razones);
+            return (nivelTexto, nivelEnum, colorHex, diagnostico);
         }
 
         public async Task BorrarBaseDeDatosAsync()

@@ -539,15 +539,22 @@ public class DatabaseService
         return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
     }
 
+   
     // ==========================================
-    // --- MÓDULO COMISIONES (MENÚ PERSONAS) ---
+    // --- MÓDULO COMISIONES Y UMBRALES ---
     // ==========================================
 
     public async Task<List<Comision>> GetComisionesAsync()
     {
         await InitAsync();
-        // Usamos _dbConnection! tal como el resto de los métodos de tu clase
         return await _dbConnection!.Table<Comision>().ToListAsync();
+    }
+
+    public async Task<int> GuardarUmbralesComisionAsync(Comision comision)
+    {
+        await InitAsync();
+        // Actualiza los umbrales de la comisión seleccionada en la base de datos usando _dbConnection
+        return await _dbConnection!.UpdateAsync(comision);
     }
 
 
@@ -602,6 +609,8 @@ public class DatabaseService
             return await _dbConnection!.InsertAsync(clase);
         }
     }
+
+    
 
 
 }

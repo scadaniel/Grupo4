@@ -56,6 +56,39 @@
             (Tu método original intacto)
             </summary>
         </member>
+        <member name="T:App_v3.ViewModels.ConfiguracionViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:App_v3.ViewModels.ConfiguracionViewModel.ComisionSeleccionada">
+            <inheritdoc cref="F:App_v3.ViewModels.ConfiguracionViewModel._comisionSeleccionada"/>
+        </member>
+        <member name="M:App_v3.ViewModels.ConfiguracionViewModel.OnComisionSeleccionadaChanged(App_v3.Models.Comision)">
+            <summary>Executes the logic for when <see cref="P:App_v3.ViewModels.ConfiguracionViewModel.ComisionSeleccionada"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:App_v3.ViewModels.ConfiguracionViewModel.ComisionSeleccionada"/> is changed.</remarks>
+        </member>
+        <member name="M:App_v3.ViewModels.EstudianteListViewModel.CargarEstudiantesAsync">
+            <summary>
+            Método de compatibilidad requerido por el code-behind de la vista (EstudianteListPage.xaml.cs).
+            Redirige al flujo de filtrado y cálculo de riesgo por comisión.
+            </summary>
+        </member>
+        <member name="M:App_v3.ViewModels.EstudianteListViewModel.FiltrarYCalcularRiesgoPorComisionAsync">
+            <summary>
+            Filtra los estudiantes por la comisión seleccionada utilizando el servicio oficial 
+            y evalúa su riesgo usando los umbrales específicos de esa comisión, ordenándolos por gravedad.
+            </summary>
+        </member>
+        <member name="M:App_v3.ViewModels.EstudianteListViewModel.ObtenerPesoGravedad(App_v3.Services.NivelRiesgo)">
+            <summary>
+            Asigna un peso numérico al nivel de riesgo para ordenarlos de mayor a menor gravedad.
+            </summary>
+        </member>
+        <member name="M:App_v3.ViewModels.EstudianteListViewModel.CalcularRiesgoPersonalizado(System.Int32,System.Int32,App_v3.Models.Comision)">
+            <summary>
+            Evalúa el riesgo comparando las inasistencias y TPs del alumno con los umbrales de la comisión.
+            </summary>
+        </member>
         <member name="T:App_v3.ViewModels.GestionPersonasMenuViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -159,14 +192,14 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ComisionSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroApellido">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiltroDni">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiltroDni" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ComisionSeleccionada">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nombre">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nombre" generated properties.</summary>
@@ -189,14 +222,14 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ComisionSeleccionada">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroApellido">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroApellido" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiltroDni">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiltroDni" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ComisionSeleccionada">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ComisionSeleccionada" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nombre">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nombre" generated properties.</summary>

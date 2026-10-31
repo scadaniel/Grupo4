@@ -28,7 +28,7 @@
     <AppXManifest Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2026-10-30T18:20:08.109</Modified>
+      <Modified>2026-10-30T21:53:37.804</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -42,11 +42,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\App_v3.dll">
       <PackagePath>App_v3.dll</PackagePath>
-      <Modified>2026-10-30T18:20:07.241</Modified>
+      <Modified>2026-10-30T21:53:36.919</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\apphost.exe">
       <PackagePath>App_v3.exe</PackagePath>
-      <Modified>2026-10-30T18:20:07.293</Modified>
+      <Modified>2026-10-30T21:53:36.945</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
