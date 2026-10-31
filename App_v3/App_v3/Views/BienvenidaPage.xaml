@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.BienvenidaPage"
+            Title="Inicio">
+
+    <!-- Usamos un Grid para superponer la imagen de fondo y los elementos -->
+    <Grid>
+        <!-- Imagen de fondo ocupando toda la pantalla -->
+        <Image Source="fondo2.png" 
+               Aspect="AspectFill" />
+
+        <!-- 2. Velo o capa semitransparente para bajarle la intensidad/nitidez al fondo -->
+        <!-- Si tu fondo es claro, usa Color="White" Opacity="0.6". Si es oscuro, usa Color="Black" Opacity="0.5" -->
+        <BoxView Color="Black" Opacity="0.5" />
+
+        <!-- 3. Contenido principal centrado -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="30" VerticalOptions="Center">
+
+                <!-- Textos principales -->
+                <Label Text="Bienvenido al sistema de gestión de Estudiantes" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="White"
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" />
+
+                <Label Text="Sistema de alerta temprana" 
+                       FontSize="18" 
+                       TextColor="#E2E8F0" 
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" />
+
+                <BoxView HeightRequest="10" Color="Transparent" />
+
+                <Label Text="Seleccione su usuario correspondiente" 
+                       FontSize="16" 
+                       FontAttributes="Italic"
+                       TextColor="#CBD5E1"
+                       HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" />
+
+                <!-- Espaciador -->
+                <BoxView HeightRequest="15" Color="Transparent" />
+
+                <!-- Botón Responsable de la comisión -->
+                <Button Text="Responsable de la comisión" 
+                        FontSize="16"
+                        Padding="15,12"
+                        BackgroundColor="#1E40AF"
+                        TextColor="White"
+                        CornerRadius="22"
+                        WidthRequest="300"
+                        HorizontalOptions="Center"
+                        Clicked="OnResponsableClicked" />
+
+                <!-- Botón Estudiante -->
+                <Button Text="Estudiante" 
+                        FontSize="16"
+                        Padding="15,12"
+                        BackgroundColor="#1E40AF"
+                        TextColor="White"
+                        CornerRadius="22"
+                        WidthRequest="300"
+                        HorizontalOptions="Center"
+                        Clicked="OnEstudianteClicked" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
