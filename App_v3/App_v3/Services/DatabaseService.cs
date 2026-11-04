@@ -617,14 +617,26 @@ public class DatabaseService
                 {
                     string? linea = reader.ReadLine()?.Trim();
 
-                    if (string.IsNullOrWhiteSpace(linea) || linea.StartsWith("#"))
+                    // Ignorar líneas totalmente vacías
+                    if (string.IsNullOrWhiteSpace(linea))
                         continue;
 
-                    if (linea.StartsWith("[") && linea.EndsWith("]"))
+                    // Detección flexible de secciones (soporta [seccion] y comentarios # --- SECCION ---)
+                    string lineaUpper = linea.ToUpper();
+                    if ((linea.StartsWith("[") && linea.EndsWith("]")) || lineaUpper.Contains("---"))
                     {
-                        seccionActual = linea.Substring(1, linea.Length - 2).Trim();
+                        if (lineaUpper.Contains("COMISIONES")) seccionActual = "comisiones";
+                        else if (lineaUpper.Contains("ESTUDIANTES")) seccionActual = "estudiantes";
+                        else if (lineaUpper.Contains("CLASES")) seccionActual = "clases";
+                        else if (lineaUpper.Contains("TRABAJOS_PRACTICOS") || lineaUpper.Contains("TPS")) seccionActual = "trabajospracticos";
+                        else if (lineaUpper.Contains("ASISTENCIAS")) seccionActual = "asistencias";
+                        else if (lineaUpper.Contains("ENTREGAS_TP")) seccionActual = "entregasp";
                         continue;
                     }
+
+                    // Ignorar líneas de comentarios explicativos con #
+                    if (linea.StartsWith("#"))
+                        continue;
 
                     var datos = linea.Split(';');
                     if (datos.Length < 2) continue;
@@ -663,79 +675,72 @@ public class DatabaseService
                                     TpsNoEntregados = int.Parse(datos[7])
                                 };
                                 db.Insert(est);
-
-                                var partes = est.NombreCompleto.Split(' ', 2);
-                                db.Insert(new Persona
-                                {
-                                    Nombre = partes[0],
-                                    Apellido = partes.Length > 1 ? partes[1] : "",
-                                    Legajo = est.Legajo,
-                                    Email = est.Email,
-                                    Telefono = est.Telefono,
-                                    Rol = "Estudiante"
-                                });
-
                                 registrosProcesados++;
                             }
                             break;
 
                         case "clases":
+                            // Tu TXT: NombreMateria;Comision;Fecha(yyyy-MM-dd);NumeroClase;Tema
                             if (datos.Length >= 5)
                             {
-                                var clase = new Clase
+                                var cls = new Clase
                                 {
                                     NombreMateria = datos[0].Trim(),
                                     Comision = datos[1].Trim(),
-                                    Fecha = DateTime.Parse(datos[2].Trim()),
+                                    Fecha = DateTime.TryParse(datos[2], out var fClase) ? fClase : DateTime.Today,
                                     NumeroClase = int.Parse(datos[3]),
                                     Tema = datos[4].Trim()
                                 };
-                                db.Insert(clase);
-                                registrosProcesados++;
-                            }
-                            break;
-
-                        case "asistencias":
-                            if (datos.Length >= 5)
-                            {
-                                var asistencia = new Asistencia
-                                {
-                                    ClaseId = int.Parse(datos[0]),
-                                    EstudianteId = int.Parse(datos[1]),
-                                    Presente = datos[2].Trim() == "1" || datos[2].Trim().ToLower() == "true",
-                                    Justificada = datos[3].Trim() == "1" || datos[3].Trim().ToLower() == "true",
-                                    Fecha = DateTime.Parse(datos[4].Trim())
-                                };
-                                db.Insert(asistencia);
+                                db.Insert(cls);
                                 registrosProcesados++;
                             }
                             break;
 
                         case "trabajospracticos":
+                            // Tu TXT: Nombre;Descripcion;FechaLimite(yyyy-MM-dd)
                             if (datos.Length >= 3)
                             {
                                 var tp = new TrabajoPractico
                                 {
                                     Nombre = datos[0].Trim(),
                                     Descripcion = datos[1].Trim(),
-                                    FechaLimite = DateTime.Parse(datos[2].Trim())
+                                    FechaLimite = DateTime.TryParse(datos[2], out var fTp) ? fTp : DateTime.Today.AddDays(5)
                                 };
                                 db.Insert(tp);
                                 registrosProcesados++;
                             }
                             break;
 
-                        case "entregastp":
+                        case "asistencias":
+                            // Tu TXT: ClaseId;EstudianteId;Presente(1/0);Justificada(1/0);Fecha(yyyy-MM-dd)
+                            if (datos.Length >= 5)
+                            {
+                                var ast = new Asistencia
+                                {
+                                    ClaseId = int.Parse(datos[0]),
+                                    EstudianteId = int.Parse(datos[1]),
+                                    Presente = datos[2].Trim() == "1",
+                                    Justificada = datos[3].Trim() == "1",
+                                    Fecha = DateTime.TryParse(datos[4], out var fAst) ? fAst : DateTime.Today
+                                };
+                                db.Insert(ast);
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "entregasp":
+                            // Tu TXT: TrabajoPracticoId;EstudianteId;Entregado(1/0);FechaEntrega(yyyy-MM-dd)
                             if (datos.Length >= 4)
                             {
-                                var entrega = new EntregaTp
+                                bool entregado = datos[2].Trim() == "1";
+                                var ent = new EntregaTp
                                 {
                                     TrabajoPracticoId = int.Parse(datos[0]),
                                     EstudianteId = int.Parse(datos[1]),
-                                    Entregado = datos[2].Trim() == "1" || datos[2].Trim().ToLower() == "true",
-                                    FechaEntrega = !string.IsNullOrWhiteSpace(datos[3]) ? DateTime.Parse(datos[3].Trim()) : null
+                                    Entregado = entregado,
+                                    FechaEntrega = (entregado && DateTime.TryParse(datos[3], out var fEnt)) ? fEnt : null
                                 };
-                                db.Insert(entrega);
+                                db.Insert(ent);
                                 registrosProcesados++;
                             }
                             break;
@@ -746,7 +751,6 @@ public class DatabaseService
 
         return registrosProcesados;
     }
-
 
     /// <summary>
     /// Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
