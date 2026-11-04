@@ -3,6 +3,7 @@ using App_v3.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions; // 👈 Importado para validar formato de Email
 using System.Windows.Input;
 
 namespace App_v3.ViewModels;
@@ -130,6 +131,7 @@ public class GestionPersonasViewModel : INotifyPropertyChanged
 
     private async Task GuardarRegistro()
     {
+        // 1. Validación de Nombre Completo obligatorio
         if (string.IsNullOrWhiteSpace(NombreCompleto))
         {
             if (Shell.Current is not null)
@@ -137,29 +139,57 @@ public class GestionPersonasViewModel : INotifyPropertyChanged
             return;
         }
 
+        // 2. Validación obligatoria de formato de Email con Regex
+        string emailTrim = Email?.Trim() ?? string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(emailTrim))
+        {
+            string patronEmail = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+            if (!Regex.IsMatch(emailTrim, patronEmail, RegexOptions.IgnoreCase))
+            {
+                if (Shell.Current is not null)
+                {
+                    await Shell.Current.DisplayAlert(
+                        "Email inválido",
+                        "Por favor, ingresa una dirección de correo electrónico válida (ejemplo: usuario@dominio.com).",
+                        "OK");
+                }
+                return;
+            }
+        }
+        else
+        {
+            if (Shell.Current is not null)
+            {
+                await Shell.Current.DisplayAlert("Atención", "El campo de correo electrónico es obligatorio y debe ser válido.", "OK");
+            }
+            return;
+        }
+
         var partes = NombreCompleto.Trim().Split(' ', 2);
         string nombre = partes[0];
         string apellido = partes.Length > 1 ? partes[1] : string.Empty;
 
-        // 1. Guardar en la tabla Persona general
+        // 3. Guardar en la tabla Persona general
         var nuevaPersona = new Persona
         {
             Nombre = nombre,
             Apellido = apellido,
-            Email = Email,
+            Email = emailTrim,
             Legajo = CampoSecundario,
             Rol = _modoActual
         };
 
         await _databaseService.SavePersonaAsync(nuevaPersona);
 
-        // 2. Si es Estudiante, guardamos también en la tabla Estudiante para habilitar la inscripción por DNI
+        // 4. Si es Estudiante, guardamos también en la tabla Estudiante para habilitar la inscripción por DNI
         if (_modoActual == "Estudiante")
         {
             var nuevoEstudiante = new Estudiante
             {
                 NombreCompleto = NombreCompleto.Trim(),
-                Email = Email,
+                Email = emailTrim,
                 Dni = DniIngresado.Trim(),
                 Legajo = CampoSecundario,
                 Activo = true

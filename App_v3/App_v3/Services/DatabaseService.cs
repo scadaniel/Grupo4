@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using App_v3.Models;
+using System.IO;
 
 namespace App_v3.Services;
 
@@ -52,7 +53,8 @@ public class DatabaseService
         await _dbConnection.CreateTableAsync<TrabajoPractico>();
         await _dbConnection.CreateTableAsync<EntregaTp>();
         await _dbConnection.CreateTableAsync<Inscripcion>(); // Tabla intermedia para relación M:N (Alumnos <-> Clases)
-        await _dbConnection.CreateTableAsync<Comision>(); //tabla comisiones
+        await _dbConnection.CreateTableAsync<Comision>(); // Tabla comisiones
+        await _dbConnection.CreateTableAsync<IntervencionContacto>(); // Tabla de seguimiento de contactos (H10, H11)
 
         // Cargar datos iniciales de prueba si las tablas están vacías
         await InicializarDatosPruebaAsync();
@@ -74,9 +76,9 @@ public class DatabaseService
         var cantidadEstudiantes = await _dbConnection!.Table<Estudiante>().CountAsync();
         if (cantidadEstudiantes == 0)
         {
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Juan Pérez", Legajo = "1001", Dni = "40111222", Comision = "Comisión A", Activo = true });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "María Gómez", Legajo = "1002", Dni = "40333444", Comision = "Comisión A", Activo = true });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Carlos Ruiz", Legajo = "1003", Dni = "40555666", Comision = "Comisión B", Activo = true });
+            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Juan Pérez", Legajo = "1001", Dni = "40111222", Comision = "Comisión A", Activo = true, Telefono = "+5491111111111", Email = "juan@email.com" });
+            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "María Gómez", Legajo = "1002", Dni = "40333444", Comision = "Comisión A", Activo = true, Telefono = "+5491122222222", Email = "maria@email.com" });
+            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Carlos Ruiz", Legajo = "1003", Dni = "40555666", Comision = "Comisión B", Activo = true, Telefono = "+5491133333333", Email = "carlos@email.com" });
         }
 
         // Precargar Clases / Cátedras de prueba
@@ -192,9 +194,6 @@ public class DatabaseService
         return await _dbConnection!.Table<Estudiante>().ToListAsync();
     }
 
-    /// <summary>
-    /// Método legacy basado en texto de comisión (mantenido por compatibilidad).
-    /// </summary>
     public async Task<List<Estudiante>> GetEstudiantesPorComisionAsync(string nombreComision)
     {
         await InitAsync();
@@ -210,9 +209,6 @@ public class DatabaseService
             .ToList();
     }
 
-    /// <summary>
-    /// Obtiene los estudiantes inscriptos a una clase específica mediante la tabla puente de inscripciones.
-    /// </summary>
     public async Task<List<Estudiante>> GetEstudiantesPorClaseIdAsync(int claseId)
     {
         await InitAsync();
@@ -241,7 +237,7 @@ public class DatabaseService
             .FirstOrDefaultAsync(i => i.EstudianteId == estudianteId && i.ClaseId == claseId);
 
         if (existente != null)
-            return 0; // Ya se encuentra inscripto
+            return 0;
 
         return await _dbConnection.InsertAsync(new Inscripcion
         {
@@ -317,7 +313,6 @@ public class DatabaseService
         foreach (var ast in asistencias)
         {
             ast.ClaseId = claseId;
-            // Aseguramos que la asistencia guarde la fecha actual de la clase si no tiene una asignada
             if (ast.Fecha == default)
             {
                 ast.Fecha = DateTime.Today;
@@ -401,9 +396,6 @@ public class DatabaseService
         }
     }
 
-    /// <summary>
-    /// Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
-    /// </summary>
     public async Task<bool> InscribirEstudiantePorDniAsync(string dni, int claseId)
     {
         await InitAsync();
@@ -417,10 +409,7 @@ public class DatabaseService
             .FirstOrDefaultAsync(e => e.Dni == dniLimpio);
 
         if (estudiante == null)
-        {
-            System.Diagnostics.Debug.WriteLine($"[Error de inscripción] No se encontró alumno con DNI: '{dniLimpio}'");
             return false;
-        }
 
         var existente = await _dbConnection.Table<Inscripcion>()
             .FirstOrDefaultAsync(i => i.EstudianteId == estudiante.Id && i.ClaseId == claseId);
@@ -437,9 +426,10 @@ public class DatabaseService
         return true;
     }
 
-    /// <summary>
-    /// Obtiene el reporte de asistencias filtrado por DNI, Comisión y Rango de Fechas de forma segura.
-    /// </summary>
+    // ==========================================
+    // --- MÓDULO REPORTES ---
+    // ==========================================
+
     public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, string? comisionFiltro, DateTime? fechaInicio, DateTime? fechaFin)
     {
         await InitAsync();
@@ -459,7 +449,6 @@ public class DatabaseService
                              Dni = e.Dni ?? string.Empty,
                              MateriaClase = $"{c.NombreMateria} (Clase #{c.NumeroClase}: {c.Tema})",
                              Comision = c.Comision ?? string.Empty,
-                             // Prioriza la fecha propia de la asistencia; si no tiene, usa la de la clase
                              FechaClase = (a.Fecha != default(DateTime) && a.Fecha.Year > 2000) ? a.Fecha : c.Fecha,
                              Presente = a.Presente,
                              Justificada = a.Justificada
@@ -467,20 +456,17 @@ public class DatabaseService
 
         var query = listaCruda.AsQueryable();
 
-        // 1. Filtro por DNI
         if (!string.IsNullOrWhiteSpace(dniFiltro))
         {
             string dniTrim = dniFiltro.Trim();
             query = query.Where(x => !string.IsNullOrEmpty(x.Dni) && x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
         }
 
-        // 2. Filtro por Comisión
         if (!string.IsNullOrWhiteSpace(comisionFiltro) && comisionFiltro != "Todas las comisiones" && comisionFiltro != "General")
         {
             query = query.Where(x => !string.IsNullOrEmpty(x.Comision) && x.Comision.Trim().Equals(comisionFiltro.Trim(), StringComparison.OrdinalIgnoreCase));
         }
 
-        // 3. Filtro por Rango de Fechas
         if (fechaInicio.HasValue)
         {
             query = query.Where(x => x.FechaClase.Date >= fechaInicio.Value.Date);
@@ -558,21 +544,6 @@ public class DatabaseService
         }
     }
 
-    public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
-    {
-        await InitAsync();
-
-        var estudiante = await _dbConnection!.Table<Estudiante>().FirstOrDefaultAsync(e => e.Id == estudianteId);
-        var comision = await _dbConnection!.Table<Comision>().FirstOrDefaultAsync(c => c.Id == comisionId);
-
-        if (estudiante != null && comision != null)
-        {
-            estudiante.Comision = comision.Nombre;
-            return await _dbConnection.UpdateAsync(estudiante);
-        }
-        return 0;
-    }
-
     public async Task<int> SaveClaseYComisionNuevaAsync(Clase clase)
     {
         await InitAsync();
@@ -598,4 +569,203 @@ public class DatabaseService
             return await _dbConnection!.InsertAsync(clase);
         }
     }
+
+    // ==========================================
+    // --- MÓDULO INTERVENCIONES Y CONTACTOS (H10, H11) ---
+    // ==========================================
+
+    public async Task<List<IntervencionContacto>> GetIntervencionesPorEstudianteAsync(int estudianteId)
+    {
+        await InitAsync();
+        return await _dbConnection!.Table<IntervencionContacto>()
+                            .Where(i => i.EstudianteId == estudianteId)
+                            .OrderByDescending(i => i.Fecha)
+                            .ToListAsync();
+    }
+
+    public async Task<int> GuardarIntervencionAsync(IntervencionContacto intervencion)
+    {
+        await InitAsync();
+        return await _dbConnection!.InsertAsync(intervencion);
+    }
+
+    public async Task<IntervencionContacto?> GetUltimoContactoEstudianteAsync(int estudianteId)
+    {
+        await InitAsync();
+        return await _dbConnection!.Table<IntervencionContacto>()
+                            .Where(i => i.EstudianteId == estudianteId)
+                            .OrderByDescending(i => i.Fecha)
+                            .FirstOrDefaultAsync();
+    }
+
+    // ==========================================
+    // --- IMPORTACIÓN MASIVA DESDE ARCHIVO TXT ---
+    // ==========================================
+
+    public async Task<int> ImportarEstructuraCompletaDesdeTxtAsync(Stream fileStream)
+    {
+        await InitAsync();
+        int registrosProcesados = 0;
+
+        using (var reader = new StreamReader(fileStream))
+        {
+            string? seccionActual = string.Empty;
+
+            await _dbConnection!.RunInTransactionAsync((SQLiteConnection db) =>
+            {
+                while (!reader.EndOfStream)
+                {
+                    string? linea = reader.ReadLine()?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(linea) || linea.StartsWith("#"))
+                        continue;
+
+                    if (linea.StartsWith("[") && linea.EndsWith("]"))
+                    {
+                        seccionActual = linea.Substring(1, linea.Length - 2).Trim();
+                        continue;
+                    }
+
+                    var datos = linea.Split(';');
+                    if (datos.Length < 2) continue;
+
+                    switch (seccionActual?.ToLower())
+                    {
+                        case "comisiones":
+                            if (datos.Length >= 5)
+                            {
+                                var com = new Comision
+                                {
+                                    Nombre = datos[0].Trim(),
+                                    InasistenciasBajo = int.Parse(datos[1]),
+                                    InasistenciasMedio = int.Parse(datos[2]),
+                                    TpsBajo = int.Parse(datos[3]),
+                                    TpsMedio = int.Parse(datos[4])
+                                };
+                                db.Insert(com);
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "estudiantes":
+                            if (datos.Length >= 8)
+                            {
+                                var est = new Estudiante
+                                {
+                                    Legajo = datos[0].Trim(),
+                                    Dni = datos[1].Trim(),
+                                    NombreCompleto = datos[2].Trim(),
+                                    Email = datos[3].Trim(),
+                                    Telefono = datos[4].Trim(),
+                                    Comision = datos[5].Trim(),
+                                    Activo = true,
+                                    Inasistencias = int.Parse(datos[6]),
+                                    TpsNoEntregados = int.Parse(datos[7])
+                                };
+                                db.Insert(est);
+
+                                var partes = est.NombreCompleto.Split(' ', 2);
+                                db.Insert(new Persona
+                                {
+                                    Nombre = partes[0],
+                                    Apellido = partes.Length > 1 ? partes[1] : "",
+                                    Legajo = est.Legajo,
+                                    Email = est.Email,
+                                    Telefono = est.Telefono,
+                                    Rol = "Estudiante"
+                                });
+
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "clases":
+                            if (datos.Length >= 5)
+                            {
+                                var clase = new Clase
+                                {
+                                    NombreMateria = datos[0].Trim(),
+                                    Comision = datos[1].Trim(),
+                                    Fecha = DateTime.Parse(datos[2].Trim()),
+                                    NumeroClase = int.Parse(datos[3]),
+                                    Tema = datos[4].Trim()
+                                };
+                                db.Insert(clase);
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "asistencias":
+                            if (datos.Length >= 5)
+                            {
+                                var asistencia = new Asistencia
+                                {
+                                    ClaseId = int.Parse(datos[0]),
+                                    EstudianteId = int.Parse(datos[1]),
+                                    Presente = datos[2].Trim() == "1" || datos[2].Trim().ToLower() == "true",
+                                    Justificada = datos[3].Trim() == "1" || datos[3].Trim().ToLower() == "true",
+                                    Fecha = DateTime.Parse(datos[4].Trim())
+                                };
+                                db.Insert(asistencia);
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "trabajospracticos":
+                            if (datos.Length >= 3)
+                            {
+                                var tp = new TrabajoPractico
+                                {
+                                    Nombre = datos[0].Trim(),
+                                    Descripcion = datos[1].Trim(),
+                                    FechaLimite = DateTime.Parse(datos[2].Trim())
+                                };
+                                db.Insert(tp);
+                                registrosProcesados++;
+                            }
+                            break;
+
+                        case "entregastp":
+                            if (datos.Length >= 4)
+                            {
+                                var entrega = new EntregaTp
+                                {
+                                    TrabajoPracticoId = int.Parse(datos[0]),
+                                    EstudianteId = int.Parse(datos[1]),
+                                    Entregado = datos[2].Trim() == "1" || datos[2].Trim().ToLower() == "true",
+                                    FechaEntrega = !string.IsNullOrWhiteSpace(datos[3]) ? DateTime.Parse(datos[3].Trim()) : null
+                                };
+                                db.Insert(entrega);
+                                registrosProcesados++;
+                            }
+                            break;
+                    }
+                }
+            });
+        }
+
+        return registrosProcesados;
+    }
+
+
+    /// <summary>
+    /// Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
+    /// </summary>
+    public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
+    {
+        await InitAsync();
+
+        var estudiante = await _dbConnection!.Table<Estudiante>().FirstOrDefaultAsync(e => e.Id == estudianteId);
+        var comision = await _dbConnection!.Table<Comision>().FirstOrDefaultAsync(c => c.Id == comisionId);
+
+        if (estudiante != null && comision != null)
+        {
+            estudiante.Comision = comision.Nombre;
+            return await _dbConnection.UpdateAsync(estudiante);
+        }
+        return 0;
+    }
+
+
+
 }

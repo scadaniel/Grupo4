@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:App_v3.ViewModels"
+             x:Class="App_v3.Views.RegistrarIntervencionPage"
+             Title="Registrar Contacto">
+    
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Registrar Intervención / Contacto"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="#1A237E"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Completa los detalles del seguimiento realizado al estudiante."
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+
+            <!-- Selector de Fecha -->
+            <Label Text="Fecha de Intervención:" FontAttributes="Bold" />
+            <DatePicker Date="{Binding FechaIntervencion}"
+                        Format="dd/MM/yyyy"
+                        MaximumDate="{x:Static sys:DateTime.Today}"
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib" />
+
+            <!-- Selector de Medio -->
+            <Label Text="Medio de Contacto:" FontAttributes="Bold" />
+            <Picker Title="Seleccionar medio"
+                    ItemsSource="{Binding MediosDisponibles}"
+                    SelectedItem="{Binding MedioSeleccionado}" />
+
+            <!-- Editor de Resultado / Notas -->
+            <Label Text="Resultado / Acuerdos alcanzados:" FontAttributes="Bold" />
+            <Editor Text="{Binding ResultadoNotas}"
+                    Placeholder="Escribe aquí las observaciones, respuesta del alumno o compromisos alcanzados..."
+                    HeightRequest="120"
+                    AutoSize="Disabled" />
+
+            <!-- Botón de Guardado -->
+            <Button Text="💾 Registrar Contacto"
+                    Command="{Binding RegistrarContactoCommand}"
+                    BackgroundColor="#2E7D32"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    Margin="0,20,0,0"
+                    HeightRequest="50" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

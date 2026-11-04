@@ -1,12 +1,17 @@
-﻿using App_v3.ViewModels;
-
-namespace App_v3.Views;
+﻿namespace App_v3.Views;
 
 public partial class GestionPersonasMenuPage : ContentPage
 {
-    public GestionPersonasMenuPage(GestionPersonasMenuViewModel viewModel)
+    public GestionPersonasMenuPage()
     {
         InitializeComponent();
-        BindingContext = viewModel;
+    }
+
+    private void OnBotonMenuFlyoutClicked(object sender, EventArgs e)
+    {
+        if (Shell.Current != null)
+        {
+            Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+        }
     }
 }

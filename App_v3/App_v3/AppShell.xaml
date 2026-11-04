@@ -5,7 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:App_v3.Views"
     Title="Sistema de Alerta Temprana"
-    FlyoutBehavior="Flyout">
+    FlyoutBehavior="Flyout"
+    BackgroundColor="#0F172A"
+    ForegroundColor="White"
+    TitleColor="White"
+    DisabledColor="#64748B">
 
     <!-- Cabecera del Menú Lateral -->
     <Shell.FlyoutHeader>
@@ -20,7 +24,7 @@
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
-    <!-- PANTALLA DE BIENVENIDA INICIAL (Ahora visible en el menú lateral) -->
+    <!-- PANTALLA DE BIENVENIDA INICIAL -->
     <FlyoutItem Title="Inicio" Icon="dotnet_bot.png">
         <ShellContent 
             Route="WelcomePage"
@@ -32,11 +36,11 @@
         <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasMenuPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Control de Riezgo" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Control de Riesgo" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Gestion de Clases" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Gestión de Clases" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
     </FlyoutItem>
 
@@ -74,5 +78,4 @@
                    HorizontalTextAlignment="Center"/>
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
-
 </Shell>

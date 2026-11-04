@@ -3,108 +3,138 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.GestionPersonasMenuPage"
              Title="Panel de Gestión de Personas"
-             BackgroundColor="#F4F6F9">
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
+    <Grid RowDefinitions="Auto, *">
 
-            <!-- Encabezado -->
-            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
-                <Label Text="👥 Gestión de Personas" 
-                       FontSize="22" 
-                       FontAttributes="Bold" 
-                       TextColor="#1A252C" 
-                       HorizontalOptions="Center" />
-                <Label Text="Seleccione el sector o acción que desea realizar" 
-                       FontSize="14" 
-                       TextColor="#757575" 
-                       HorizontalOptions="Center" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
+
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
+
+            <Label Grid.Column="1" 
+                   Text="Gestión de Personas" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
+        </Grid>
+
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+
+                <!-- Encabezado -->
+                <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
+                    <Label Text="👥 Panel de Control" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           TextColor="White" 
+                           HorizontalOptions="Center" />
+                    <Label Text="Seleccione el sector o acción que desea realizar" 
+                           FontSize="14" 
+                           TextColor="#94A3B8" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Tarjeta 1: Listado, Filtros y Estado -->
+                <Frame BorderColor="#334155" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="#1E293B">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#3B82F6" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Listado y Filtros" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Búsqueda por DNI y apellido, control de estado activo/inactivo y asignación a comisiones." FontSize="12" TextColor="#94A3B8" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding IrAListadoCommand}"
+                                BackgroundColor="#3B82F6" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
+                <!-- Tarjeta 2: Consulta por Comisiones -->
+                <Frame BorderColor="#334155" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="#1E293B">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#22C55E" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Nómina por Comisión" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Seleccione una comisión para visualizar la nómina exacta de alumnos inscriptos." FontSize="12" TextColor="#94A3B8" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding IrAComisionesCommand}"
+                                BackgroundColor="#22C55E" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
+                <!-- Tarjeta 3: Alta de Nuevo Estudiante -->
+                <Frame BorderColor="#334155" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="#1E293B">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#F97316" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Registro / Alta" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Formulario limpio para dar de alta a nuevos estudiantes en la base de datos." FontSize="12" TextColor="#94A3B8" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding IrANuevoEstudianteCommand}"
+                                BackgroundColor="#F97316" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
             </VerticalStackLayout>
-
-            <!-- Tarjeta 1: Listado, Filtros y Estado -->
-            <Frame BorderColor="#E0E0E0" 
-                   CornerRadius="12" 
-                   Padding="20" 
-                   HasShadow="True" 
-                   BackgroundColor="White">
-                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                    <!-- Indicador lateral -->
-                    <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#1976D2" VerticalOptions="Fill" />
-
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                        <Label Text="Listado y Filtros" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                        <Label Text="Búsqueda por DNI y apellido, control de estado activo/inactivo y asignación a comisiones." FontSize="12" TextColor="#666" />
-                    </VerticalStackLayout>
-
-                    <Button Grid.Column="2" 
-                            Text="Ver" 
-                            Command="{Binding IrAListadoCommand}"
-                            BackgroundColor="#1976D2" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            VerticalOptions="Center" 
-                            HeightRequest="40" 
-                            WidthRequest="80" />
-                </Grid>
-            </Frame>
-
-            <!-- Tarjeta 2: Consulta por Comisiones -->
-            <Frame BorderColor="#E0E0E0" 
-                   CornerRadius="12" 
-                   Padding="20" 
-                   HasShadow="True" 
-                   BackgroundColor="White">
-                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                    <!-- Indicador lateral -->
-                    <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#2E7D32" VerticalOptions="Fill" />
-
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                        <Label Text="Nómina por Comisión" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                        <Label Text="Seleccione una comisión para visualizar la nómina exacta de alumnos inscriptos." FontSize="12" TextColor="#666" />
-                    </VerticalStackLayout>
-
-                    <Button Grid.Column="2" 
-                            Text="Ver" 
-                            Command="{Binding IrAComisionesCommand}"
-                            BackgroundColor="#2E7D32" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            VerticalOptions="Center" 
-                            HeightRequest="40" 
-                            WidthRequest="80" />
-                </Grid>
-            </Frame>
-
-            <!-- Tarjeta 3: Alta de Nuevo Estudiante -->
-            <Frame BorderColor="#E0E0E0" 
-                   CornerRadius="12" 
-                   Padding="20" 
-                   HasShadow="True" 
-                   BackgroundColor="White">
-                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                    <!-- Indicador lateral -->
-                    <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#E65100" VerticalOptions="Fill" />
-
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                        <Label Text="Registro / Alta" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                        <Label Text="Formulario limpio para dar de alta a nuevos estudiantes en la base de datos." FontSize="12" TextColor="#666" />
-                    </VerticalStackLayout>
-
-                    <Button Grid.Column="2" 
-                            Text="Ver" 
-                            Command="{Binding IrANuevoEstudianteCommand}"
-                            BackgroundColor="#E65100" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            VerticalOptions="Center" 
-                            HeightRequest="40" 
-                            WidthRequest="80" />
-                </Grid>
-            </Frame>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -30,10 +30,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<DatabaseService>();
 
         // =========================================================
-        // MÓDULO: GESTIÓN DE PERSONAS
+        // MÓDULO: PANTALLA DE BIENVENIDA (INICIO)
         // =========================================================
-        //builder.Services.AddTransient<GestionPersonasViewModel>();
-        //builder.Services.AddTransient<GestionPersonasPage>();
+        builder.Services.AddTransient<WelcomePage>();
 
         // =========================================================
         // MÓDULO: GESTIÓN DE CLASES Y CÁTEDRAS
@@ -49,72 +48,55 @@ public static class MauiProgram
 
         // =========================================================
         // MÓDULO: ASISTENCIA DE ALUMNOS (Historia H3)
-        // Inyección transitoria para instanciar limpia la toma de lista
         // =========================================================
         builder.Services.AddTransient<AttendanceViewModel>();
         builder.Services.AddTransient<AttendancePage>();
 
         // =========================================================
         // MÓDULO: CALENDARIO Y TRABAJOS PRÁCTICOS (Historia H2)
-        // Gestión de fechas límite, clases programadas y cronograma
         // =========================================================
         builder.Services.AddTransient<CalendarViewModel>();
         builder.Services.AddTransient<CalendarPage>();
 
         // =========================================================
-        // MÓDULO: services de configuración de umbrales de riesgo (Historia H4)
+        // MÓDULO: CONFIGURACIÓN DE UMBRALES DE RIESGO (Historia H4)
         // =========================================================
-
         builder.Services.AddSingleton<ConfiguracionService>();
         builder.Services.AddTransient<ConfiguracionViewModel>();
         builder.Services.AddTransient<ConfiguracionPage>();
 
         // =========================================================
-        // MÓDULO: registro de entregas de trabajos prácticos
+        // MÓDULO: TOMA DE ASISTENCIA DE ALUMNOS (Historia H3)
         // =========================================================
-
-        builder.Services.AddTransient<RegistroEntregasViewModel>();
-
-        // =========================================================
-        // MÓDULO: toma de asistencia de alumnos (Historia H3)
-        // =========================================================
-
         builder.Services.AddTransient<TomaAsistenciaViewModel>();
         builder.Services.AddTransient<TomaAsistenciaPage>();
 
         // =========================================================
-        // MÓDULO: Entrega de trabajos prácticos 
+        // MÓDULO: ENTREGA DE TRABAJOS PRÁCTICOS 
         // =========================================================
-
         builder.Services.AddTransient<RegistroEntregasViewModel>();
         builder.Services.AddTransient<RegistroEntregasPage>();
 
         // =========================================================
-        // reporte:  Reportes de Asistencia
+        // REPORTES: Reportes de Asistencia
         // =========================================================
         builder.Services.AddTransient<ReporteAsistenciasViewModel>();
         builder.Services.AddTransient<ReporteAsistenciasPage>();
 
         // =========================================================
-        // reporte: Entrega de trabajos prácticos 
+        // REPORTES: Entrega de trabajos prácticos 
         // =========================================================
-
         builder.Services.AddTransient<ReporteEntregasTpViewModel>();
         builder.Services.AddTransient<ReporteEntregasTpPage>();
 
-
         // =========================================================
-        // menu de reportes
+        // MENÚ DE REPORTES
         // =========================================================
-
         builder.Services.AddTransient<MenuReportesPage>();
 
-
         // =========================================================
-        // menu de Estudiantes
-        //  Registro de Vistas y ViewModels para Gestión de Personas
+        // MENÚ DE ESTUDIANTES / GESTIÓN DE PERSONAS
         // =========================================================
-
         builder.Services.AddTransient<GestionPersonasMenuPage>();
         builder.Services.AddTransient<GestionPersonasMenuViewModel>();
 

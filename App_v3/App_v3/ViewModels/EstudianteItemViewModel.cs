@@ -6,19 +6,16 @@ namespace App_v3.ViewModels
     {
         public Estudiante Estudiante { get; set; }
 
-        // Propiedades directas expuestas para evitar errores en enlaces y ordenamientos
         public string Legajo => Estudiante?.Legajo ?? string.Empty;
         public string NombreCompleto => Estudiante?.NombreCompleto ?? string.Empty;
         public string Email => Estudiante?.Email ?? string.Empty;
         public string Dni => Estudiante?.Dni ?? string.Empty;
         public string Telefono => Estudiante?.Telefono ?? string.Empty;
 
-        // Propiedades anteriores conservadas por compatibilidad
         public double Promedio { get; set; }
         public int PorcentajeAsistencia { get; set; }
         public bool EnRiesgo => Promedio < 6.0 || PorcentajeAsistencia < 75;
 
-        // --- Propiedades para el Motor de Riesgo ---
         private NivelRiesgo _nivelRiesgoEnum = NivelRiesgo.Bajo;
         public NivelRiesgo NivelRiesgoEnum
         {
@@ -40,14 +37,27 @@ namespace App_v3.ViewModels
             set { _diagnosticoRiesgo = value; OnPropertyChanged(); }
         }
 
-        // --- ALIAS DE COMPATIBILIDAD PARA EL XAML ---
+        // --- Propiedades para el Estado de Contacto (H11) ---
+        private bool _fueContactado;
+        public bool FueContactado
+        {
+            get => _fueContactado;
+            set { _fueContactado = value; OnPropertyChanged(); }
+        }
+
+        private string _textoEstadoContacto = "Sin contacto registrado";
+        public string TextoEstadoContacto
+        {
+            get => _textoEstadoContacto;
+            set { _textoEstadoContacto = value; OnPropertyChanged(); }
+        }
+
+        // --- Alias de compatibilidad para el XAML ---
         public string ColorHex => ColorRiesgoHex;
         public string Diagnostico => DiagnosticoRiesgo;
         public string NivelRiesgoText => NivelRiesgoEnum.ToString().ToUpper();
 
-        // --- CONSTRUCTORES ---
-
-        // Constructor 1: Para otras pantallas que pasen promedio y porcentaje
+        // --- Constructores ---
         public EstudianteItemViewModel(Estudiante estudiante, double promedio, int porcentajeAsistencia)
         {
             Estudiante = estudiante;
@@ -55,7 +65,6 @@ namespace App_v3.ViewModels
             PorcentajeAsistencia = porcentajeAsistencia;
         }
 
-        // Constructor 2: Requerido por el EstudianteListViewModel (Riesgo personalizado)
         public EstudianteItemViewModel(Estudiante estudiante, NivelRiesgo nivelRiesgo, string colorHex, string diagnostico)
         {
             Estudiante = estudiante;
@@ -68,7 +77,6 @@ namespace App_v3.ViewModels
         }
     }
 
-    // Definición del Enum NivelRiesgo para evitar errores de tipo no encontrado
     public enum NivelRiesgo
     {
         Bajo,

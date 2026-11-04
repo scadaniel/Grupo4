@@ -44,13 +44,15 @@ namespace App_v3.ViewModels
         }
 
         public ICommand GuardarCommand { get; }
-        public ICommand ResetDatabaseCommand { get; } // 🛠️ Comando para borrar la BD
+        public ICommand ResetDatabaseCommand { get; }
+        public ICommand ImportarTxtMasivoCommand { get; } // 📥 Comando para la carga masiva estructurada desde TXT
 
         public ConfiguracionViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
             GuardarCommand = new Command(async () => await GuardarAsync());
-            ResetDatabaseCommand = new Command(async () => await BorrarBaseDeDatosAsync()); // 🛠️ Inicialización del comando
+            ResetDatabaseCommand = new Command(async () => await BorrarBaseDeDatosAsync());
+            ImportarTxtMasivoCommand = new Command(async () => await ImportarEstructuraTxtConVerificacionAsync());
 
             _ = CargarComisionesAsync();
         }
@@ -164,6 +166,62 @@ namespace App_v3.ViewModels
                 catch (Exception ex)
                 {
                     await Shell.Current.DisplayAlert("Error", $"No se pudo restablecer la base de datos: {ex.Message}", "OK");
+                }
+            }
+        }
+
+        // 📥 Método encargado de abrir el selector nativo e importar la estructura masiva por secciones desde el TXT
+        private async Task ImportarEstructuraTxtConVerificacionAsync()
+        {
+            try
+            {
+                bool confirmar = true;
+                if (Shell.Current != null)
+                {
+                    confirmar = await Shell.Current.DisplayAlert(
+                        "⚡ Importación Masiva de Datos",
+                        "¿Deseas seleccionar el archivo TXT estructurado para poblar todas las tablas (comisiones, alumnos, clases, asistencias y TPs)?",
+                        "Sí, seleccionar archivo",
+                        "Cancelar");
+                }
+
+                if (!confirmar) return;
+
+                var options = new PickOptions
+                {
+                    PickerTitle = "Selecciona el archivo TXT con datos masivos"
+                };
+
+                var result = await FilePicker.Default.PickAsync(options);
+
+                if (result != null)
+                {
+                    using var stream = await result.OpenReadAsync();
+
+                    int totalRegistros = await _databaseService.ImportarEstructuraCompletaDesdeTxtAsync(stream);
+
+                    if (Shell.Current != null)
+                    {
+                        await Shell.Current.DisplayAlert(
+                            "¡Importación Completa Exitosa!",
+                            $"Se procesaron e insertaron correctamente {totalRegistros} registros en la base de datos SQLite.",
+                            "OK");
+                    }
+
+                    // Refrescar las comisiones locales en pantalla
+                    await CargarComisionesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ERROR EN IMPORTACIÓN TXT: {ex.Message}");
+
+                if (Shell.Current != null)
+                {
+                    await Shell.Current.DisplayAlert(
+                        "Error de Importación",
+                        $"Ocurrió un inconveniente al leer o insertar el archivo masivo: {ex.Message}",
+                        "OK");
                 }
             }
         }

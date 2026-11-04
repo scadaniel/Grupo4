@@ -80,6 +80,9 @@
 	  <MauiXaml Update="Views\NuevoEstudiantePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\RegistrarIntervencionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RegistroEntregasPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

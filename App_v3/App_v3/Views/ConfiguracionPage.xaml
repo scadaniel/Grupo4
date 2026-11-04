@@ -2,81 +2,135 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.ConfiguracionPage"
-             Title="Configuración de Umbrales">
+             Title="Configuración de Umbrales"
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
+    <Grid RowDefinitions="Auto, *">
 
-            <Label Text="Parámetros de Riesgo (H7)" FontSize="20" FontAttributes="Bold" />
-            <Label Text="Seleccione la comisión y defina los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
-                   TextColor="Gray" FontSize="14" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
 
-            <!-- Sección Selector de Comisión -->
-            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Stroke="#E0E0E0">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="SELECCIONE LA COMISIÓN A CONFIGURAR" FontAttributes="Bold" FontSize="15" TextColor="#1976D2" />
-
-                    <Picker ItemsSource="{Binding ListaComisiones}"
-                            SelectedItem="{Binding ComisionSeleccionada}"
-                            ItemDisplayBinding="{Binding Nombre}"
-                            Title="Elija una comisión..."
-                            FontSize="15"
-                            BackgroundColor="#F9F9F9" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Sección Inasistencias -->
-            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Criterio de Inasistencias" FontAttributes="Bold" FontSize="16" />
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding InasistenciasBajo}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Sección Trabajos Prácticos -->
-            <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#F9F9F9">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Criterio de Trabajos Prácticos No Entregados" FontAttributes="Bold" FontSize="16" />
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding TpsBajo}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" />
-                        <Entry Text="{Binding TpsMedio}" Keyboard="Numeric" WidthRequest="80" />
-                    </HorizontalStackLayout>
-                    <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="DarkGray" />
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- Botón Guardar -->
-            <Button Text="Guardar Configuración de Umbrales" 
-                    Command="{Binding GuardarCommand}"
-                    BackgroundColor="DarkBlue"
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
                     TextColor="White"
-                    CornerRadius="8"
-                    Margin="0,10,0,0" />
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
+            
 
-            <!-- 🛠️ Botón Restablecer / Borrar Base de Datos -->
-            <Button Text="Restablecer / Borrar Base de Datos" 
-                    Command="{Binding ResetDatabaseCommand}"
-                    BackgroundColor="#D32F2F"
-                    TextColor="White"
-                    CornerRadius="8"
-                    Margin="0,5,0,20" />
+            <Label Grid.Column="1" 
+                   Text="Configuración de Umbrales" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
+        </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <Label Text="Parámetros de Riesgo (H7)" FontSize="20" FontAttributes="Bold" TextColor="White" />
+                <Label Text="Seleccione la comisión y defina los límites numéricos a partir de los cuales el sistema clasificará a los estudiantes en riesgo Medio o Alto." 
+                       TextColor="#94A3B8" FontSize="14" />
+
+                <!-- Sección Selector de Comisión -->
+                <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Stroke="#E0E0E0">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="SELECCIONE LA COMISIÓN A CONFIGURAR" FontAttributes="Bold" FontSize="15" TextColor="#1976D2" />
+
+                        <Picker ItemsSource="{Binding ListaComisiones}"
+                                SelectedItem="{Binding ComisionSeleccionada}"
+                                ItemDisplayBinding="{Binding Nombre}"
+                                Title="Elija una comisión..."
+                                FontSize="15"
+                                BackgroundColor="#F9F9F9" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Sección Inasistencias -->
+                <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#1E293B" Stroke="#334155">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Criterio de Inasistencias" FontAttributes="Bold" FontSize="16" TextColor="White" />
+
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" TextColor="#94A3B8" />
+                            <Entry Text="{Binding InasistenciasBajo}" Keyboard="Numeric" WidthRequest="80" TextColor="White" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" TextColor="#94A3B8" />
+                            <Entry Text="{Binding InasistenciasMedio}" Keyboard="Numeric" WidthRequest="80" TextColor="White" />
+                        </HorizontalStackLayout>
+                        <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="#64748B" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Sección Trabajos Prácticos -->
+                <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#1E293B" Stroke="#334155">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Criterio de Trabajos Prácticos No Entregados" FontAttributes="Bold" FontSize="16" TextColor="White" />
+
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Label Text="Límite para Riesgo BAJO (hasta):" VerticalOptions="Center" WidthRequest="220" TextColor="#94A3B8" />
+                            <Entry Text="{Binding TpsBajo}" Keyboard="Numeric" WidthRequest="80" TextColor="White" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Label Text="Límite para Riesgo MEDIO (hasta):" VerticalOptions="Center" WidthRequest="220" TextColor="#94A3B8" />
+                            <Entry Text="{Binding TpsMedio}" Keyboard="Numeric" WidthRequest="80" TextColor="White" />
+                        </HorizontalStackLayout>
+                        <Label Text="* Superar el límite medio asignará automáticamente Riesgo ALTO." FontSize="12" TextColor="#64748B" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Botón Guardar -->
+                <Button Text="Guardar Configuración de Umbrales" 
+                        Command="{Binding GuardarCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="45"
+                        Margin="0,10,0,0" />
+
+                <!-- 🛠️ Botón Restablecer / Borrar Base de Datos -->
+                <Button Text="Restablecer / Borrar Base de Datos" 
+                        Command="{Binding ResetDatabaseCommand}"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="45"
+                        Margin="0,0,0,10" />
+
+                <!-- 📂 SECCIÓN CARGA MASIVA DE DATOS (UBICADA DEBAJO DE LOS BOTONES) -->
+                <Border Padding="15" StrokeShape="RoundRectangle 8" BackgroundColor="#1E293B" Stroke="#334155" Margin="0,10,0,20">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Carga Masiva de Datos" FontAttributes="Bold" FontSize="16" TextColor="White" />
+                        <Label Text="Importar un archivo externo (txt) para actualizar de manera masiva la DB" 
+                               TextColor="#94A3B8" FontSize="13" />
+
+                        <Button Text="📁 Seleccionar y Cargar Archivo..." 
+                            Command="{Binding ImportarTxtMasivoCommand}"
+                            BackgroundColor="#0284C7"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="45"
+                            Margin="0,5,0,0" />     
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

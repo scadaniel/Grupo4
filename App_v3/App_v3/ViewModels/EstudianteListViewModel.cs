@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using App_v3.Models;
 using App_v3.Services;
+using App_v3.Views;
 
 namespace App_v3.ViewModels
 {
@@ -27,22 +28,39 @@ namespace App_v3.ViewModels
             }
         }
 
-        private EstudianteItemViewModel? _estudianteSeleccionado;
-        public EstudianteItemViewModel? EstudianteSeleccionado
+        private string _textoBusqueda = string.Empty;
+        public string TextoBusqueda
         {
-            get => _estudianteSeleccionado;
+            get => _textoBusqueda;
             set
             {
-                if (_estudianteSeleccionado != value)
+                if (_textoBusqueda != value)
                 {
-                    _estudianteSeleccionado = value;
+                    _textoBusqueda = value;
                     OnPropertyChanged();
+                    _ = FiltrarYCalcularRiesgoPorComisionAsync();
+                }
+            }
+        }
+
+        private bool _soloNoContactadosSemana;
+        public bool SoloNoContactadosSemana
+        {
+            get => _soloNoContactadosSemana;
+            set
+            {
+                if (_soloNoContactadosSemana != value)
+                {
+                    _soloNoContactadosSemana = value;
+                    OnPropertyChanged();
+                    _ = FiltrarYCalcularRiesgoPorComisionAsync();
                 }
             }
         }
 
         public ICommand CargarComisionesCommand { get; }
         public ICommand ResetDatabaseCommand { get; }
+        public ICommand RegistrarContactoAlumnoCommand { get; }
 
         public EstudianteListViewModel(DatabaseService databaseService)
         {
@@ -50,6 +68,7 @@ namespace App_v3.ViewModels
 
             CargarComisionesCommand = new Command(async () => await CargarComisionesAsync());
             ResetDatabaseCommand = new Command(async () => await BorrarBaseDeDatosAsync());
+            RegistrarContactoAlumnoCommand = new Command<EstudianteItemViewModel>(async (item) => await IrARegistrarContactoAsync(item));
 
             _ = InicializarVistaAsync();
         }
@@ -87,19 +106,11 @@ namespace App_v3.ViewModels
                         }
                     }
                 });
-
-                System.Diagnostics.Debug.WriteLine($"[Comisiones Cargadas]: {ListaComisiones.Count} comisiones únicas encontradas.");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[Error Comisiones]: {ex.Message}");
             }
-        }
-
-        public async Task CargarEstudiantesAsync()
-        {
-            await CargarComisionesAsync();
-            await FiltrarYCalcularRiesgoPorComisionAsync();
         }
 
         public async Task FiltrarYCalcularRiesgoPorComisionAsync()
@@ -108,14 +119,11 @@ namespace App_v3.ViewModels
             {
                 if (ComisionSeleccionada == null || string.IsNullOrWhiteSpace(ComisionSeleccionada.Nombre))
                 {
-                    System.Diagnostics.Debug.WriteLine("[Riesgo]: No hay comisión seleccionada o su nombre es nulo.");
                     await MainThread.InvokeOnMainThreadAsync(() => Estudiantes.Clear());
                     return;
                 }
 
                 string nombreComision = ComisionSeleccionada.Nombre.Trim();
-                System.Diagnostics.Debug.WriteLine($"[Riesgo]: Buscando alumnos para la comisión '{nombreComision}'...");
-
                 var alumnosDeComision = await _databaseService.GetEstudiantesPorComisionAsync(nombreComision);
 
                 var listaTemporal = new List<EstudianteItemViewModel>();
@@ -124,17 +132,53 @@ namespace App_v3.ViewModels
                 {
                     foreach (var est in alumnosDeComision)
                     {
+                        // 🔍 Filtro por búsqueda rápida de Nombre, Apellido, Legajo o DNI
+                        if (!string.IsNullOrWhiteSpace(TextoBusqueda))
+                        {
+                            string filtro = TextoBusqueda.Trim().ToLower();
+                            bool coincideNombre = est.NombreCompleto?.ToLower().Contains(filtro) ?? false;
+                            bool coincideDni = est.Dni?.ToLower().Contains(filtro) ?? false;
+                            bool coincideLegajo = est.Legajo?.ToLower().Contains(filtro) ?? false;
+
+                            if (!coincideNombre && !coincideDni && !coincideLegajo)
+                            {
+                                continue;
+                            }
+                        }
+
                         int inasistencias = est.Inasistencias;
                         int tpsNoEntregados = est.TpsNoEntregados;
 
                         var resultadoRiesgo = CalcularRiesgoPersonalizado(inasistencias, tpsNoEntregados, ComisionSeleccionada);
+
+                        // Consultar el último registro de contacto para el alumno (H11)
+                        var ultimoContacto = await _databaseService.GetUltimoContactoEstudianteAsync(est.Id);
+
+                        bool contactado = ultimoContacto != null;
+                        string textoContacto = contactado
+                            ? $"📞 Contactado el {ultimoContacto.Fecha:dd/MM} ({ultimoContacto.Medio})"
+                            : "Sin contacto registrado";
+
+                        // Aplicar el filtro CA 11.2 (No contactados en los últimos 7 días)
+                        if (SoloNoContactadosSemana)
+                        {
+                            bool contactadoEstaSemana = ultimoContacto != null && (DateTime.Today - ultimoContacto.Fecha).TotalDays <= 7;
+                            if (contactadoEstaSemana)
+                            {
+                                continue;
+                            }
+                        }
 
                         var itemVm = new EstudianteItemViewModel(
                             est,
                             resultadoRiesgo.NivelEnum,
                             resultadoRiesgo.ColorHex,
                             resultadoRiesgo.Diagnostico
-                        );
+                        )
+                        {
+                            FueContactado = contactado,
+                            TextoEstadoContacto = textoContacto
+                        };
 
                         listaTemporal.Add(itemVm);
                     }
@@ -153,13 +197,23 @@ namespace App_v3.ViewModels
                         Estudiantes.Add(item);
                     }
                 });
-
-                System.Diagnostics.Debug.WriteLine($"[Riesgo]: Se cargaron y evaluaron {Estudiantes.Count} estudiantes con éxito.");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[Error Filtrado Riesgo]: {ex.Message}");
             }
+        }
+
+        private async Task IrARegistrarContactoAsync(EstudianteItemViewModel? item)
+        {
+            if (item == null || item.Estudiante == null) return;
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "EstudianteId", item.Estudiante.Id }
+            };
+
+            await Shell.Current.GoToAsync(nameof(RegistrarIntervencionPage), parameters);
         }
 
         private int ObtenerPesoGravedad(NivelRiesgo nivelRiesgo)
@@ -175,7 +229,6 @@ namespace App_v3.ViewModels
 
         private (string NivelTexto, NivelRiesgo NivelEnum, string ColorHex, string Diagnostico) CalcularRiesgoPersonalizado(int inasistencias, int tpsNoEntregados, Comision? comision)
         {
-            // Blindaje contra nulos por si el objeto comisión llega vacío al inicializar
             int limiteInasBajo = comision?.InasistenciasBajo ?? 3;
             int limiteInasMedio = comision?.InasistenciasMedio ?? 6;
             int limiteTpsBajo = comision?.TpsBajo ?? 2;

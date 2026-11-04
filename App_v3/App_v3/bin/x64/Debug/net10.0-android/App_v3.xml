@@ -19,24 +19,9 @@
             Inicializa la conexión SQLite y crea automáticamente todas las tablas necesarias si no existen.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorComisionAsync(System.String)">
+        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
             <summary>
-            Método legacy basado en texto de comisión (mantenido por compatibilidad).
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorClaseIdAsync(System.Int32)">
-            <summary>
-            Obtiene los estudiantes inscriptos a una clase específica mediante la tabla puente de inscripciones.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.InscribirEstudiantePorDniAsync(System.String,System.Int32)">
-            <summary>
-            Busca un estudiante por su DNI y lo inscribe en la clase especificada mediante la tabla puente.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.ObtenerReporteAsistenciasAsync(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
-            <summary>
-            Obtiene el reporte de asistencias filtrado por DNI, Comisión y Rango de Fechas de forma segura.
+            Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
             </summary>
         </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
