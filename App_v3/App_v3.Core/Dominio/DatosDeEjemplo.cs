@@ -197,34 +197,80 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         }
     }
 
+    
+
     // Cinco clases ya dictadas, una por semana, y una futura sin asistencia.
-    private async Task<List<ClaseDictada>> CrearClasesAsync(
-        Comision comision,
-        DateTime hoy)
+private async Task<List<ClaseDictada>> CrearClasesAsync(
+    Comision comision,
+    DateTime hoy)
+{
+    var clases = new List<ClaseDictada>();
+
+    var materias = await repositorio.ListarAsync<Materia>();
+    var materia = materias.First(m => m.Id == comision.MateriaId);
+
+    string[] temas = materia.Nombre switch
     {
-        var clases = new List<ClaseDictada>();
-
-        string[] temas =
+        "Programación I" =>
         [
-            "Introducción", "Variables", "Condicionales",
-            "Ciclos", "Funciones", "Listas"
-        ];
+            "Introducción a la programación",
+            "Variables y tipos de datos",
+            "Estructuras condicionales",
+            "Estructuras repetitivas",
+            "Funciones y métodos",
+            "Listas y colecciones"
+        ],
 
-        int[] dias = [-35, -28, -21, -14, -7, 7];
+        "Bases de Datos" =>
+        [
+            "Introducción a las bases de datos",
+            "Modelo entidad-relación",
+            "Tablas y relaciones",
+            "Consultas SQL",
+            "Claves primarias y foráneas",
+            "Joins y consultas relacionadas"
+        ],
 
-        for (var i = 0; i < temas.Length; i++)
+        "Programación II" =>
+        [
+            "Repaso de programación",
+            "Programación orientada a objetos",
+            "Clases y objetos",
+            "Herencia y polimorfismo",
+            "Colecciones y excepciones",
+            "Persistencia de datos"
+        ],
+
+        "Análisis de Sistemas" =>
+        [
+            "Introducción al análisis de sistemas",
+            "Relevamiento de requerimientos",
+            "Casos de uso",
+            "Diagramas UML",
+            "Modelado de procesos",
+            "Diseño de sistemas"
+        ],
+
+        _ => throw new InvalidOperationException(
+            $"No hay temas definidos para la materia {materia.Nombre}.")
+    };
+
+    int[] dias = [-35, -28, -21, -14, -7, 7];
+
+    for (var i = 0; i < temas.Length; i++)
+    {
+        clases.Add(await GuardarAsync(new ClaseDictada
         {
-            clases.Add(await GuardarAsync(new ClaseDictada
-            {
-                ComisionId = comision.Id,
-                Numero = i + 1,
-                Tema = temas[i],
-                Fecha = hoy.AddDays(dias[i])
-            }));
-        }
-
-        return clases;
+            ComisionId = comision.Id,
+            Numero = i + 1,
+            Tema = temas[i],
+            Fecha = hoy.AddDays(dias[i])
+        }));
     }
+
+    return clases;
+}
+
 
     // Tres trabajos con la fecha límite vencida y uno todavía en plazo.
     private async Task<List<TrabajoPractico>> CrearTrabajosAsync(
@@ -312,14 +358,14 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         MedioContacto medio,
         string resultado,
         string nota) => new()
-    {
-        ComisionId = comision.Id,
-        EstudianteId = estudiante.Id,
-        Fecha = fecha,
-        Medio = medio,
-        Resultado = resultado,
-        Nota = nota
-    };
+        {
+            ComisionId = comision.Id,
+            EstudianteId = estudiante.Id,
+            Fecha = fecha,
+            Medio = medio,
+            Resultado = resultado,
+            Nota = nota
+        };
 
     private async Task<T> GuardarAsync<T>(T entidad)
         where T : class, IEntidad, new()

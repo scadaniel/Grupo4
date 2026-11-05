@@ -3,6 +3,7 @@
 Sistema de Seguimiento Académico y Alerta Temprana
 
 AVANCES DEL PROYECTO:
+
 compilar: dotnet build -f net10.0-windows10.0.19041.0
 correr: dotnet run -f net10.0-windows10.0.19041.0
 
