@@ -9,3 +9,5 @@ compilar: dotnet build -f net10.0-windows10.0.19041.0
 correr: dotnet run -f net10.0-windows10.0.19041.0
 
 https://docs.google.com/document/d/1OYaaCtgJK-Sxodxti-QsrKi3uinkgSv4_9NRyLwH9ak/edit?usp=sharing
+
+![Diagrama de estructura Grupo4](docs/diagrama%20de%20estructura%20Grupo4.jpg)
