@@ -3,80 +3,113 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.MenuReportesPage"
              Title="Panel de Reportes e Historiales"
-             BackgroundColor="#F4F6F9">
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
+    <Grid RowDefinitions="Auto, *">
 
-            <!-- Encabezado -->
-            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
-                <Label Text="📊 Centro de Reportes" 
-                       FontSize="22" 
-                       FontAttributes="Bold" 
-                       TextColor="#1A252C" 
-                       HorizontalOptions="Center" />
-                <Label Text="Seleccione el tipo de historial que desea consultar" 
-                       FontSize="14" 
-                       TextColor="#757575" 
-                       HorizontalOptions="Center" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
+
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
+
+            <Label Grid.Column="1" 
+                   Text="Panel de Reportes" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
+        </Grid>
+
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
+            <VerticalStackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+
+                <!-- Encabezado -->
+                <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
+                    <Label Text="📊 Centro de Reportes" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           TextColor="#1A252C" 
+                           HorizontalOptions="Center" />
+                    <Label Text="Seleccione el tipo de historial que desea consultar" 
+                           FontSize="14" 
+                           TextColor="#757575" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Tarjeta 1: Reporte de Asistencias -->
+                <Frame BorderColor="#E0E0E0" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="White">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <!-- Indicador lateral -->
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#1976D2" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Reporte de Asistencias" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
+                            <Label Text="Filtros avanzados por DNI, comisiones y rangos de fechas con indicadores de colores." FontSize="12" TextColor="#666" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding IrAsistenciasCommand}"
+                                BackgroundColor="#1976D2" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
+                <!-- Tarjeta 2: Reporte de Trabajos Prácticos -->
+                <Frame BorderColor="#E0E0E0" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="White">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <!-- Indicador lateral -->
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#2E7D32" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Reporte de Trabajos Prácticos" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
+                            <Label Text="Historial de entregas y pendientes por alumno y por trabajo práctico." FontSize="12" TextColor="#666" />
+                        </VerticalStackLayout>
+
+                        <Button Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding IrEntregasTpCommand}"
+                                BackgroundColor="#2E7D32" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
             </VerticalStackLayout>
-
-            <!-- Tarjeta 1: Reporte de Asistencias -->
-            <Frame BorderColor="#E0E0E0" 
-                   CornerRadius="12" 
-                   Padding="20" 
-                   HasShadow="True" 
-                   BackgroundColor="White">
-                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                    <!-- Indicador lateral -->
-                    <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#1976D2" VerticalOptions="Fill" />
-
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                        <Label Text="Reporte de Asistencias" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                        <Label Text="Filtros avanzados por DNI, comisiones y rangos de fechas con indicadores de colores." FontSize="12" TextColor="#666" />
-                    </VerticalStackLayout>
-
-                    <Button Grid.Column="2" 
-                            Text="Ver" 
-                            Command="{Binding IrAsistenciasCommand}"
-                            BackgroundColor="#1976D2" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            VerticalOptions="Center" 
-                            HeightRequest="40" 
-                            WidthRequest="80" />
-                </Grid>
-            </Frame>
-
-            <!-- Tarjeta 2: Reporte de Trabajos Prácticos -->
-            <Frame BorderColor="#E0E0E0" 
-                   CornerRadius="12" 
-                   Padding="20" 
-                   HasShadow="True" 
-                   BackgroundColor="White">
-                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                    <!-- Indicador lateral -->
-                    <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#2E7D32" VerticalOptions="Fill" />
-
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                        <Label Text="Reporte de Trabajos Prácticos" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                        <Label Text="Historial de entregas y pendientes por alumno y por trabajo práctico." FontSize="12" TextColor="#666" />
-                    </VerticalStackLayout>
-
-                    <Button Grid.Column="2" 
-                            Text="Ver" 
-                            Command="{Binding IrEntregasTpCommand}"
-                            BackgroundColor="#2E7D32" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            VerticalOptions="Center" 
-                            HeightRequest="40" 
-                            WidthRequest="80" />
-                </Grid>
-            </Frame>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>

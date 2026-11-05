@@ -32,35 +32,31 @@
     </FlyoutItem>
 
     <!-- DEMÁS MÓDULOS DEL MENÚ LATERAL -->
-    <FlyoutItem Title="Datos de Estudiantes" Icon="dotnet_bot.png">
+    <FlyoutItem Title="ESTUDIANTES" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasMenuPage}" />
-    </FlyoutItem>
+    </FlyoutItem>       
 
-    <FlyoutItem Title="Control de Riesgo" Icon="dotnet_bot.png">
-        <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Gestión de Clases" Icon="dotnet_bot.png">
-        <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Calendario" Icon="dotnet_bot.png">
-        <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Toma de Asistencia" Icon="dotnet_bot.png">
+    <FlyoutItem Title="ASISTENCIAS" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Entregas TP" Icon="dotnet_bot.png">
+    <FlyoutItem Title="TRABAJOS PRACTICOS" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:RegistroEntregasPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Reportes" Icon="dotnet_bot.png">
+    <FlyoutItem Title="CALENDARIO" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:CalendarPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="ANALISIS DE RIESGOS" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:EstudianteListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="REPORTES" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:MenuReportesPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Configuración" Icon="dotnet_bot.png">
+    <FlyoutItem Title="CONFIGURACION" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:ConfiguracionPage}" />
     </FlyoutItem>
 

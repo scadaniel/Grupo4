@@ -2,45 +2,82 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.CalendarPage"
-             Title="Calendario de Cursada">
+             Title="Calendario de Cursada"
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Gestión del Calendario" FontSize="20" FontAttributes="Bold" />
+    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
+    <Grid RowDefinitions="Auto, *">
 
-            <Label Text="Tipo de Evento:" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding TiposEvento}"
-                    SelectedItem="{Binding TipoSeleccionado}" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
 
-            <Label Text="Título / Tema / Nombre del TP:" FontAttributes="Bold" />
-            <Entry Text="{Binding TituloInput}" Placeholder="Ej: Introducción a Sensores o TP 1" />
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
 
-            <Label Text="Fecha Programada / Límite:" FontAttributes="Bold" />
-            <DatePicker Date="{Binding FechaInput}" />
+            <Label Grid.Column="1" 
+                   Text="Calendario de Cursada" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
+        </Grid>
 
-            <Button Text="Guardar en el Calendario" 
-                    Command="{Binding GuardarEventoCommand}" 
-                    BackgroundColor="Navy" 
-                    TextColor="White" />
+        <!-- CONTENIDO SCROLLABLE -->
+        <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Gestión del Calendario" FontSize="20" FontAttributes="Bold" TextColor="#1A252C" />
 
-            <BoxView HeightRequest="1" BackgroundColor="LightGray" Margin="0,10" />
+                <Label Text="Tipo de Evento:" FontAttributes="Bold" TextColor="#1A252C" />
+                <Picker ItemsSource="{Binding TiposEvento}"
+                        SelectedItem="{Binding TipoSeleccionado}"
+                        BackgroundColor="White" />
 
-            <Label Text="Cronograma de Clases y Trabajos Prácticos:" FontSize="18" FontAttributes="Bold" />
+                <Label Text="Título / Tema / Nombre del TP:" FontAttributes="Bold" TextColor="#1A252C" />
+                <Entry Text="{Binding TituloInput}" Placeholder="Ej: Introducción a Sensores o TP 1" BackgroundColor="White" />
 
-            <!-- Visualización usando Border (Estándar .NET 10) -->
-            <CollectionView ItemsSource="{Binding EventosCalendario}" HeightRequest="300">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,5" Padding="10" BackgroundColor="#F9F9F9" Stroke="LightGray" StrokeThickness="1" StrokeShape="RoundRectangle 8">
-                            <VerticalStackLayout Spacing="3">
-                                <Label Text="{Binding Tipo}" FontAttributes="Bold" TextColor="DarkBlue" FontSize="12" />
-                                <Label Text="{Binding Descripcion}" FontSize="16" />
-                                <Label Text="{Binding FechaFormateada}" FontSize="12" TextColor="Gray" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Label Text="Fecha Programada / Límite:" FontAttributes="Bold" TextColor="#1A252C" />
+                <DatePicker Date="{Binding FechaInput}" BackgroundColor="White" />
+
+                <Button Text="Guardar en el Calendario" 
+                        Command="{Binding GuardarEventoCommand}" 
+                        BackgroundColor="Navy" 
+                        TextColor="White" 
+                        CornerRadius="8"
+                        HeightRequest="45" />
+
+                <BoxView HeightRequest="1" BackgroundColor="LightGray" Margin="0,10" />
+
+                <Label Text="Cronograma de Clases y Trabajos Prácticos:" FontSize="18" FontAttributes="Bold" TextColor="#1A252C" />
+
+                <!-- Visualización usando Border -->
+                <CollectionView ItemsSource="{Binding EventosCalendario}" HeightRequest="300">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,5" Padding="10" BackgroundColor="#FFFFFF" Stroke="LightGray" StrokeThickness="1" StrokeShape="RoundRectangle 8">
+                                <VerticalStackLayout Spacing="3">
+                                    <Label Text="{Binding Tipo}" FontAttributes="Bold" TextColor="DarkBlue" FontSize="12" />
+                                    <Label Text="{Binding Descripcion}" FontSize="16" TextColor="#212121" />
+                                    <Label Text="{Binding FechaFormateada}" FontSize="12" TextColor="Gray" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

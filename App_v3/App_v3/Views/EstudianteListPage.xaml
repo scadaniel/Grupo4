@@ -4,109 +4,145 @@
              xmlns:viewmodels="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.EstudianteListPage"
              Title="Panel de Seguimiento y Riesgo"
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False"
              x:Name="PageRoot">
 
-    <Grid RowDefinitions="Auto, Auto, Auto, *" Padding="12" RowSpacing="8">
+    <!-- Grid principal: Fila 0 para la Barra Superior, Fila 1 para el Contenido -->
+    <Grid RowDefinitions="Auto, *">
 
-        <!-- Selector de Comisión -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
-            <Label Text="Comisión:" 
-                   VerticalOptions="Center" 
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
+
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
+
+            <Label Grid.Column="1" 
+                   Text="Seguimiento y Riesgo" 
+                   TextColor="White" 
+                   FontSize="18" 
                    FontAttributes="Bold" 
-                   Margin="0,0,10,0" />
-            <Picker Grid.Column="1"
-                    Title="Seleccionar comisión"
-                    ItemsSource="{Binding ListaComisiones}"
-                    ItemDisplayBinding="{Binding Nombre}"
-                    SelectedItem="{Binding ComisionSeleccionada}" />
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
         </Grid>
 
-        <!-- Barra de Búsqueda Rápida por Apellido, Nombre o DNI -->
-        <SearchBar Grid.Row="1"
-                   Placeholder="Buscar por nombre, apellido, DNI o legajo..."
-                   Text="{Binding TextoBusqueda}" />
+        <!-- CONTENIDO PRINCIPAL (Desplazado a Fila 1 con fondo claro) -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, *" Padding="12" RowSpacing="8" BackgroundColor="#F4F6F9">
 
-        <!-- Filtro H11: No Contactados esta Semana -->
-        <Frame Grid.Row="2" 
-               BackgroundColor="#F5F5F5" 
-               CornerRadius="8" 
-               Padding="10,5" 
-               HasShadow="False"
-               BorderColor="#E0E0E0">
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                <Switch IsToggled="{Binding SoloNoContactadosSemana}" 
-                        OnColor="#1565C0" />
-                <Label Text="Mostrar solo no contactados esta semana (últimos 7 días)"
-                       VerticalOptions="Center"
-                       FontSize="13"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-            </HorizontalStackLayout>
-        </Frame>
+            <!-- Selector de Comisión -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+                <Label Text="Comisión:" 
+                       VerticalOptions="Center" 
+                       FontAttributes="Bold" 
+                       Margin="0,0,10,0" />
+                <Picker Grid.Column="1"
+                        Title="Seleccionar comisión"
+                        ItemsSource="{Binding ListaComisiones}"
+                        ItemDisplayBinding="{Binding Nombre}"
+                        SelectedItem="{Binding ComisionSeleccionada}"
+                        BackgroundColor="White" />
+            </Grid>
 
-        <!-- Lista de Estudiantes -->
-        <CollectionView Grid.Row="3" ItemsSource="{Binding Estudiantes}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodels:EstudianteItemViewModel">
-                    <Frame Margin="0,4" Padding="12" CornerRadius="8" HasShadow="True" BorderColor="#CCCCCC">
-                        <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="6">
+            <!-- Barra de Búsqueda Rápida por Apellido, Nombre o DNI -->
+            <SearchBar Grid.Row="1"
+                       Placeholder="Buscar por nombre, apellido, DNI o legajo..."
+                       Text="{Binding TextoBusqueda}"
+                       BackgroundColor="White" />
 
-                            <!-- Nombre y DNI / Legajo -->
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
-                                <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#111111" />
-                                <Label Text="{Binding Dni, StringFormat='DNI: {0}'}" FontSize="12" TextColor="Gray" />
-                            </VerticalStackLayout>
+            <!-- Filtro H11: No Contactados esta Semana -->
+            <Frame Grid.Row="2" 
+                   BackgroundColor="#F5F5F5" 
+                   CornerRadius="8" 
+                   Padding="10,5" 
+                   HasShadow="False"
+                   BorderColor="#E0E0E0">
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Switch IsToggled="{Binding SoloNoContactadosSemana}" 
+                            OnColor="#1565C0" />
+                    <Label Text="Mostrar solo no contactados esta semana (últimos 7 días)"
+                           VerticalOptions="Center"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                </HorizontalStackLayout>
+            </Frame>
 
-                            <!-- Insignia Nivel de Riesgo -->
-                            <Frame Grid.Row="0" Grid.Column="1" 
-                                   BackgroundColor="{Binding ColorRiesgoHex}" 
-                                   Padding="8,4" 
-                                   CornerRadius="4" 
-                                   HasShadow="False">
-                                <Label Text="{Binding NivelRiesgoText}" TextColor="White" FontAttributes="Bold" FontSize="11" />
-                            </Frame>
+            <!-- Lista de Estudiantes -->
+            <CollectionView Grid.Row="3" ItemsSource="{Binding Estudiantes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:EstudianteItemViewModel">
+                        <Frame Margin="0,4" Padding="12" CornerRadius="8" HasShadow="True" BorderColor="#CCCCCC" BackgroundColor="White">
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="6">
 
-                            <!-- Diagnóstico -->
-                            <Label Grid.Row="1" Grid.ColumnSpan="2" 
-                                   Text="{Binding Diagnostico}" 
-                                   FontSize="12" 
-                                   TextColor="#555555" />
+                                <!-- Nombre y DNI / Legajo -->
+                                <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                                    <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#111111" />
+                                    <Label Text="{Binding Dni, StringFormat='DNI: {0}'}" FontSize="12" TextColor="Gray" />
+                                </VerticalStackLayout>
 
-                            <!-- Estado del Último Contacto (H11) -->
-                            <Label Grid.Row="2" Grid.ColumnSpan="2"
-                                   Text="{Binding TextoEstadoContacto}" 
-                                   FontSize="12" 
-                                   FontAttributes="Bold"
-                                   TextColor="{Binding FueContactado, Converter={StaticResource BooleanToColorConverter}, FallbackValue='#1565C0'}" />
+                                <!-- Insignia Nivel de Riesgo -->
+                                <Frame Grid.Row="0" Grid.Column="1" 
+                                       BackgroundColor="{Binding ColorRiesgoHex}" 
+                                       Padding="8,4" 
+                                       CornerRadius="4" 
+                                       HasShadow="False">
+                                    <Label Text="{Binding NivelRiesgoText}" TextColor="White" FontAttributes="Bold" FontSize="11" />
+                                </Frame>
 
-                            <!-- Botón Acción Rápida para Registrar Contacto (H10) -->
-                            <Button Grid.Row="3" Grid.ColumnSpan="2"
-                                    Text="📞 Registrar Contacto / Intervención"
-                                    Command="{Binding BindingContext.RegistrarContactoAlumnoCommand, Source={x:Reference PageRoot}}"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="#1976D2"
-                                    TextColor="White"
-                                    FontSize="12"
-                                    HeightRequest="36"
-                                    Margin="0,4,0,0"
-                                    CornerRadius="6" />
+                                <!-- Diagnóstico -->
+                                <Label Grid.Row="1" Grid.ColumnSpan="2" 
+                                       Text="{Binding Diagnostico}" 
+                                       FontSize="12" 
+                                       TextColor="#555555" />
 
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                                <!-- Estado del Último Contacto (H11) -->
+                                <Label Grid.Row="2" Grid.ColumnSpan="2"
+                                       Text="{Binding TextoEstadoContacto}" 
+                                       FontSize="12" 
+                                       FontAttributes="Bold"
+                                       TextColor="{Binding FueContactado, Converter={StaticResource BooleanToColorConverter}, FallbackValue='#1565C0'}" />
 
-            <!-- Vista vacía si no hay coincidencias -->
-            <CollectionView.EmptyView>
-                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Padding="20">
-                    <Label Text="🔍" FontSize="40" HorizontalOptions="Center" />
-                    <Label Text="No se encontraron alumnos que coincidan con los filtros de búsqueda." 
-                           TextColor="Gray" 
-                           HorizontalOptions="Center" 
-                           HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
-            </CollectionView.EmptyView>
-        </CollectionView>
+                                <!-- Botón Acción Rápida para Registrar Contacto (H10) -->
+                                <Button Grid.Row="3" Grid.ColumnSpan="2"
+                                        Text="📞 Registrar Contacto / Intervención"
+                                        Command="{Binding BindingContext.RegistrarContactoAlumnoCommand, Source={x:Reference PageRoot}}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#1976D2"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        HeightRequest="36"
+                                        Margin="0,4,0,0"
+                                        CornerRadius="6" />
 
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <!-- Vista vacía si no hay coincidencias -->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Padding="20">
+                        <Label Text="🔍" FontSize="40" HorizontalOptions="Center" />
+                        <Label Text="No se encontraron alumnos que coincidan con los filtros de búsqueda." 
+                               TextColor="Gray" 
+                               HorizontalOptions="Center" 
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+        </Grid>
     </Grid>
 </ContentPage>

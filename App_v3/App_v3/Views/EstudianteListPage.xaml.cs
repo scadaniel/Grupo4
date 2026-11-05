@@ -18,4 +18,12 @@ public partial class EstudianteListPage : ContentPage
         // Recargar la lista y refrescar el estado de los contactos guardados
         await _viewModel.FiltrarYCalcularRiesgoPorComisionAsync();
     }
+
+    private void OnBotonMenuFlyoutClicked(object sender, EventArgs e)
+    {
+        if (Shell.Current != null)
+        {
+            Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+        }
+    }
 }

@@ -11,6 +11,8 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(Views.ReporteAsistenciasPage), typeof(Views.ReporteAsistenciasPage));
         Routing.RegisterRoute(nameof(Views.ReporteEntregasTpPage), typeof(Views.ReporteEntregasTpPage));
 
+        Routing.RegisterRoute(nameof(Views.RegistrarIntervencionPage), typeof(Views.RegistrarIntervencionPage));
+
         MainPage = new AppShell();
     }
 }

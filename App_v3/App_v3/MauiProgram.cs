@@ -109,6 +109,13 @@ public static class MauiProgram
         builder.Services.AddTransient<NuevoEstudiantePage>();
         builder.Services.AddTransient<NuevoEstudianteViewModel>();
 
+        // =========================================================
+        // realizar una comunicacion 
+        // =========================================================
+
+        builder.Services.AddTransient<RegistrarIntervencionPage>();
+        builder.Services.AddTransient<RegistrarIntervencionViewModel>();
+
         return builder.Build();
     }
 }

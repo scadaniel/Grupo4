@@ -3,44 +3,84 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.GestionClasesPage"
-             Title="Gestión de Clases y Cátedras">
+             Title="Gestión de Clases y Cátedras"
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Registrar Nueva Cátedra / Clase"
-                   FontSize="20"
-                   FontAttributes="Bold" />
+    <!-- Grid principal: Fila 0 para la Barra Superior, Fila 1 para el Contenido -->
+    <Grid RowDefinitions="Auto, *">
 
-            <Entry Placeholder="Nombre de la Materia"
-                   Text="{Binding NombreMateria}" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *, Auto">
 
-            <Entry Placeholder="Comisión / Aula"
-                   Text="{Binding Comision}" />
+            <Button Grid.Column="0"
+                    Text="☰  Menú" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    VerticalOptions="Center"
+                    Clicked="OnBotonMenuFlyoutClicked" />
 
-            <Button Text="Guardar Clase"
-                    Command="{Binding GuardarClaseCommand}"
-                    BackgroundColor="#512BD4"
-                    TextColor="White" />
+            <Label Grid.Column="1" 
+                   Text="Gestión de Clases" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   Margin="20,0,0,0" />
+        </Grid>
 
-            <BoxView HeightRequest="1" Color="Gray" Margin="0,10" />
+        <!-- CONTENIDO SCROLLABLE CON FONDO CLARO -->
+        <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
+            <VerticalStackLayout Padding="20" Spacing="15">
 
-            <Label Text="Clases Registradas"
-                   FontSize="18"
-                   FontAttributes="Bold" />
+                <Label Text="Registrar Nueva Cátedra / Clase"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#1A252C" />
 
-            <CollectionView ItemsSource="{Binding Clases}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Margin="0,5" Padding="10">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding NombreMateria}" FontAttributes="Bold" FontSize="16" />
-                                <!-- CAMBIO AQUÍ: TextColor en lugar de Color -->
-                                <Label Text="{Binding Comision, StringFormat='Comisión: {0}'}" FontSize="14" TextColor="Gray" />
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Entry Placeholder="Nombre de la Materia"
+                       Text="{Binding NombreMateria}"
+                       BackgroundColor="White" />
+
+                <Entry Placeholder="Comisión / Aula"
+                       Text="{Binding Comision}"
+                       BackgroundColor="White" />
+
+                <Button Text="Guardar Clase"
+                        Command="{Binding GuardarClaseCommand}"
+                        BackgroundColor="#512BD4"
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="45" />
+
+                <BoxView HeightRequest="1" Color="Gray" Margin="0,10" />
+
+                <Label Text="Clases Registradas"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#1A252C" />
+
+                <CollectionView ItemsSource="{Binding Clases}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,5" Padding="10" BackgroundColor="White" BorderColor="#E0E0E0">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding NombreMateria}" FontAttributes="Bold" FontSize="16" TextColor="#212121" />
+                                    <Label Text="{Binding Comision, StringFormat='Comisión: {0}'}" FontSize="14" TextColor="Gray" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

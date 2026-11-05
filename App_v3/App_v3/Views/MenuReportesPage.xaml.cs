@@ -9,6 +9,14 @@ public partial class MenuReportesPage : ContentPage
         InitializeComponent();
         BindingContext = new MenuReportesViewModel();
     }
+
+    private void OnBotonMenuFlyoutClicked(object sender, EventArgs e)
+    {
+        if (Shell.Current != null)
+        {
+            Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+        }
+    }
 }
 
 public class MenuReportesViewModel
