@@ -112,9 +112,18 @@ public static class MauiProgram
         // =========================================================
         // realizar una comunicacion 
         // =========================================================
-
         builder.Services.AddTransient<RegistrarIntervencionPage>();
         builder.Services.AddTransient<RegistrarIntervencionViewModel>();
+
+        // =========================================================
+        // REPORTES: Reporte de Contactos (Historia H12)
+        // =========================================================
+        builder.Services.AddTransient<ReporteContactosViewModel>();
+        builder.Services.AddTransient<ReporteContactosPage>();
+
+        Routing.RegisterRoute(nameof(ReporteContactosPage), typeof(ReporteContactosPage));
+
+        
 
         return builder.Build();
     }

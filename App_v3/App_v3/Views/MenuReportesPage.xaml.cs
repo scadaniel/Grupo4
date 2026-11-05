@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using App_v3.Views;
 
 namespace App_v3.Views;
 
@@ -15,6 +16,19 @@ public partial class MenuReportesPage : ContentPage
         if (Shell.Current != null)
         {
             Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+        }
+    }
+
+    // Este método es el que se conecta directamente con Clicked="OnVerReporteContactosClicked" del XAML
+    private async void OnVerReporteContactosClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync(nameof(ReporteContactosPage));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudo abrir el reporte: {ex.Message}", "OK");
         }
     }
 }

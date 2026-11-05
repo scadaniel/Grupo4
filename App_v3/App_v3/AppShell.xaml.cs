@@ -13,6 +13,8 @@ namespace App_v3
             Routing.RegisterRoute(nameof(ListadoEstudiantesPage), typeof(ListadoEstudiantesPage));
             Routing.RegisterRoute(nameof(ComisionesNominaPage), typeof(ComisionesNominaPage));
             Routing.RegisterRoute(nameof(NuevoEstudiantePage), typeof(NuevoEstudiantePage));
+            // Reporte de alumnos contactados y fecha de contacto
+            Routing.RegisterRoute(nameof(ReporteContactosPage), typeof(ReporteContactosPage));
         }
     }
 }

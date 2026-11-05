@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.ReporteContactosPage"
+             Title="Reporte General de Contactos"
+             BackgroundColor="#F4F6F9">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- BARRA SUPERIOR CON BOTÓN DE RETORNO -->
+        <Grid Grid.Row="0" BackgroundColor="#1E293B" Padding="15" ColumnDefinitions="Auto, *">
+            <Button Grid.Column="0"
+                    Text="← Volver" 
+                    Command="{Binding VolverAlMenuCommand}" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White" 
+                    CornerRadius="8" 
+                    HeightRequest="40" />
+            <Label Grid.Column="1" 
+                   Text="Historial y Reporte de Contactos" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <VerticalStackLayout Grid.Row="1" Padding="16" Spacing="12">
+
+            <!-- Selector de Comisión -->
+            <Picker Title="Seleccione una comisión"
+                    ItemsSource="{Binding ListaComisiones}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ComisionSeleccionada}"
+                    BackgroundColor="White" />
+
+            <!-- Listado Detallado de Contactos -->
+            <CollectionView ItemsSource="{Binding ContactosRealizados}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,6" Padding="14" CornerRadius="10" BorderColor="#E2E8F0" BackgroundColor="White">
+                            <VerticalStackLayout Spacing="6">
+                                <!-- Estudiante y Fecha -->
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Text="{Binding NombreEstudiante}" FontAttributes="Bold" FontSize="16" TextColor="#1E293B" />
+                                    <Label Grid.Column="1" Text="{Binding FechaTexto}" FontSize="12" TextColor="#64748B" VerticalOptions="Center" />
+                                </Grid>
+
+                                <Label Text="{Binding DetalleAcademico}" FontSize="13" TextColor="#475569" />
+                                <Label Text="{Binding Motivo, StringFormat='Motivo: {0}'}" FontSize="13" FontAttributes="Italic" TextColor="#334155" />
+                                <Label Text="{Binding ReporteSituacion, StringFormat='Situación: {0}'}" FontSize="13" TextColor="#0F172A" />
+
+                                <!-- Mensaje si existiera -->
+                                <Label Text="{Binding Mensaje, StringFormat='Mensaje: {0}'}" 
+                                       FontSize="13" 
+                                       TextColor="#2563EB" 
+                                       IsVisible="{Binding Mensaje, Converter={StaticResource IsNotNullOrEmptyConverter}}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

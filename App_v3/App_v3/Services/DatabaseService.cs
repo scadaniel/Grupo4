@@ -771,5 +771,44 @@ public class DatabaseService
     }
 
 
+    public async Task<List<ReporteContactoItemModel>> GetReporteContactosDetalladoAsync(int comisionId)
+    {
+        await InitAsync();
+
+        // Obtenemos los registros de la base de datos local
+        var intervenciones = await _dbConnection!.Table<IntervencionContacto>().ToListAsync();
+        var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
+        var comisiones = await _dbConnection.Table<Comision>().ToListAsync();
+
+        string? nombreComisionFiltro = null;
+        if (comisionId > 0)
+        {
+            var com = comisiones.FirstOrDefault(c => c.Id == comisionId);
+            nombreComisionFiltro = com?.Nombre?.Trim();
+        }
+
+        // El JOIN con intervenciones asegura traer ÚNICAMENTE a los alumnos que fueron contactados
+        var query = from contacto in intervenciones
+                    join est in estudiantes on contacto.EstudianteId equals est.Id
+                    where comisionId == 0 || (est.Comision != null && est.Comision.Trim().Equals(nombreComisionFiltro, StringComparison.OrdinalIgnoreCase))
+                    orderby contacto.Fecha descending
+                    select new ReporteContactoItemModel
+                    {
+                        NombreEstudiante = est.NombreCompleto ?? string.Empty,
+                        Legajo = est.Legajo ?? string.Empty,
+                        ComisionNombre = est.Comision ?? string.Empty,
+                        FechaContacto = contacto.Fecha,
+                        MedioContacto = contacto.Medio ?? string.Empty,
+                        Motivo = "Intervención Registrada",
+                        ReporteSituacion = string.IsNullOrWhiteSpace(contacto.Resultado) ? "Sin observaciones" : contacto.Resultado,
+                        AsistenciasAlMomento = est.Inasistencias,
+                        TpsNoEntregadosAlMomento = est.TpsNoEntregados,
+                        Mensaje = contacto.Resultado
+                    };
+
+        return query.ToList();
+    }
+
+
 
 }

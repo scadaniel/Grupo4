@@ -109,6 +109,35 @@
                     </Grid>
                 </Frame>
 
+                <!-- Tarjeta 3: Historial y Reporte de Contactos -->
+                <Frame BorderColor="#E0E0E0" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="White"> 
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <!-- Indicador lateral violeta -->
+                        <BoxView Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#7C3AED" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Historial y Reporte de Contactos" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
+                            <Label Text="Listado detallado de a quién se contactó, fecha, medio, motivo, situación, asistencias, TPs y mensajes." FontSize="12" TextColor="#666" />
+                        </VerticalStackLayout>
+
+                        <!-- Botón vinculado al comando del ViewModel del menú -->
+                        <Button Grid.Column="2" 
+                            Text="Ver" 
+                            Clicked="OnVerReporteContactosClicked"
+                            BackgroundColor="#7C3AED" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="8" 
+                            VerticalOptions="Center" 
+                            HeightRequest="40" 
+                            WidthRequest="80" />
+                    </Grid>
+                </Frame>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

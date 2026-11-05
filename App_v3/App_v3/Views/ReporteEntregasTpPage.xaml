@@ -4,120 +4,171 @@
              xmlns:vm="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.ReporteEntregasTpPage"
              Title="Historial y Reporte de Trabajos Prácticos"
-             BackgroundColor="#F4F6F9">
+             BackgroundColor="#F4F6F9"
+             Shell.NavBarIsVisible="False">
 
-    <!-- Cambiado a 3 filas: Botón Volver (Auto), Filtros (Auto) y Listado (*) -->
-    <Grid RowDefinitions="Auto, Auto, *" Padding="15">
+    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
+    <Grid RowDefinitions="Auto, *">
 
-        <!-- Botón para Volver al Menú de Reportes -->
-        <Button Grid.Row="0" 
-                Text="⬅ Volver al Menú de Reportes" 
-                Command="{Binding VolverAlMenuCommand}" 
-                BackgroundColor="#757575" 
-                TextColor="White" 
-                FontAttributes="Bold" 
-                Margin="0,0,0,10" />
+        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA UNIFICADA (Idéntica a la de Contactos) -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="15" 
+              ColumnDefinitions="Auto, *">
 
-        <!-- Sección de Filtros (Fila 1) -->
-        <Frame Grid.Row="1" BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" Margin="0,0,0,10" BackgroundColor="White">
-            <VerticalStackLayout Spacing="10">
-                <Label Text="Filtros de Trabajos Prácticos" FontSize="15" FontAttributes="Bold" TextColor="#1976D2" />
+            <!-- Botón Azul de Volver -->
+            <Button Grid.Column="0"
+                    Text="← Volver" 
+                    Command="{Binding VolverAlMenuCommand}" 
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White" 
+                    FontAttributes="Bold"
+                    CornerRadius="8" 
+                    HeightRequest="40" 
+                    WidthRequest="100" />
 
-                <!-- Filtro por DNI -->
-                <Entry Placeholder="Buscar por DNI del alumno..." 
-                       Text="{Binding DniFiltro}" 
-                       Keyboard="Numeric" 
-                       BackgroundColor="#F9F9F9" />
+            <!-- Título Centrado -->
+            <Label Grid.Column="1" 
+                   Text="Historial y Reporte de Trabajos Prácticos" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center" />
+        </Grid>
 
-                <!-- Filtro por Trabajo Práctico -->
-                <Picker ItemsSource="{Binding TrabajosPracticos}"
-                        SelectedItem="{Binding TpSeleccionado}"
-                        ItemDisplayBinding="{Binding Nombre}"
-                        Title="Filtrar por Trabajo Práctico"
-                        BackgroundColor="#F9F9F9" />
+        <!-- CONTENIDO DE LA PÁGINA -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, *" Padding="16" RowSpacing="14">
 
-                <!-- Botones de Acción -->
-                <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,5,0,0">
-                    <Button Grid.Column="0" 
-                            Text="Aplicar Filtros" 
-                            Command="{Binding BuscarCommand}" 
-                            BackgroundColor="#1976D2" 
-                            TextColor="White" 
-                            FontAttributes="Bold" />
-                    <Button Grid.Column="1" 
-                            Text="Limpiar" 
-                            Command="{Binding LimpiarFiltrosCommand}" 
-                            BackgroundColor="#757575" 
-                            TextColor="White" 
-                            FontAttributes="Bold" />
-                </Grid>
-            </VerticalStackLayout>
-        </Frame>
+            <!-- Fila 0: Panel de Filtros (Tal como lo tenías) -->
+            <Border Grid.Row="0" 
+                    Padding="16" 
+                    StrokeShape="RoundRectangle 16" 
+                    BackgroundColor="White" 
+                    Stroke="#E2E8F0">
+                <VerticalStackLayout Spacing="10">
 
-        <!-- Listado con Tarjetas Visuales y Cuadraditos de Colores (Fila 2) -->
-        <CollectionView Grid.Row="2" ItemsSource="{Binding ListaReporteTp}">
-            <CollectionView.EmptyView>
-                <Label Text="No se encontraron registros de TPs con los filtros seleccionados." 
-                       HorizontalOptions="Center" 
-                       TextColor="Gray" 
-                       Margin="0,30" />
-            </CollectionView.EmptyView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame BorderColor="#EFEFEF" 
-                           CornerRadius="8" 
-                           Padding="12" 
-                           Margin="0,4" 
-                           HasShadow="False" 
-                           BackgroundColor="White">
-                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                    <Label Text="Filtros de Trabajos Prácticos" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="#0F172A" />
 
-                            <!-- Cuadradito indicador lateral de color (Verde/Rojo) -->
-                            <BoxView Grid.Column="0" 
-                                     WidthRequest="10" 
-                                     CornerRadius="4" 
-                                     BackgroundColor="{Binding ColorEstado}" 
-                                     VerticalOptions="Fill" />
+                    <!-- Filtro por DNI -->
+                    <Entry Placeholder="Buscar por DNI del alumno..." 
+                           Text="{Binding DniFiltro}" 
+                           Keyboard="Numeric" 
+                           FontSize="14"
+                           BackgroundColor="#F8FAFC"
+                           ClearButtonVisibility="WhileEditing" />
 
-                            <!-- Información del Alumno y el TP -->
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="{Binding NombreEstudiante}" 
-                                           FontAttributes="Bold" 
-                                           FontSize="15" 
-                                           TextColor="#212121" />
-                                    <Label Text="{Binding Dni, StringFormat='(DNI: {0})'}" 
+                    <!-- Filtro por Trabajo Práctico -->
+                    <Picker ItemsSource="{Binding ListaTrabajosPracticos}"
+                            SelectedItem="{Binding TpSeleccionado}"
+                            ItemDisplayBinding="{Binding Nombre}"
+                            Title="Filtrar por Trabajo Práctico"
+                            FontSize="14"
+                            TextColor="#1E293B"
+                            BackgroundColor="#F8FAFC" />
+
+                    <!-- Botones de Acción de Filtro -->
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="10" VerticalOptions="End" Margin="0,5,0,0">
+                        <Button Grid.Column="0" 
+                                Text="Aplicar Filtros" 
+                                Command="{Binding AplicarFiltrosCommand}" 
+                                BackgroundColor="#2563EB" 
+                                TextColor="White" 
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                CornerRadius="10"
+                                HeightRequest="42" />
+
+                        <Button Grid.Column="1" 
+                                Text="Limpiar" 
+                                Command="{Binding LimpiarFiltrosCommand}" 
+                                BackgroundColor="#64748B" 
+                                TextColor="White" 
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                CornerRadius="10"
+                                HeightRequest="42" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Fila 1: Listado de Resultados (CollectionView) -->
+            <CollectionView Grid.Row="1" ItemsSource="{Binding ListaReporteTps}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,40">
+                        <Label Text="📭" FontSize="48" HorizontalOptions="Center" />
+                        <Label Text="No se encontraron registros de trabajos prácticos para los filtros seleccionados." 
+                               HorizontalOptions="Center" 
+                               TextColor="#64748B" 
+                               FontSize="14" 
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 12" 
+                                BackgroundColor="White" 
+                                Stroke="#E2E8F0" 
+                                Padding="14" 
+                                Margin="0,5">
+                            <Grid ColumnDefinitions="10, *, Auto" ColumnSpacing="14" VerticalOptions="Center">
+
+                                <!-- Franja lateral de color (Rojo para Pendiente, Verde para Entregado) -->
+                                <BoxView Grid.Column="0" 
+                                         BackgroundColor="{Binding ColorEstado}" 
+                                         CornerRadius="5" 
+                                         VerticalOptions="Fill" />
+
+                                <!-- Información del Alumno y TP -->
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="{Binding NombreEstudiante}" 
+                                               FontAttributes="Bold" 
+                                               FontSize="15" 
+                                               TextColor="#0F172A" />
+                                        <Label Text="{Binding Dni, StringFormat='(DNI: {0})'}" 
+                                               FontSize="12" 
+                                               TextColor="#64748B" 
+                                               VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <Label Text="{Binding NombreTp, StringFormat='TP: {0}'}" 
+                                           FontSize="13" 
+                                           FontAttributes="Bold"
+                                           TextColor="#334155" />
+
+                                    <Label Text="{Binding DetalleEntrega}" 
                                            FontSize="12" 
-                                           TextColor="#757575" 
-                                           VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                                <Label Text="{Binding NombreTp, StringFormat='TP: {0}'}" 
-                                       FontSize="13" 
-                                       FontAttributes="Bold"
-                                       TextColor="#333" />
-                                <Label Text="{Binding TextoFechaEntrega}" 
-                                       FontSize="11" 
-                                       TextColor="#888" />
-                            </VerticalStackLayout>
+                                           TextColor="#64748B" />
+                                </VerticalStackLayout>
 
-                            <!-- Insignia (Badge) de Estado con Color -->
-                            <Border Grid.Column="2" 
-                                    Padding="10,6" 
-                                    BackgroundColor="{Binding ColorEstado}" 
-                                    StrokeShape="RoundRectangle 6" 
-                                    VerticalOptions="Center">
-                                <Label Text="{Binding EstadoTexto}" 
-                                       TextColor="White" 
-                                       FontSize="12" 
-                                       FontAttributes="Bold" 
-                                       HorizontalOptions="Center" />
-                            </Border>
+                                <!-- Insignia de Estado -->
+                                <Border Grid.Column="2" 
+                                        Padding="10,6" 
+                                        BackgroundColor="{Binding ColorEstado}" 
+                                        StrokeShape="RoundRectangle 8" 
+                                        WidthRequest="105"
+                                        HorizontalOptions="End" 
+                                        VerticalOptions="Center">
+                                    <Label Text="{Binding EstadoTexto}" 
+                                           TextColor="White" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" 
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center" />
+                                </Border>
 
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
+        </Grid>
     </Grid>
 </ContentPage>

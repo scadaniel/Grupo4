@@ -89,6 +89,9 @@
 	  <MauiXaml Update="Views\ReporteAsistenciasPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ReporteContactosPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ReporteEntregasTpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
