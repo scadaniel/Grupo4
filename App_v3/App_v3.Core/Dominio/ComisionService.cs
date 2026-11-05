@@ -38,4 +38,9 @@ public class ComisionService(IRepositorio repositorio)
         if (repetida)
             throw new ReglaDeNegocioException($"Ya existe la comisión {comision.Nombre} en esa materia.");
     }
+
+    public async Task BorrarAsync(int comisionId)
+    {
+        await repositorio.BorrarAsync<Comision>(comisionId);
+    }
 }

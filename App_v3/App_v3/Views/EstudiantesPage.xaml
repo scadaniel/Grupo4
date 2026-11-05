@@ -21,7 +21,9 @@
                             IsEnabled="{Binding Selector.HayComision}" />
                 </Grid>
                 <Grid ColumnDefinitions="*,160" ColumnSpacing="10">
-                    <SearchBar Grid.Column="0" Placeholder="Buscar por nombre, DNI o legajo" Text="{Binding Busqueda}" />
+                   <SearchBar Grid.Column="0" Placeholder="Buscar por nombre, DNI o legajo" Text="{Binding Busqueda}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray900}}"
+                     PlaceholderColor="{StaticResource Gray500}" />
                     <Picker Grid.Column="1" Title="Mostrar" ItemsSource="{Binding Filtros}" SelectedItem="{Binding Filtro}" />
                 </Grid>
                 <Label Text="{Binding TextoNominaVacia}" Style="{StaticResource Detalle}" IsVisible="{Binding NominaVacia}" />

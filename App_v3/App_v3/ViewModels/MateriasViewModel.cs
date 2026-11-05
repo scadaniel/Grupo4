@@ -25,6 +25,10 @@ public class MateriasViewModel : BaseViewModel, IPantalla
     private string _nombreMateria = string.Empty;
     private string _nombreComision = string.Empty;
     private Vista _vista = Vista.Lista;
+    //// declaro  las propiedades de los comondos para borrar materia y comision
+    public ICommand BorrarMateriaCommand { get; }
+    public ICommand BorrarComisionCommand { get; }
+
 
     public MateriasViewModel(
         SelectorComisionViewModel selector, MateriaService materias, ComisionService comisiones, IDialogService dialogos)
@@ -38,8 +42,24 @@ public class MateriasViewModel : BaseViewModel, IPantalla
         AbrirNuevaMateriaCommand = Comando(() => { IrA(Vista.NuevaMateria); return Task.CompletedTask; });
         AbrirNuevaComisionCommand = Comando(AbrirNuevaComisionAsync);
         VolverCommand = Comando(() => { Volver(); return Task.CompletedTask; });
+
+        // Dentro del constructor de MateriasViewModel:
+        BorrarMateriaCommand = new ComandoGenerico<FilaOpcionViewModel>(BorrarMateriaAsync);
+        BorrarComisionCommand = new ComandoGenerico<FilaOpcionViewModel>(BorrarComisionAsync);
+
         Selector.PropertyChanged += (_, _) => Refrescar();
         Refrescar();
+    }
+
+    public class ComandoGenerico<T>(Func<T?, Task> accion) : ICommand
+    {
+        public event EventHandler? CanExecuteChanged;
+        public bool CanExecute(object? parameter) => true;
+        public async void Execute(object? parameter)
+        {
+            if (parameter is T val) await accion(val);
+            else if (parameter is null) await accion(default);
+        }
     }
 
     public SelectorComisionViewModel Selector { get; }
@@ -72,6 +92,41 @@ public class MateriasViewModel : BaseViewModel, IPantalla
     {
         get => _nombreComision;
         set => SetProperty(ref _nombreComision, value);
+    }
+
+    private async Task BorrarMateriaAsync(FilaOpcionViewModel? fila)
+    {
+        if (fila is null) return;
+        var materia = Selector.Materias.FirstOrDefault(m => m.Nombre == fila.Texto.Replace("✓ ", ""));
+        if (materia is null) return;
+
+        var confirmar = await Dialogos.ConfirmarAsync(
+            "Eliminar materia",
+            $"A continuación se eliminará la materia seleccionada ({materia.Nombre}), ¿está seguro que desea eliminar? Seleccione su respuesta");
+
+        if (!confirmar) return;
+
+        await _materias.BorrarAsync(materia.Id);
+        await Selector.CargarAsync();
+        IrA(Vista.Lista);
+    }
+
+    private async Task BorrarComisionAsync(FilaOpcionViewModel? fila)
+    {
+        if (fila is null) return;
+        var nombreComision = fila.Texto.Replace("✓ ", "").Replace("Comisión ", "");
+        var comision = Selector.Comisiones.FirstOrDefault(c => c.Nombre == nombreComision);
+        if (comision is null) return;
+
+        var confirmar = await Dialogos.ConfirmarAsync(
+            "Eliminar comisión",
+            $"A continuación se eliminará la comisión seleccionada ({comision.Nombre}), ¿está seguro que desea eliminar? Seleccione su respuesta");
+
+        if (!confirmar) return;
+
+        await _comisiones.BorrarAsync(comision.Id);
+        await Selector.CargarAsync();
+        IrA(Vista.Lista);
     }
 
     public Task AlMostrarseAsync()

@@ -65,4 +65,10 @@ public sealed class RepositorioSqlite(string rutaArchivo) : IRepositorio
             _candado.Release();
         }
     }
+
+    public async Task BorrarAsync<T>(int id) where T : class, IEntidad, new()
+    {
+        await AsegurarTablasAsync();
+        await _conexion.DeleteAsync<T>(id);
+    }
 }

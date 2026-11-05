@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:App_v3.Views"
+             xmlns:conv="clr-namespace:App_v3.Converters"
+             x:Class="App_v3.Views.EstudiantePortalPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="Portal del Estudiante">
+    <ContentPage.Resources>
+        <conv:EstadoAColorConverter x:Key="EstadoColor" />
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            
+            <!-- 1. BARRA SUPERIOR CON FONDO GRIS PASTEL INSTITUCIONAL (Gray950) -->
+            <Border BackgroundColor="{StaticResource Gray950}" Stroke="{StaticResource Gray100}" StrokeThickness="0" Padding="8,4" StrokeShape="RoundRectangle 8">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <Label Grid.Column="0" 
+                           Text="¡ Bienvenido ! Se encuentra en el portal de Estudiantes" 
+                           FontSize="15" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource Gray900}" 
+                           VerticalOptions="Center" 
+                           Margin="8,0,0,0" />
+                
+                    <Button Grid.Column="1" 
+                            Text="⋮" 
+                            FontSize="20" 
+                            FontAttributes="Bold" 
+                            Style="{StaticResource BotonTexto}" 
+                            Clicked="AlPresionarOpciones" 
+                            WidthRequest="44" 
+                            HeightRequest="44" />
+                </Grid>
+            </Border>
+
+            <!-- 2. MÓDULO VIOLETA CON ISOTIPO INSTITUCIONAL AMPLIADO Y DESTACADO -->
+            <Border BackgroundColor="#2B0B98" StrokeThickness="0" Padding="20,16" StrokeShape="RoundRectangle 12">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                        <Label Text="Portal de Autogestión Académica" FontSize="20" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Consulta tu estado académico, inasistencias y entregas en tiempo real." FontSize="13" TextColor="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+
+                    <!-- ISOTIPO INSTITUCIONAL GRANDE Y DESTACADO -->
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="16,0,0,0" Spacing="-8">
+                        <Border BackgroundColor="White" 
+                                StrokeThickness="0" 
+                                StrokeShape="RoundRectangle 16" 
+                                Padding="14,4" 
+                                HorizontalOptions="Center">
+                            <Label Text="Gestión Institucional" 
+                                   TextColor="#2B0B98" 
+                                   FontSize="13" 
+                                   FontAttributes="Bold" />
+                        </Border>
+                        <Border BackgroundColor="Transparent" 
+                                Stroke="White" 
+                                StrokeThickness="2" 
+                                StrokeShape="RoundRectangle 10" 
+                                Padding="12,2,12,4" 
+                                HorizontalOptions="Center"
+                                ZIndex="-1">
+                            <Label Text="de Estudiantes" 
+                                   TextColor="White" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+          <!-- VISTA DE IDENTIFICACIÓN (Si no ha ingresado su DNI) -->
+            <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding NoTieneEstudiante}">
+                <VerticalStackLayout Spacing="12" Padding="8">
+                    <Label Text="Identificación del Estudiante" Style="{StaticResource TituloTarjeta}" />
+                    <Label Text="Ingrese su número de DNI o Legajo para acceder a su legajo y reportes de seguimiento." Style="{StaticResource Detalle}" />
+                    <Entry Placeholder="Ej: 40112345 o L-1001" Text="{Binding DocumentoBusqueda}" Keyboard="Default" />
+                    <Button Text="Consultar mi legajo" Command="{Binding BuscarCommand}" />
+                    <!-- TEXTO DE ERROR EN ROJO -->
+                    <Label Text="{Binding MensajeError}" Style="{StaticResource MensajeError}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- VISTA DE DATOS Y TRAYECTORIA (Una vez identificado) -->
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding TieneEstudiante}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="{Binding EstudianteActual.NombreCompleto}" Style="{StaticResource Titulo}" />
+                        <Label Text="{Binding EstudianteActual.Dni, StringFormat='DNI: {0}'}" Style="{StaticResource Detalle}" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="Cambiar / Salir" Command="{Binding CambiarEstudianteCommand}" Style="{StaticResource BotonSecundario}" VerticalOptions="Center" />
+                </Grid>
+
+                <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Ficha}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding NombreCompleto}" Style="{StaticResource TituloTarjeta}" />
+                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" />
+                        <Label Text="{Binding TextoEstado}" FontAttributes="Bold" TextColor="{Binding EsActivo, Converter={StaticResource EstadoColor}}" />
+                        <Label Text="{Binding TextoNivel, StringFormat='Estado de Riesgo: {0}'}" FontAttributes="Bold" TextColor="{Binding Nivel, Converter={StaticResource EstadoColor}}" IsVisible="{Binding TieneNivel}" />
+                        <Label Text="{Binding Motivo}" Style="{StaticResource Detalle}" />
+                        <Label Text="{Binding Resumen}" FontAttributes="Bold" />
+
+                        <Label Text="Historial de Asistencia" Style="{StaticResource Seccion}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Asistencias}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,2">
+                                        <Label Grid.Column="0" Text="{Binding Texto}" FontSize="13" />
+                                        <Label Grid.Column="1" Text="{Binding TextoEstado}" FontSize="13" FontAttributes="Bold" TextColor="{Binding Estado, Converter={StaticResource EstadoColor}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <Label Text="Historial de Trabajos Prácticos" Style="{StaticResource Seccion}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Entregas}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,2">
+                                        <Label Grid.Column="0" Text="{Binding Texto}" FontSize="13" />
+                                        <Label Grid.Column="1" Text="{Binding TextoEstado}" FontSize="13" FontAttributes="Bold" TextColor="{Binding Estado, Converter={StaticResource EstadoColor}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -2,31 +2,100 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_v3.Views.BarraGlobalView">
-    <!-- Una sola línea de 32 px: la etiqueta va a la izquierda de cada selector (sin encabezado encima), así entra en la barra. -->
-    <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,Auto" ColumnSpacing="8" Padding="8,0" VerticalOptions="Center">
-        <Label Grid.Column="0" Text="Materia" Style="{StaticResource EtiquetaBarra}" />
-        <Grid Grid.Column="1" VerticalOptions="Center">
+
+<Grid ColumnDefinitions="Auto,Auto,*,Auto,*,Auto,Auto,Auto"
+          ColumnSpacing="8"
+          Padding="12,4"
+          VerticalOptions="Center">
+
+        <!-- 1. Isotipo Institucional -->
+        <VerticalStackLayout Grid.Column="0"
+                            VerticalOptions="Center"
+                            Margin="0,0,8,0"
+                            Spacing="-7">
+            <Border BackgroundColor="#2B0B98"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="10,2"
+                    HorizontalOptions="Center">
+                <Label Text="Gestión Institucional"
+                       TextColor="White"
+                       FontSize="11"
+                       FontAttributes="Bold"/>
+            </Border>
+            <Border BackgroundColor="White"
+                    Stroke="#2B0B98"
+                    StrokeThickness="1.2"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="8,1,8,2"
+                    HorizontalOptions="Center"
+                    ZIndex="-1">
+                <Label Text="de Estudiantes"
+                       TextColor="#2B0B98"
+                       FontSize="12"
+                       FontAttributes="Bold"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- 2. Materia -->
+        <Label Grid.Column="1"
+               Text="Materia"
+               Style="{StaticResource EtiquetaBarra}"/>
+        <Grid Grid.Column="2"
+              VerticalOptions="Center">
             <Picker ItemsSource="{Binding Materias}"
                     ItemDisplayBinding="{Binding Nombre}"
                     SelectedItem="{Binding MateriaSeleccionada}"
                     IsEnabled="{Binding HayMateria}"
-                    AutomationProperties.Name="Materia"
-                    HeightRequest="32" MinimumHeightRequest="32" MinimumWidthRequest="140" />
-            <Label Text="Sin materias" Style="{StaticResource MarcadorPicker}" IsVisible="{Binding SinMateria}" />
+                    TextColor="{StaticResource Gray900}"
+                    TitleColor="{StaticResource Gray500}"
+                    HeightRequest="32"
+                    MinimumHeightRequest="32"/>
+            <Label Text="Sin materias"
+                   Style="{StaticResource MarcadorPicker}"
+                   IsVisible="{Binding SinMateria}"/>
         </Grid>
 
-        <Label Grid.Column="2" Text="Comisión" Style="{StaticResource EtiquetaBarra}" />
-        <Grid Grid.Column="3" VerticalOptions="Center">
+        <!-- 3. Comisión -->
+        <Label Grid.Column="3"
+               Text="Comisión"
+               Style="{StaticResource EtiquetaBarra}"/>
+        <Grid Grid.Column="4"
+              VerticalOptions="Center">
             <Picker ItemsSource="{Binding Comisiones}"
                     ItemDisplayBinding="{Binding Nombre}"
                     SelectedItem="{Binding ComisionSeleccionada}"
                     IsEnabled="{Binding HayComision}"
-                    AutomationProperties.Name="Comisión"
-                    HeightRequest="32" MinimumHeightRequest="32" MinimumWidthRequest="140" />
-            <Label Text="Sin comisiones" Style="{StaticResource MarcadorPicker}" IsVisible="{Binding SinComision}" />
+                    TextColor="{StaticResource Gray900}"
+                    TitleColor="{StaticResource Gray500}"
+                    HeightRequest="32"
+                    MinimumHeightRequest="32"/>
+            <Label Text="Sin comisiones"
+                   Style="{StaticResource MarcadorPicker}"
+                   IsVisible="{Binding SinComision}"/>
         </Grid>
 
-        <Button Grid.Column="4" Text="Reportes" Style="{StaticResource BotonTexto}" Clicked="AlIrAReportes" />
-        <Button Grid.Column="5" Text="Configuración" Style="{StaticResource BotonTexto}" Clicked="AlIrAConfiguracion" />
+        <!-- 4. Reportes -->
+        <Button Grid.Column="5"
+                Text="Reportes"
+                Style="{StaticResource BotonTexto}"
+                Clicked="AlIrAReportes" />
+
+        <!-- 5. Configuración -->
+        <Button Grid.Column="6"
+                Text="Configuración"
+                Style="{StaticResource BotonTexto}"
+                Clicked="AlIrAConfiguracion" />
+
+        <!-- 6. Salir -->
+        <Button Grid.Column="7"
+                Text="⋮"
+                FontSize="18"
+                FontAttributes="Bold"
+                Style="{StaticResource BotonTexto}"
+                Clicked="AlPresionarOpciones"
+                WidthRequest="32"
+                HeightRequest="32"
+                Padding="0" />
     </Grid>
 </ContentView>

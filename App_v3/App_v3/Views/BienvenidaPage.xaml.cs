@@ -15,7 +15,17 @@ public partial class BienvenidaPage : ContentPage
 
     private async void OnEstudianteClicked(object sender, EventArgs e)
     {
-        // Vista de estudiante (puedes adaptarla después)
-        await DisplayAlert("Acceso", "Redirigiendo al panel de Estudiante...", "OK");
+        try
+        {
+            // Resolvemos la página del portal del estudiante por inyección de dependencias
+            var portalPage = IPlatformApplication.Current!.Services.GetRequiredService<EstudiantePortalPage>();
+
+            // La envolvemos en una NavigationPage para que tenga barra superior y soporte retroceso de forma segura
+            Application.Current!.MainPage = new NavigationPage(portalPage);
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudo abrir el portal: {ex.Message}", "Aceptar");
+        }
     }
 }

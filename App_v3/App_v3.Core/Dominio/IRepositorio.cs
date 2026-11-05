@@ -14,4 +14,5 @@ public interface IRepositorio
 
     /// <summary>Borra todos los registros de todas las tablas (datos de ejemplo, reinicio).</summary>
     Task VaciarAsync();
+    Task BorrarAsync<T>(int id) where T : class, IEntidad, new();
 }

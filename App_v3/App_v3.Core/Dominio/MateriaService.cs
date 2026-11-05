@@ -18,6 +18,16 @@ public class MateriaService(IRepositorio repositorio)
         return materia;
     }
 
+    public async Task BorrarAsync(int materiaId)
+    {
+        var comisiones = await repositorio.ListarAsync<Comision>();
+        foreach (var c in comisiones.Where(x => x.MateriaId == materiaId))
+        {
+            await repositorio.BorrarAsync<Comision>(c.Id);
+        }
+        await repositorio.BorrarAsync<Materia>(materiaId);
+    }
+
     public async Task<List<Materia>> ListarAsync() =>
         (await repositorio.ListarAsync<Materia>())
             .OrderBy(m => m.Nombre, StringComparer.CurrentCultureIgnoreCase)

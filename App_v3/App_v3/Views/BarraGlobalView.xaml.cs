@@ -28,4 +28,18 @@ public partial class BarraGlobalView : ContentView
             if (Shell.Current is not null) await Shell.Current.DisplayAlertAsync("Error", ex.Message, "Aceptar");
         }
     }
+
+    private async void AlPresionarOpciones(object sender, EventArgs e)
+    {
+        bool salir = await Shell.Current.DisplayAlert(
+            "Cerrar sesión", 
+            "¿Seguro que desea salir al menú principal?", 
+            "Salir", 
+            "Cancelar");
+
+        if (salir)
+        {
+            Application.Current!.MainPage = new BienvenidaPage();
+        }
+    }
 }

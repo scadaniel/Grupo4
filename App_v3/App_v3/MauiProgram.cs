@@ -78,6 +78,10 @@ public static class MauiProgram
         servicios.AddTransient<UmbralesViewModel>();
         servicios.AddTransient<DatosViewModel>();
         servicios.AddTransient<ConfiguracionViewModel>();
+
+      // <--VIEWMODEL DEL PORTAL DEL ESTUDIANTE -->
+        servicios.AddTransient<EstudiantePortalViewModel>();
+
     }
 
     private static void RegistrarPaginas(IServiceCollection servicios)
@@ -92,5 +96,9 @@ public static class MauiProgram
         servicios.AddTransient<ReporteAsistenciasPage>();
         servicios.AddTransient<ReporteEntregasPage>();
         servicios.AddTransient<ConfiguracionPage>();
+
+        // <-- La PÁGINA DEL PORTAL DEL ESTUDIANTE -->
+        servicios.AddTransient<EstudiantePortalPage>();
     }
+    
 }
