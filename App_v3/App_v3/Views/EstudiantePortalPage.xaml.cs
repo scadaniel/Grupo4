@@ -12,16 +12,16 @@ public partial class EstudiantePortalPage : ContentPage
 
     private async void AlPresionarOpciones(object sender, EventArgs e)
     {
-        // Cuadro de diálogo nativo con el texto solicitado y los botones de confirmación
-        bool salir = await DisplayAlert(
-            "Cerrar sesión", 
-            "¿Seguro que desea salir del portal de estudiantes?", 
-            "Salir", 
+        bool salir = await DisplayAlertAsync(
+            "Cerrar sesión",
+            "¿Seguro que desea salir del portal de estudiantes?",
+            "Salir",
             "Cancelar");
 
         if (salir)
         {
-            Application.Current!.MainPage = new BienvenidaPage();
+            Application.Current!.Windows[0].Page = new BienvenidaPage();
         }
     }
+
 }

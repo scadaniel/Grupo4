@@ -53,7 +53,11 @@ public class MateriasViewModel : BaseViewModel, IPantalla
 
     public class ComandoGenerico<T>(Func<T?, Task> accion) : ICommand
     {
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
         public bool CanExecute(object? parameter) => true;
         public async void Execute(object? parameter)
         {

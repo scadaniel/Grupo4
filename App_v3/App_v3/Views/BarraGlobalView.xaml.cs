@@ -31,15 +31,15 @@ public partial class BarraGlobalView : ContentView
 
     private async void AlPresionarOpciones(object sender, EventArgs e)
     {
-        bool salir = await Shell.Current.DisplayAlert(
-            "Cerrar sesión", 
-            "¿Seguro que desea salir al menú principal?", 
-            "Salir", 
+        bool salir = await Shell.Current.DisplayAlertAsync(
+            "Cerrar sesión",
+            "¿Seguro que desea salir al menú principal?",
+            "Salir",
             "Cancelar");
 
         if (salir)
         {
-            Application.Current!.MainPage = new BienvenidaPage();
+            Application.Current!.Windows[0].Page = new BienvenidaPage();
         }
     }
 }
