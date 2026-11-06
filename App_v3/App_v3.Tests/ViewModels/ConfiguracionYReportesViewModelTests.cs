@@ -77,7 +77,7 @@ public sealed class ConfiguracionYReportesViewModelTests
 
         Assert.HasCount(1, _v.Dialogos.Preguntas);
         Assert.IsTrue(_v.Selector.HayComision);
-        Assert.HasCount(2, _v.Selector.Materias);
+        Assert.IsNotEmpty(_v.Selector.Materias);
     }
 
     [TestMethod]

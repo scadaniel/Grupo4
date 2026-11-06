@@ -50,7 +50,7 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         await InscribirAsync(comisiones[1], estudiantes.Skip(5).Take(4),
             bajaDelUltimo: null);
 
-        // 2BD1: 5 inscriptos, 5 activos.
+        // 1BD1: 5 inscriptos, 5 activos.
         await InscribirAsync(comisiones[2], estudiantes.Skip(9).Take(5),
             bajaDelUltimo: null);
 
@@ -82,7 +82,7 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
                 [0, 0, 1, 2],
                 [2, 3, 3, 3]));
 
-        // 2BD1: 1 alto, 1 medio y 3 bajo.
+        // 1BD1: 1 alto, 1 medio y 3 bajo.
         await CargarCursadaAsync(comisiones[2], estudiantes.Skip(9).Take(5).ToList(), hoy,
             new Cursada(
                 [0, 3, 0, 1, 2],
@@ -197,79 +197,79 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         }
     }
 
-    
+
 
     // Cinco clases ya dictadas, una por semana, y una futura sin asistencia.
-private async Task<List<ClaseDictada>> CrearClasesAsync(
-    Comision comision,
-    DateTime hoy)
-{
-    var clases = new List<ClaseDictada>();
-
-    var materias = await repositorio.ListarAsync<Materia>();
-    var materia = materias.First(m => m.Id == comision.MateriaId);
-
-    string[] temas = materia.Nombre switch
+    private async Task<List<ClaseDictada>> CrearClasesAsync(
+        Comision comision,
+        DateTime hoy)
     {
-        "Programación I" =>
-        [
-            "Introducción a la programación",
+        var clases = new List<ClaseDictada>();
+
+        var materias = await repositorio.ListarAsync<Materia>();
+        var materia = materias.First(m => m.Id == comision.MateriaId);
+
+        string[] temas = materia.Nombre switch
+        {
+            "Programación I" =>
+            [
+                "Introducción a la programación",
             "Variables y tipos de datos",
             "Estructuras condicionales",
             "Estructuras repetitivas",
             "Funciones y métodos",
             "Listas y colecciones"
-        ],
+            ],
 
-        "Bases de Datos" =>
-        [
-            "Introducción a las bases de datos",
+            "Bases de Datos" =>
+            [
+                "Introducción a las bases de datos",
             "Modelo entidad-relación",
             "Tablas y relaciones",
             "Consultas SQL",
             "Claves primarias y foráneas",
             "Joins y consultas relacionadas"
-        ],
+            ],
 
-        "Programación II" =>
-        [
-            "Repaso de programación",
+            "Programación II" =>
+            [
+                "Repaso de programación",
             "Programación orientada a objetos",
             "Clases y objetos",
             "Herencia y polimorfismo",
             "Colecciones y excepciones",
             "Persistencia de datos"
-        ],
+            ],
 
-        "Análisis de Sistemas" =>
-        [
-            "Introducción al análisis de sistemas",
+            "Análisis de Sistemas" =>
+            [
+                "Introducción al análisis de sistemas",
             "Relevamiento de requerimientos",
             "Casos de uso",
             "Diagramas UML",
             "Modelado de procesos",
             "Diseño de sistemas"
-        ],
+            ],
 
-        _ => throw new InvalidOperationException(
-            $"No hay temas definidos para la materia {materia.Nombre}.")
-    };
+            _ => throw new InvalidOperationException(
+                $"No hay temas definidos para la materia {materia.Nombre}.")
+        };
 
-    int[] dias = [-35, -28, -21, -14, -7, 7];
+        int[] dias = [-35, -28, -21, -14, -7, 7];
 
-    for (var i = 0; i < temas.Length; i++)
-    {
-        clases.Add(await GuardarAsync(new ClaseDictada
+        for (var i = 0; i < temas.Length; i++)
         {
-            ComisionId = comision.Id,
-            Numero = i + 1,
-            Tema = temas[i],
-            Fecha = hoy.AddDays(dias[i])
-        }));
-    }
+            clases.Add(await GuardarAsync(new ClaseDictada
+            {
+                ComisionId = comision.Id,
+                Numero = i + 1,
+                Tema = temas[i],
+                Fecha = hoy.AddDays(dias[i])
+            }));
+        }
 
-    return clases;
-}
+        return clases;
+    }
 
 
     // Tres trabajos con la fecha límite vencida y uno todavía en plazo.

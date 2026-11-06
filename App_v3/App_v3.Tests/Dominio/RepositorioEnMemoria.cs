@@ -31,6 +31,11 @@ public sealed class RepositorioEnMemoria : IRepositorio
         return Task.CompletedTask;
     }
 
+    public Task BorrarAsync<T>(int id) where T : class, IEntidad, new()
+    {
+        Tabla<T>().RemoveAll(e => e.Id == id);
+        return Task.CompletedTask;
+    }
     private List<IEntidad> Tabla<T>()
     {
         if (!_tablas.TryGetValue(typeof(T), out var tabla))

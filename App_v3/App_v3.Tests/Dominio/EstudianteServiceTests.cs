@@ -54,7 +54,7 @@ public sealed class EstudianteServiceTests
 
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Estudiantes.AltaAsync(datos));
 
-        Assert.IsTrue(ex.Message.Contains(campo));
+        Assert.Contains(campo, ex.Message);
         Assert.IsEmpty(await _e.Estudiantes.ListarAsync());
     }
 
@@ -64,9 +64,9 @@ public sealed class EstudianteServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Estudiantes.AltaAsync(new DatosEstudiante(null, null, "Juan", "Pérez", null)));
 
-        Assert.IsTrue(ex.Message.Contains("Legajo"));
-        Assert.IsTrue(ex.Message.Contains("DNI"));
-        Assert.IsTrue(ex.Message.Contains("Email"));
+        Assert.Contains("Legajo", ex.Message);
+        Assert.Contains("DNI", ex.Message);
+        Assert.Contains("Email", ex.Message);
     }
 
     [TestMethod]
@@ -79,7 +79,7 @@ public sealed class EstudianteServiceTests
     {
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Estudiantes.AltaAsync(Datos(dni: dni)));
 
-        Assert.IsTrue(ex.Message.Contains("DNI"));
+        Assert.Contains("DNI", ex.Message);
         Assert.IsEmpty(await _e.Estudiantes.ListarAsync());
     }
 
@@ -106,7 +106,7 @@ public sealed class EstudianteServiceTests
     {
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Estudiantes.AltaAsync(Datos(email: email)));
 
-        Assert.IsTrue(ex.Message.Contains("email"));
+        Assert.Contains("email", ex.Message);
         Assert.IsEmpty(await _e.Estudiantes.ListarAsync());
     }
 
@@ -118,7 +118,7 @@ public sealed class EstudianteServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Estudiantes.AltaAsync(Datos(legajo: "AB-1", dni: "30111223")));
 
-        Assert.IsTrue(ex.Message.Contains("legajo"));
+        Assert.Contains("legajo", ex.Message);
     }
 
     [TestMethod]
@@ -129,7 +129,7 @@ public sealed class EstudianteServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Estudiantes.AltaAsync(Datos(legajo: "L2", dni: "30.111.222")));
 
-        Assert.IsTrue(ex.Message.Contains("DNI"));
+        Assert.Contains("DNI", ex.Message);
     }
 
     [TestMethod]
