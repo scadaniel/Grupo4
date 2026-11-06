@@ -1,4 +1,3 @@
-
 using App_v3.Dominio;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +14,7 @@ public partial class App : Application
     {
         var servicios = IPlatformApplication.Current!.Services;
         var datos = servicios.GetRequiredService<DatosDeEjemplo>();
+        var repositorio = servicios.GetRequiredService<IRepositorio>();
 
         var ventana = new Window(new ContentPage
         {
@@ -26,16 +26,20 @@ public partial class App : Application
             }
         });
 
-        _ = InicializarAsync(ventana, datos);
+        _ = InicializarAsync(ventana, datos, repositorio);
 
         return ventana;
     }
 
-    private static async Task InicializarAsync(Window ventana, DatosDeEjemplo datos)
+    private static async Task InicializarAsync(Window ventana, DatosDeEjemplo datos, IRepositorio repositorio)
     {
         try
         {
-            await datos.CargarAsync();
+            // Solo se cargan los datos de ejemplo si no hay nada guardado.
+            // Si ya hay materias, no se toca nada: así lo que carga el usuario se conserva.
+            if ((await repositorio.ListarAsync<Materia>()).Count == 0)
+                await datos.CargarAsync();
+
             ventana.Page = new Views.BienvenidaPage();
         }
         catch (Exception ex)
