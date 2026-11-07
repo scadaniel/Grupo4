@@ -2,284 +2,234 @@
 using System.Globalization;
 using System.Text;
 
+
 namespace App_v3.Dominio;
 
-/// <summary>
-/// Datos de ejemplo para probar la aplicación: materias, comisiones, estudiantes, clases,
-/// asistencias, entregas y contactos con niveles de riesgo variados. Reemplaza lo que haya cargado.
-/// </summary>
+
 public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
 {
-    private static readonly string[] Nombres =
+    private static readonly string[] ListaMujeres =
     [
-        "Martín", "Sofía", "Lucas", "Valentina", "Joaquín", "Camila",
-        "Tomás", "Agustina", "Mateo", "Lucía", "Diego", "Elena",
-        "Nicolás", "Florencia", "Santiago", "Milagros", "Franco", "Julieta",
-        "Facundo", "Carolina", "Federico", "Rocío", "Bruno", "Micaela",
-        "Gabriel", "Daniela", "Ignacio", "Paula", "Andrés", "Victoria"
+        "Lucía González", "Camila Benítez", "Martina Duarte", "Valentina Rossi", "Sofía Ferreira",
+        "María Belén Giménez", "Florencia Villalba", "Julieta Cardozo", "Natalia Ojeda", "Micaela Martínez",
+        "Victoria Pereyra", "Romina Almada", "Sabrina Insaurralde", "Mariana Acuña", "Daniela Bogado",
+        "Agustina Vera", "Carolina Méndez", "Andrea Fernández", "Paula Galeano", "Luciana Maidana",
+        "Noel Cabrera", "Rocío Rivero", "Antonella Maciel", "Brenda Silvero", "Estefanía Valdez",
+        "Valeria Godoy", "María José Britos", "Noelia Franco", "Sol Viera", "Daiana Centurión",
+        "Gimena Olivera", "Celeste Fleitas", "Candela Sosa", "Carla Rolón", "Georgina Escobar",
+        "Melina Ayala", "Pamela Cáceres", "Yazmín Riquelme", "Lourdes Cristaldo", "Milagros Sanabria",
+        "Evelyn Soria", "Tamara Núñez", "Tamara Benítez", "Guillermina Ledesma", "Patricia Bareiro",
+        "Laura Cantero", "Ana Clara Larrosa", "Lorena Paredes", "Gabriela Servín", "Yamila Amarilla",
+        "Dahiana Denis", "Sabrina Delgado", "Dahiana Ortiz", "Yanina Ortiz", "Nicole Leiva",
+        "Malena Bustos", "María Paz Espínola", "Araceli Galeano", "Jessica Fernández", "Paola Domínguez",
+        "Cynthia Chaparro", "Laura Barrios", "Macarena Ríos", "Florencia Varela", "Jimena Leguizamón",
+        "Melani Oviedo", "Johana Aquino", "Mónica Caballero", "María Elena Cabañas", "Nadia Portillo",
+        "Karen Monges", "Claudia Florentín", "Silvina Ramos", "Viviana Rotela", "Tamara Giménez",
+        "Mercedes D'Angelo", "Adriana Alvarenga", "Josefina Saravia", "Belén Samudio", "María Luján Maidana"
     ];
 
-    private static readonly string[] Apellidos =
+
+    private static readonly string[] ListaHombres =
     [
-        "González", "Rodríguez", "Fernández", "López", "Martínez", "Sánchez",
-        "Díaz", "Romero", "Álvarez", "Torres", "Ruiz", "Gómez",
-        "Acosta", "Benítez", "Medina", "Herrera", "Suárez", "Aguirre",
-        "Castro", "Molina", "Ortiz", "Silva", "Núñez", "Rojas",
-        "Cabrera", "Vega", "Méndez", "Pereyra", "Flores", "Campos"
+        "Mateo González", "Joaquín Benítez", "Lucas Duarte", "Santiago Rossi", "Tomás Ferreira",
+        "Nicolás Giménez", "Agustín Villalba", "Enzo Cardozo", "Matías Ojeda", "Franco Martínez",
+        "Maximiliano Pereyra", "Bruno Almada", "Rodrigo Insaurralde", "Juan Pablo Acuña", "Diego Bogado",
+        "Gonzalo Vera", "Ignacio Méndez", "Facundo Fernández", "Thiago Galeano", "Gabriel Maidana",
+        "Sebastián Cabrera", "Federico Rivero", "Emiliano Maciel", "Bautista Silvero", "Leandro Valdez",
+        "Nahuel Godoy", "Julián Britos", "Emanuel Franco", "Ramiro Viera", "Valentín Centurión",
+        "Damián Olivera", "Alan Fleitas", "Marcos Sosa", "Esteban Rolón", "Luciano Escobar",
+        "Iván Ayala", "Alex Cáceres", "Brian Riquelme", "Cristian Cristaldo", "Kevin Sanabria",
+        "Gustavo Soria", "Hernán Núñez", "Fabricio Ledesma", "Carlos Bareiro", "Jorge Cantero",
+        "Juan Manuel Larrosa", "Martín Paredes", "Víctor Servín", "Adrián Amarilla", "Pablo Denis",
+        "Guillermo Delgado", "Matías Ortiz", "Oscar Samudio", "Néstor Leiva", "Lautaro Bustos",
+        "Felipe Espínola", "Alexis Galeano", "Jonathan Fernández", "Mauricio Domínguez", "Claudio Chaparro",
+        "Marcelo Barrios", "Darío Ríos", "Daniel Varela", "Alejandro Leguizamón", "Fernando Oviedo",
+        "Ariel Aquino", "Raúl Caballero", "Aldo Cabañas", "César Portillo", "Osvaldo Monges",
+        "Sergio Florentín", "Mario Ramos", "Hugo Rotela", "Walter Giménez", "Gonzalo D'Angelo",
+        "Julio Alvarenga", "Alfredo Saravia", "Roberto Samudio", "Nelson Maidana", "Juan Carlos Ferreyra"
     ];
 
-    // Cantidad de inasistencias y de TP entregados por estudiante.
-    private sealed record Cursada(int[] Ausencias, int[] Entregados);
 
     public async Task CargarAsync()
     {
         await repositorio.VaciarAsync();
-
         var hoy = reloj.GetLocalNow().DateTime.Date;
-        var comisiones = await CrearComisionesAsync();
-        var estudiantes = await CrearEstudiantesAsync();
 
-        // Distribución de los 30 estudiantes en las 7 comisiones.
-        // Se registran tres bajas: 1P1, 2P2 y 1AS1.
 
-        // 1P1: 5 inscriptos, 1 baja, 4 activos.
-        await InscribirAsync(comisiones[0], estudiantes.Take(5),
-            bajaDelUltimo: hoy.AddDays(-10));
+        // 1. Generar 4 planteles de 45 estudiantes únicos por comisión
+        var estudiantes10111 = await CrearEstudiantesRangoAsync(45, 10001, 0);
+        var estudiantes10112 = await CrearEstudiantesRangoAsync(45, 10501, 45);
+        var estudiantes20111 = await CrearEstudiantesRangoAsync(45, 20001, 90);
+        var estudiantes20112 = await CrearEstudiantesRangoAsync(45, 20501, 135);
 
-        // 1P2: 4 inscriptos, 4 activos.
-        await InscribirAsync(comisiones[1], estudiantes.Skip(5).Take(4),
-            bajaDelUltimo: null);
 
-        // 1BD1: 5 inscriptos, 5 activos.
-        await InscribirAsync(comisiones[2], estudiantes.Skip(9).Take(5),
-            bajaDelUltimo: null);
+        // ==========================================
+        // CREACIÓN DE MATERIAS (Las 7 en común y las específicas)
+        // ==========================================
+       
+        // Troncales / En común
+        var matTecnicas = await GuardarAsync(new Materia { Nombre = "Técnicas de Programación" });
+        var matBaseDatos = await GuardarAsync(new Materia { Nombre = "Administración de Base de Datos" });
+        var matMatematica = await GuardarAsync(new Materia { Nombre = "Elementos de Análisis Matemático" });
+        var matLogica = await GuardarAsync(new Materia { Nombre = "Lógica Computacional" });
+        var matPoo = await GuardarAsync(new Materia { Nombre = "Desarrollo de Sistemas Orientado a Objetos" });
+        var matModelado = await GuardarAsync(new Materia { Nombre = "Modelado y Diseño de Software" });
+        var matIngles = await GuardarAsync(new Materia { Nombre = "Inglés" });
 
-        // 2P1: 4 inscriptos, 4 activos.
-        await InscribirAsync(comisiones[3], estudiantes.Skip(14).Take(4),
-            bajaDelUltimo: null);
 
-        // 2P2: 4 inscriptos, 1 baja, 3 activos.
-        await InscribirAsync(comisiones[4], estudiantes.Skip(18).Take(4),
-            bajaDelUltimo: hoy.AddDays(-10));
+        // Específicas / Variantes de planes
+        var matEstadisticaSoft = await GuardarAsync(new Materia { Nombre = "Estadística y Probabilidad (Software)" });
+        var matEstadisticaSys = await GuardarAsync(new Materia { Nombre = "Estadística y probabilidades (Sistemas)" });
+        var matPpSoft = await GuardarAsync(new Materia { Nombre = "PP I : Campo Profesional (Software)" });
+        var matPpSys = await GuardarAsync(new Materia { Nombre = "PP I : Campo Laboral (Sistemas)" });
 
-        // 1AS1: 4 inscriptos, 1 baja, 3 activos.
-        await InscribirAsync(comisiones[5], estudiantes.Skip(22).Take(4),
-            bajaDelUltimo: hoy.AddDays(-10));
 
-        // 1AS2: 4 inscriptos, 4 activos.
-        await InscribirAsync(comisiones[6], estudiantes.Skip(26).Take(4),
-            bajaDelUltimo: null);
-
-        // 1P1: 1 alto, 3 bajo y 1 baja.
-        await CargarCursadaAsync(comisiones[0], estudiantes.Take(5).ToList(), hoy,
-            new Cursada(
-                [5, 0, 1, 2, 0],
-                [3, 3, 3, 3, 3]));
-
-        // 1P2: 1 medio y 3 bajo.
-        await CargarCursadaAsync(comisiones[1], estudiantes.Skip(5).Take(4).ToList(), hoy,
-            new Cursada(
-                [0, 0, 1, 2],
-                [2, 3, 3, 3]));
-
-        // 1BD1: 1 alto, 1 medio y 3 bajo.
-        await CargarCursadaAsync(comisiones[2], estudiantes.Skip(9).Take(5).ToList(), hoy,
-            new Cursada(
-                [0, 3, 0, 1, 2],
-                [0, 3, 3, 3, 3]));
-
-        // 2P1: 1 alto y 3 bajo.
-        await CargarCursadaAsync(comisiones[3], estudiantes.Skip(14).Take(4).ToList(), hoy,
-            new Cursada(
-                [5, 0, 1, 2],
-                [3, 3, 3, 3]));
-
-        // 2P2: 1 medio, 2 bajo y 1 baja.
-        await CargarCursadaAsync(comisiones[4], estudiantes.Skip(18).Take(4).ToList(), hoy,
-            new Cursada(
-                [0, 0, 1, 2],
-                [1, 3, 3, 3]));
-
-        // 1AS1: 1 alto, 2 bajo y 1 baja.
-        await CargarCursadaAsync(comisiones[5], estudiantes.Skip(22).Take(4).ToList(), hoy,
-            new Cursada(
-                [0, 0, 1, 2],
-                [0, 3, 3, 3]));
-
-        // 1AS2: 1 medio y 3 bajo.
-        await CargarCursadaAsync(comisiones[6], estudiantes.Skip(26).Take(4).ToList(), hoy,
-            new Cursada(
-                [3, 0, 1, 2],
-                [2, 3, 3, 3]));
-
-        // Contactos de dos estudiantes activos de 1P1.
-        await CargarContactosAsync(comisiones[0], estudiantes.Take(5).ToList(), hoy);
-    }
-
-    private async Task<List<Comision>> CrearComisionesAsync()
-    {
-        var programacion = await GuardarAsync(new Materia { Nombre = "Programación I" });
-        var bases = await GuardarAsync(new Materia { Nombre = "Bases de Datos" });
-        var programacionII = await GuardarAsync(new Materia { Nombre = "Programación II" });
-        var analisis = await GuardarAsync(new Materia { Nombre = "Análisis de Sistemas" });
-
-        return
-        [
-            await GuardarAsync(new Comision { MateriaId = programacion.Id, Nombre = "1P1" }),
-            await GuardarAsync(new Comision { MateriaId = programacion.Id, Nombre = "1P2" }),
-            await GuardarAsync(new Comision { MateriaId = bases.Id, Nombre = "1BD1" }),
-            await GuardarAsync(new Comision { MateriaId = programacionII.Id, Nombre = "2P1" }),
-            await GuardarAsync(new Comision { MateriaId = programacionII.Id, Nombre = "2P2" }),
-            await GuardarAsync(new Comision { MateriaId = analisis.Id, Nombre = "1AS1" }),
-            await GuardarAsync(new Comision { MateriaId = analisis.Id, Nombre = "1AS2" })
-        ];
-    }
-
-    private async Task<List<Estudiante>> CrearEstudiantesAsync()
-    {
-        var estudiantes = new List<Estudiante>();
-
-        for (var i = 0; i < Nombres.Length; i++)
-            estudiantes.Add(await GuardarAsync(NuevoEstudiante(i)));
-
-        return estudiantes;
-    }
-
-    private static Estudiante NuevoEstudiante(int indice) => new()
-    {
-        Legajo = $"L-{1001 + indice}",
-        Dni = $"4011{1001 + indice}",
-        Nombre = Nombres[indice],
-        Apellido = Apellidos[indice],
-        Email = SinTildes($"{Nombres[indice]}.{Apellidos[indice]}@ejemplo.com").ToLowerInvariant(),
-        Telefono = $"11-5555-{1001 + indice}"
-    };
-
-    private static string SinTildes(string texto) =>
-        new(texto.Normalize(NormalizationForm.FormD)
-            .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
-            .ToArray());
-
-    private async Task InscribirAsync(
-        Comision comision,
-        IEnumerable<Estudiante> estudiantes,
-        DateTime? bajaDelUltimo)
-    {
-        var lista = estudiantes.ToList();
-
-        foreach (var estudiante in lista)
+        // ==========================================
+        // COMISIÓN 10111 (Desarrollo de Software - 1er Cuatrimestre)
+        // ==========================================
+        foreach (var mat in new[] { matTecnicas, matBaseDatos, matMatematica, matLogica })
         {
-            var esElDeLaBaja = bajaDelUltimo is not null && estudiante == lista[^1];
+            var com = await GuardarAsync(new Comision { MateriaId = mat.Id, Nombre = "10111" });
+            await InscribirYCurarAsync(com, estudiantes10111, hoy);
+        }
 
+
+        // ==========================================
+        // COMISIÓN 10112 (Desarrollo de Software - 2do Cuatrimestre)
+        // ==========================================
+        foreach (var mat in new[] { matPoo, matModelado, matEstadisticaSoft, matIngles, matPpSoft })
+        {
+            var com = await GuardarAsync(new Comision { MateriaId = mat.Id, Nombre = "10112" });
+            await InscribirYCurarAsync(com, estudiantes10112, hoy);
+        }
+
+
+        // ==========================================
+        // COMISIÓN 20111 (Análisis de Sistemas - 1er Cuatrimestre)
+        // (Comparte las mismas materias de 1er cuatrimestre pero con su propia cohorte)
+        // ==========================================
+        foreach (var mat in new[] { matTecnicas, matBaseDatos, matMatematica, matLogica })
+        {
+            var com = await GuardarAsync(new Comision { MateriaId = mat.Id, Nombre = "20111" });
+            await InscribirYCurarAsync(com, estudiantes20111, hoy);
+        }
+
+
+        // ==========================================
+        // COMISIÓN 20112 (Análisis de Sistemas - 2do Cuatrimestre)
+        // ==========================================
+        foreach (var mat in new[] { matPoo, matModelado, matEstadisticaSys, matIngles, matPpSys })
+        {
+            var com = await GuardarAsync(new Comision { MateriaId = mat.Id, Nombre = "20112" });
+            await InscribirYCurarAsync(com, estudiantes20112, hoy);
+        }
+    }
+
+
+    private async Task<List<Estudiante>> CrearEstudiantesRangoAsync(int cantidad, int legajoBase, int indiceInicio)
+    {
+        var lista = new List<Estudiante>();
+        var nombresCompletos = MezclarListas(ListaMujeres, ListaHombres);
+
+
+        for (var i = 0; i < cantidad; i++)
+        {
+            int index = (indiceInicio + i) % nombresCompletos.Length;
+            SepararNombreApellido(nombresCompletos[index], out var nombre, out var apellido);
+
+
+            var est = await GuardarAsync(new Estudiante
+            {
+                Legajo = $"L-{legajoBase + i}",
+                Dni = $"4{legajoBase + i:D7}".Substring(0, 8),
+                Nombre = nombre,
+                Apellido = apellido,
+                Email = $"{SinTildes(nombre).ToLowerInvariant()}.{SinTildes(apellido).ToLowerInvariant()}{legajoBase + i}@ejemplo.com",
+                Telefono = $"11-5555-{(legajoBase + i)}"
+            });
+            lista.Add(est);
+        }
+        return lista;
+    }
+
+
+    private static void SepararNombreApellido(string completo, out string nombre, out string apellido)
+    {
+        var partes = completo.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (partes.Length <= 1)
+        {
+            nombre = completo;
+            apellido = "SinApellido";
+            return;
+        }
+        apellido = partes[^1];
+        nombre = string.Join(" ", partes[..^1]);
+    }
+
+
+    private static string[] MezclarListas(string[] mujeres, string[] hombres)
+    {
+        var combinadas = new string[mujeres.Length + hombres.Length];
+        int m = 0, h = 0, c = 0;
+        while (m < mujeres.Length || h < hombres.Length)
+        {
+            if (m < mujeres.Length) combinadas[c++] = mujeres[m++];
+            if (h < hombres.Length) combinadas[c++] = hombres[h++];
+        }
+        return combinadas;
+    }
+
+
+    private async Task InscribirYCurarAsync(Comision comision, List<Estudiante> estudiantes, DateTime hoy)
+    {
+        var clases = await CrearClasesAsync(comision, hoy);
+        var trabajos = await CrearTrabajosAsync(comision, hoy);
+        Random rand = new(comision.Id + comision.MateriaId);
+
+
+        foreach (var estudiante in estudiantes)
+        {
             await GuardarAsync(new Inscripcion
             {
                 EstudianteId = estudiante.Id,
                 ComisionId = comision.Id,
-                Activa = !esElDeLaBaja,
-                FechaBaja = esElDeLaBaja ? bajaDelUltimo : null
+                Activa = true,
+                FechaBaja = null
             });
-        }
-    }
 
-    private async Task CargarCursadaAsync(
-        Comision comision,
-        List<Estudiante> estudiantes,
-        DateTime hoy,
-        Cursada cursada)
-    {
-        var clases = await CrearClasesAsync(comision, hoy);
-        var trabajos = await CrearTrabajosAsync(comision, hoy);
 
-        for (var k = 0; k < estudiantes.Count; k++)
-        {
-            await RegistrarAsistenciasAsync(clases, estudiantes[k], cursada.Ausencias[k]);
-            await RegistrarEntregasAsync(trabajos, estudiantes[k], cursada.Entregados[k]);
+            int ausencias = rand.Next(0, 6);
+            int entregados = rand.Next(1, 4);
+
+
+            await RegistrarAsistenciasAsync(clases, estudiante, ausencias);
+            await RegistrarEntregasAsync(trabajos, estudiante, entregados);
         }
     }
 
 
-
-    // Cinco clases ya dictadas, una por semana, y una futura sin asistencia.
-    private async Task<List<ClaseDictada>> CrearClasesAsync(
-        Comision comision,
-        DateTime hoy)
+    private async Task<List<ClaseDictada>> CrearClasesAsync(Comision comision, DateTime hoy)
     {
         var clases = new List<ClaseDictada>();
-
-        var materias = await repositorio.ListarAsync<Materia>();
-        var materia = materias.First(m => m.Id == comision.MateriaId);
-
-        string[] temas = materia.Nombre switch
-        {
-            "Programación I" =>
-            [
-                "Introducción a la programación",
-            "Variables y tipos de datos",
-            "Estructuras condicionales",
-            "Estructuras repetitivas",
-            "Funciones y métodos",
-            "Listas y colecciones"
-            ],
-
-            "Bases de Datos" =>
-            [
-                "Introducción a las bases de datos",
-            "Modelo entidad-relación",
-            "Tablas y relaciones",
-            "Consultas SQL",
-            "Claves primarias y foráneas",
-            "Joins y consultas relacionadas"
-            ],
-
-            "Programación II" =>
-            [
-                "Repaso de programación",
-            "Programación orientada a objetos",
-            "Clases y objetos",
-            "Herencia y polimorfismo",
-            "Colecciones y excepciones",
-            "Persistencia de datos"
-            ],
-
-            "Análisis de Sistemas" =>
-            [
-                "Introducción al análisis de sistemas",
-            "Relevamiento de requerimientos",
-            "Casos de uso",
-            "Diagramas UML",
-            "Modelado de procesos",
-            "Diseño de sistemas"
-            ],
-
-            _ => throw new InvalidOperationException(
-                $"No hay temas definidos para la materia {materia.Nombre}.")
-        };
-
         int[] dias = [-35, -28, -21, -14, -7, 7];
-
-        for (var i = 0; i < temas.Length; i++)
+        for (var i = 0; i < dias.Length; i++)
         {
             clases.Add(await GuardarAsync(new ClaseDictada
             {
                 ComisionId = comision.Id,
                 Numero = i + 1,
-                Tema = temas[i],
+                Tema = $"Unidad Temática {i + 1}",
                 Fecha = hoy.AddDays(dias[i])
             }));
         }
-
         return clases;
     }
 
 
-    // Tres trabajos con la fecha límite vencida y uno todavía en plazo.
-    private async Task<List<TrabajoPractico>> CrearTrabajosAsync(
-        Comision comision,
-        DateTime hoy)
+    private async Task<List<TrabajoPractico>> CrearTrabajosAsync(Comision comision, DateTime hoy)
     {
         var trabajos = new List<TrabajoPractico>();
         int[] dias = [-28, -14, -3, 14];
-
         for (var i = 0; i < dias.Length; i++)
         {
             trabajos.Add(await GuardarAsync(new TrabajoPractico
@@ -289,15 +239,11 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
                 FechaLimite = hoy.AddDays(dias[i])
             }));
         }
-
         return trabajos;
     }
 
-    // El estudiante falta a las primeras clases ya dictadas.
-    private async Task RegistrarAsistenciasAsync(
-        List<ClaseDictada> clases,
-        Estudiante estudiante,
-        int ausencias)
+
+    private async Task RegistrarAsistenciasAsync(List<ClaseDictada> clases, Estudiante estudiante, int ausencias)
     {
         for (var c = 0; c < 5; c++)
         {
@@ -310,11 +256,8 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         }
     }
 
-    // Registra los tres TP vencidos. El TP en plazo queda sin registro.
-    private async Task RegistrarEntregasAsync(
-        List<TrabajoPractico> trabajos,
-        Estudiante estudiante,
-        int entregados)
+
+    private async Task RegistrarEntregasAsync(List<TrabajoPractico> trabajos, Estudiante estudiante, int entregados)
     {
         for (var t = 0; t < 3; t++)
         {
@@ -327,50 +270,17 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         }
     }
 
-    // Un contacto reciente y uno viejo, para probar el filtro
-    // "No contactados esta semana".
-    private async Task CargarContactosAsync(
-        Comision comision,
-        List<Estudiante> estudiantes,
-        DateTime hoy)
-    {
-        await GuardarAsync(NuevoContacto(
-            comision,
-            estudiantes[2],
-            hoy.AddDays(-3),
-            MedioContacto.Llamada,
-            "Respondió",
-            "Se comprometió a entregar el TP 3."));
 
-        await GuardarAsync(NuevoContacto(
-            comision,
-            estudiantes[3],
-            hoy.AddDays(-12),
-            MedioContacto.Email,
-            "No respondió",
-            "Se reenviará el mensaje."));
-    }
+    private static string SinTildes(string texto) =>
+        new(texto.Normalize(NormalizationForm.FormD)
+            .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+            .ToArray());
 
-    private static Contacto NuevoContacto(
-        Comision comision,
-        Estudiante estudiante,
-        DateTime fecha,
-        MedioContacto medio,
-        string resultado,
-        string nota) => new()
-        {
-            ComisionId = comision.Id,
-            EstudianteId = estudiante.Id,
-            Fecha = fecha,
-            Medio = medio,
-            Resultado = resultado,
-            Nota = nota
-        };
 
-    private async Task<T> GuardarAsync<T>(T entidad)
-        where T : class, IEntidad, new()
+    private async Task<T> GuardarAsync<T>(T entidad) where T : class, IEntidad, new()
     {
         await repositorio.GuardarAsync(entidad);
         return entidad;
     }
 }
+
