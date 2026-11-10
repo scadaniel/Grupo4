@@ -123,7 +123,10 @@ public static class MauiProgram
 
         Routing.RegisterRoute(nameof(ReporteContactosPage), typeof(ReporteContactosPage));
 
-        
+        // reporte de alumnos en riesgo por comisión
+        builder.Services.AddTransient<ReporteRiesgoComisionViewModel>();
+        builder.Services.AddTransient<ReporteRiesgoComisionPage>();
+
 
         return builder.Build();
     }

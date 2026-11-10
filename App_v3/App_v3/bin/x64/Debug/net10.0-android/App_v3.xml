@@ -24,6 +24,11 @@
             Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
             </summary>
         </member>
+        <member name="M:App_v3.Services.DatabaseService.GetIntervencionesAsync">
+            <summary>
+            Obtiene la lista completa de intervenciones de la base de datos (corregido con InitAsync y _dbConnection).
+            </summary>
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
@@ -137,6 +142,35 @@
         <member name="P:App_v3.ViewModels.NuevoEstudianteViewModel.VolverAlMenuCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.NuevoEstudianteViewModel.VolverAlMenuAsync"/>.</summary>
         </member>
+        <member name="T:App_v3.ViewModels.ReporteRiesgoComisionViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.ComisionSeleccionada">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.comisionSeleccionada"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.TotalAlumnos">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.totalAlumnos"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.AlumnosEnRiesgoRojo">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.alumnosEnRiesgoRojo"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EmailDestinatario">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.emailDestinatario"/>
+        </member>
+        <member name="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.cargarDatosCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.CargarDatosCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.CargarDatosCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.ReporteRiesgoComisionViewModel.CargarDatosAsync"/>.</summary>
+        </member>
+        <member name="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.enviarReporteEmailCommand">
+            <summary>The backing field for <see cref="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EnviarReporteEmailCommand"/>.</summary>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EnviarReporteEmailCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EnviarReporteEmailAsync"/>.</summary>
+        </member>
         <member name="T:App_v3.Resource">
             <summary>
             Android Resource Designer class.
@@ -173,6 +207,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Legajo">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Legajo" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalAlumnos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalAlumnos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AlumnosEnRiesgoRojo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AlumnosEnRiesgoRojo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EmailDestinatario">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EmailDestinatario" generated properties.</summary>
+        </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
@@ -202,6 +245,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Legajo">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Legajo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalAlumnos">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalAlumnos" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AlumnosEnRiesgoRojo">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AlumnosEnRiesgoRojo" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EmailDestinatario">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EmailDestinatario" generated properties.</summary>
         </member>
     </members>
 </doc>

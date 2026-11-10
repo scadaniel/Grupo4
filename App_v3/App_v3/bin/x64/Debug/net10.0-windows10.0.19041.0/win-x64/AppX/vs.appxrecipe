@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2026-11-05T23:07:10.395</Modified>
+      <Modified>2026-11-10T00:46:14.478</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2026-11-05T22:19:53.647</Modified>
+      <Modified>2026-11-09T23:27:17.508</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\App_v3.runtimeconfig.json">
       <PackagePath>App_v3.runtimeconfig.json</PackagePath>
@@ -42,11 +42,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\App_v3.dll">
       <PackagePath>App_v3.dll</PackagePath>
-      <Modified>2026-11-05T23:07:09.297</Modified>
+      <Modified>2026-11-10T00:46:13.061</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\obj\x64\Debug\net10.0-windows10.0.19041.0\win-x64\apphost.exe">
       <PackagePath>App_v3.exe</PackagePath>
-      <Modified>2026-11-05T23:07:09.342</Modified>
+      <Modified>2026-11-10T00:46:13.108</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -658,7 +658,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\GRUPO4\Grupo4\App_v3\App_v3\bin\x64\Debug\net10.0-windows10.0.19041.0\win-x64\App_v3.deps.json">
       <PackagePath>App_v3.deps.json</PackagePath>
-      <Modified>2026-11-05T22:19:53.191</Modified>
+      <Modified>2026-11-09T23:27:16.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\scada\.nuget\packages\microsoft.maui.controls.core\10.0.20\lib\net10.0-windows10.0.19041\Microsoft.Maui.Controls.pri">
       <PackagePath>Microsoft.Maui.Controls.pri</PackagePath>

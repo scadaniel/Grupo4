@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_v3.Views.ReporteRiesgoComisionPage"
+             Title="Informe de Riesgo por Comisión"
+             BackgroundColor="#0F172A"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- 🌟 BARRA SUPERIOR CON EL BOTÓN AZUL "VOLVER" -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#1E293B" 
+              Padding="20,15" 
+              ColumnDefinitions="Auto, *">
+
+            <Button Grid.Column="0"
+                    Text="← Volver" 
+                    Clicked="OnVolverClicked"
+                    BackgroundColor="#3B82F6" 
+                    TextColor="White"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    HeightRequest="40"
+                    WidthRequest="100"
+                    VerticalOptions="Center" />
+
+            <Label Grid.Column="1" 
+                   Text="Informe de Riesgo por Comisión" 
+                   TextColor="White" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <!-- CONTENIDO PRINCIPAL (El que ya te funciona) -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <!-- Indicador Grande: Riesgo Rojo / Total -->
+                <Frame BackgroundColor="#1E293B" CornerRadius="12" Padding="20">
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Label Text="Alumnos en Riesgo / Total" TextColor="#94A3B8" FontSize="14" HorizontalOptions="Center"/>
+                        <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label x:Name="RiesgoRojoLabel" Text="0" TextColor="#EF4444" FontSize="36" FontAttributes="Bold" />
+                            <Label Text="/" TextColor="White" FontSize="36" FontAttributes="Bold" />
+                            <Label x:Name="TotalAlumnosLabel" Text="0" TextColor="White" FontSize="36" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Sección opcional para copiar el reporte -->
+                <Frame BackgroundColor="#F1F5F9" CornerRadius="10" Padding="15">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Copiar reporte completo para enviar por correo" FontAttributes="Bold" FontSize="14" TextColor="#334155" />
+                        <Button Text="Copiar Informe para Enviar" 
+                                BackgroundColor="#0284C7" 
+                                TextColor="White" 
+                                Clicked="OnEnviarEmailClicked" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Lista detallada de estudiantes con faltas, TPs y llamadas -->
+                <Label Text="Detalle de Estudiantes" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                <CollectionView x:Name="EstudiantesCollection">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,6" Padding="15" CornerRadius="8" BackgroundColor="#FFFFFF" BorderColor="#E2E8F0">
+                                <VerticalStackLayout Spacing="6">
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding NombreCompleto}" FontAttributes="Bold" FontSize="16" TextColor="#1E293B" VerticalOptions="Center"/>
+                                        <!-- Indicador visual de estado (Rojo o Verde) -->
+                                        <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" BackgroundColor="{Binding ColorRiesgo}" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+
+                                    <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="#64748B" />
+
+                                    <!-- Estadísticas de Faltas y TPs -->
+                                    <HorizontalStackLayout Spacing="15" Margin="0,4,0,0">
+                                        <Label Text="{Binding Inasistencias, StringFormat='❌ Inasistencias: {0}'}" FontSize="13" FontAttributes="Bold" TextColor="#DC2626" />
+                                        <Label Text="{Binding TpsNoEntregados, StringFormat='⚠️ TPs Pendientes: {0}'}" FontSize="13" FontAttributes="Bold" TextColor="#D97706" />
+                                    </HorizontalStackLayout>
+
+                                    <!-- Nota o registro de llamada/intervención -->
+                                    <Frame BackgroundColor="#F8FAFC" Padding="10" CornerRadius="6" HasShadow="False" BorderColor="#E2E8F0" Margin="0,4,0,0">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="Registro de Intervención / Llamada:" FontSize="11" FontAttributes="Bold" TextColor="#475569" />
+                                            <Label Text="{Binding TextoUltimaIntervencion}" FontSize="12" TextColor="#334155" />
+                                        </VerticalStackLayout>
+                                    </Frame>
+
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -680,7 +680,6 @@ public class DatabaseService
                             break;
 
                         case "clases":
-                            // Tu TXT: NombreMateria;Comision;Fecha(yyyy-MM-dd);NumeroClase;Tema
                             if (datos.Length >= 5)
                             {
                                 var cls = new Clase
@@ -697,7 +696,6 @@ public class DatabaseService
                             break;
 
                         case "trabajospracticos":
-                            // Tu TXT: Nombre;Descripcion;FechaLimite(yyyy-MM-dd)
                             if (datos.Length >= 3)
                             {
                                 var tp = new TrabajoPractico
@@ -712,7 +710,6 @@ public class DatabaseService
                             break;
 
                         case "asistencias":
-                            // Tu TXT: ClaseId;EstudianteId;Presente(1/0);Justificada(1/0);Fecha(yyyy-MM-dd)
                             if (datos.Length >= 5)
                             {
                                 var ast = new Asistencia
@@ -729,7 +726,6 @@ public class DatabaseService
                             break;
 
                         case "entregasp":
-                            // Tu TXT: TrabajoPracticoId;EstudianteId;Entregado(1/0);FechaEntrega(yyyy-MM-dd)
                             if (datos.Length >= 4)
                             {
                                 bool entregado = datos[2].Trim() == "1";
@@ -770,12 +766,10 @@ public class DatabaseService
         return 0;
     }
 
-
     public async Task<List<ReporteContactoItemModel>> GetReporteContactosDetalladoAsync(int comisionId)
     {
         await InitAsync();
 
-        // Obtenemos los registros de la base de datos local
         var intervenciones = await _dbConnection!.Table<IntervencionContacto>().ToListAsync();
         var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
         var comisiones = await _dbConnection.Table<Comision>().ToListAsync();
@@ -787,7 +781,6 @@ public class DatabaseService
             nombreComisionFiltro = com?.Nombre?.Trim();
         }
 
-        // El JOIN con intervenciones asegura traer ÚNICAMENTE a los alumnos que fueron contactados
         var query = from contacto in intervenciones
                     join est in estudiantes on contacto.EstudianteId equals est.Id
                     where comisionId == 0 || (est.Comision != null && est.Comision.Trim().Equals(nombreComisionFiltro, StringComparison.OrdinalIgnoreCase))
@@ -809,6 +802,12 @@ public class DatabaseService
         return query.ToList();
     }
 
-
-
+    /// <summary>
+    /// Obtiene la lista completa de intervenciones de la base de datos (corregido con InitAsync y _dbConnection).
+    /// </summary>
+    public async Task<List<IntervencionContacto>> GetIntervencionesAsync()
+    {
+        await InitAsync();
+        return await _dbConnection!.Table<IntervencionContacto>().ToListAsync();
+    }
 }

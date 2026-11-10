@@ -138,6 +138,45 @@
                     </Grid>
                 </Frame>
 
+                <!-- Tarjeta 4: Informe de Riesgo por Comisión -->
+                <Frame BorderColor="#E0E0E0" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       HasShadow="True" 
+                       BackgroundColor="White">
+                    <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+
+                        <BoxView Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" WidthRequest="8" CornerRadius="4" BackgroundColor="#DC2626" VerticalOptions="Fill" />
+
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="Informe de Riesgo por Comisión" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
+                            <Label Text="Alumnos en riesgo rojo vs total, listado detallado y opción de envío de informe por correo." FontSize="12" TextColor="#666" />
+                        </VerticalStackLayout>
+
+                        <!-- Botón Ver conectado al comando -->
+                        <Button Grid.Row="0" Grid.Column="2" 
+                                Text="Ver" 
+                                Command="{Binding VerReporteRiesgoComisionCommand}"
+                                BackgroundColor="#DC2626" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="8" 
+                                VerticalOptions="Center" 
+                                HeightRequest="40" 
+                                WidthRequest="80" />
+
+                        <!-- Selector de Comisión enlazado al ViewModel -->
+                        <Picker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                Title="Seleccione una comisión..."
+                                TitleColor="#757575"
+                                TextColor="#212121"
+                                BackgroundColor="#F1F5F9"
+                                ItemsSource="{Binding ListaComisiones}"
+                                SelectedItem="{Binding ComisionSeleccionada}"
+                                Margin="0,10,0,0" />
+                    </Grid>
+                </Frame>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

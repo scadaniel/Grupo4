@@ -15,6 +15,8 @@ namespace App_v3
             Routing.RegisterRoute(nameof(NuevoEstudiantePage), typeof(NuevoEstudiantePage));
             // Reporte de alumnos contactados y fecha de contacto
             Routing.RegisterRoute(nameof(ReporteContactosPage), typeof(ReporteContactosPage));
+            // Reporte de alumnos en riesgo por comisión
+            Routing.RegisterRoute(nameof(ReporteRiesgoComisionPage), typeof(ReporteRiesgoComisionPage));
         }
     }
 }
