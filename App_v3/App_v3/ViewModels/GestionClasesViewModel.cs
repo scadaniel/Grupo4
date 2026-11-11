@@ -25,15 +25,18 @@ public class GestionClasesViewModel : INotifyPropertyChanged
         }
     }
 
-    private string _comision = string.Empty;
-    public string Comision
+    // Colección de comisiones para poblar el Picker
+    public ObservableCollection<Comision> ListaComisiones { get; } = new();
+
+    private Comision? _comisionSeleccionada;
+    public Comision? ComisionSeleccionada
     {
-        get => _comision;
+        get => _comisionSeleccionada;
         set
         {
-            if (_comision != value)
+            if (_comisionSeleccionada != value)
             {
-                _comision = value;
+                _comisionSeleccionada = value;
                 OnPropertyChanged();
             }
         }
@@ -48,58 +51,63 @@ public class GestionClasesViewModel : INotifyPropertyChanged
     {
         _databaseService = databaseService;
 
-        CargarClasesCommand = new Command(async () => await CargarClasesAsync());
+        CargarClasesCommand = new Command(async () => await CargarDatosAsync());
         GuardarClaseCommand = new Command(async () => await GuardarClaseAsync());
 
-        _ = CargarClasesAsync();
+        _ = CargarDatosAsync();
     }
 
-    private async Task CargarClasesAsync()
+    private async Task CargarDatosAsync()
     {
-        var lista = await _databaseService.GetClasesAsync();
+        // 1. Cargar clases existentes
+        var listaClases = await _databaseService.GetClasesAsync();
         Clases.Clear();
-        foreach (var clase in lista)
+        foreach (var clase in listaClases)
         {
             Clases.Add(clase);
         }
+
+        // 2. Cargar comisiones disponibles para el Picker
+        var comisiones = await _databaseService.GetComisionesAsync();
+        ListaComisiones.Clear();
+        if (comisiones != null)
+        {
+            foreach (var com in comisiones)
+            {
+                ListaComisiones.Add(com);
+            }
+        }
     }
-
-    //private async Task GuardarClaseAsync()   // viejo modelo
-    //{
-    //    if (string.IsNullOrWhiteSpace(NombreMateria))
-    //        return;
-
-    //    var nuevaClase = new Clase
-    //    {
-    //        NombreMateria = NombreMateria,
-    //        Comision = Comision
-    //    };
-
-    //    await _databaseService.SaveClaseAsync(nuevaClase);
-    //    NombreMateria = string.Empty;
-    //    Comision = string.Empty;
-    //    await CargarClasesAsync();
-    //}
 
     private async Task GuardarClaseAsync()
     {
         if (string.IsNullOrWhiteSpace(NombreMateria))
+        {
+            if (Shell.Current != null)
+                await Shell.Current.DisplayAlert("Atención", "Debe ingresar el nombre de la materia.", "Aceptar");
             return;
+        }
+
+        if (ComisionSeleccionada == null || string.IsNullOrWhiteSpace(ComisionSeleccionada.Nombre))
+        {
+            if (Shell.Current != null)
+                await Shell.Current.DisplayAlert("Atención", "Debe seleccionar una comisión.", "Aceptar");
+            return;
+        }
 
         var nuevaClase = new Clase
         {
-            NombreMateria = NombreMateria,
-            Comision = Comision
+            NombreMateria = NombreMateria.Trim(),
+            Comision = ComisionSeleccionada.Nombre.Trim()
         };
 
-        // 🚀 AQUÍ ESTÁ EL CAMBIO: 
-        // Usamos el nuevo método seguro que guarda la clase Y a la vez 
-        // registra la comisión en la tabla nueva para que lo use el otro módulo.
         await _databaseService.SaveClaseYComisionNuevaAsync(nuevaClase);
 
+        // Limpiar campos
         NombreMateria = string.Empty;
-        Comision = string.Empty;
-        await CargarClasesAsync();
+        ComisionSeleccionada = null;
+
+        await CargarDatosAsync();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

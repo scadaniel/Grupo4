@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:App_v3.Models"
              xmlns:vm="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.GestionClasesPage"
              Title="Gestión de Clases y Cátedras"
              BackgroundColor="#0F172A"
              Shell.NavBarIsVisible="False">
 
-    <!-- Grid principal: Fila 0 para la Barra Superior, Fila 1 para el Contenido -->
     <Grid RowDefinitions="Auto, *">
 
-        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
-        <Grid Grid.Row="0" 
-              BackgroundColor="#1E293B" 
-              Padding="20,15" 
-              ColumnDefinitions="Auto, *, Auto">
-
+        <!-- BARRA SUPERIOR -->
+        <Grid Grid.Row="0" BackgroundColor="#1E293B" Padding="20,15" ColumnDefinitions="Auto, *, Auto">
             <Button Grid.Column="0"
-                    Text="☰  Menú" 
+                    Text="☰ Menú" 
                     BackgroundColor="#3B82F6" 
                     TextColor="White"
                     FontSize="18"
@@ -27,7 +23,6 @@
                     WidthRequest="120"
                     VerticalOptions="Center"
                     Clicked="OnBotonMenuFlyoutClicked" />
-
             <Label Grid.Column="1" 
                    Text="Gestión de Clases" 
                    TextColor="White" 
@@ -37,7 +32,7 @@
                    Margin="20,0,0,0" />
         </Grid>
 
-        <!-- CONTENIDO SCROLLABLE CON FONDO CLARO -->
+        <!-- CONTENIDO SCROLLABLE -->
         <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
             <VerticalStackLayout Padding="20" Spacing="15">
 
@@ -46,13 +41,21 @@
                        FontAttributes="Bold"
                        TextColor="#1A252C" />
 
-                <Entry Placeholder="Nombre de la Materia"
+                <!-- Nombre de la Materia -->
+                <Entry Placeholder="Nombre de la Materia (ej. Física 2)"
                        Text="{Binding NombreMateria}"
                        BackgroundColor="White" />
 
-                <Entry Placeholder="Comisión / Aula"
-                       Text="{Binding Comision}"
-                       BackgroundColor="White" />
+                <!-- Selector de Comisión (Picker) -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Asignar Comisión" FontSize="14" FontAttributes="Bold" TextColor="#2C3E50" />
+                    <Picker ItemsSource="{Binding ListaComisiones}"
+                            SelectedItem="{Binding ComisionSeleccionada}"
+                            ItemDisplayBinding="{Binding Nombre}"
+                            Title="Elija una comisión..."
+                            FontSize="15"
+                            BackgroundColor="White" />
+                </VerticalStackLayout>
 
                 <Button Text="Guardar Clase"
                         Command="{Binding GuardarClaseCommand}"
@@ -70,7 +73,7 @@
 
                 <CollectionView ItemsSource="{Binding Clases}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:Clase">
                             <Frame Margin="0,5" Padding="10" BackgroundColor="White" BorderColor="#E0E0E0">
                                 <VerticalStackLayout>
                                     <Label Text="{Binding NombreMateria}" FontAttributes="Bold" FontSize="16" TextColor="#212121" />
@@ -80,6 +83,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

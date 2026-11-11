@@ -9,24 +9,9 @@
             Valida que los valores de los umbrales no sean contradictorios ni negativos.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.ResetDatabaseAsync">
-            <summary>
-            Borra el archivo físico .db3 local y reinicia la conexión para reconstruir la base de datos de cero.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.InitAsync">
-            <summary>
-            Inicializa la conexión SQLite y crea automáticamente todas las tablas necesarias si no existen.
-            </summary>
-        </member>
         <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
             <summary>
-            Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetIntervencionesAsync">
-            <summary>
-            Obtiene la lista completa de intervenciones de la base de datos (corregido con InitAsync y _dbConnection).
+            Inscribe a un estudiante en una comisión mediante la tabla intermedia sin perder las anteriores.
             </summary>
         </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">

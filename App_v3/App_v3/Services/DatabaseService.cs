@@ -8,9 +8,6 @@ public class DatabaseService
 {
     private SQLiteAsyncConnection? _dbConnection;
 
-    /// <summary>
-    /// Borra el archivo físico .db3 local y reinicia la conexión para reconstruir la base de datos de cero.
-    /// </summary>
     public async Task ResetDatabaseAsync()
     {
         if (_dbConnection is not null)
@@ -30,9 +27,6 @@ public class DatabaseService
         await InitAsync();
     }
 
-    /// <summary>
-    /// Inicializa la conexión SQLite y crea automáticamente todas las tablas necesarias si no existen.
-    /// </summary>
     private async Task InitAsync()
     {
         if (_dbConnection is not null)
@@ -52,11 +46,11 @@ public class DatabaseService
         await _dbConnection.CreateTableAsync<Asistencia>();
         await _dbConnection.CreateTableAsync<TrabajoPractico>();
         await _dbConnection.CreateTableAsync<EntregaTp>();
-        await _dbConnection.CreateTableAsync<Inscripcion>(); // Tabla intermedia para relación M:N (Alumnos <-> Clases)
-        await _dbConnection.CreateTableAsync<Comision>(); // Tabla comisiones
-        await _dbConnection.CreateTableAsync<IntervencionContacto>(); // Tabla de seguimiento de contactos (H10, H11)
+        await _dbConnection.CreateTableAsync<Inscripcion>();
+        await _dbConnection.CreateTableAsync<Comision>();
+        await _dbConnection.CreateTableAsync<EstudianteComision>(); // <-- Tabla intermedia para comisiones múltiples
+        await _dbConnection.CreateTableAsync<IntervencionContacto>();
 
-        // Cargar datos iniciales de prueba si las tablas están vacías
         await InicializarDatosPruebaAsync();
     }
 
@@ -66,13 +60,8 @@ public class DatabaseService
         return _dbConnection!;
     }
 
-    // ==========================================
-    // --- SEED DATA (Datos Iniciales) ---
-    // ==========================================
-
     private async Task InicializarDatosPruebaAsync()
     {
-        // Precargar Estudiantes de prueba
         var cantidadEstudiantes = await _dbConnection!.Table<Estudiante>().CountAsync();
         if (cantidadEstudiantes == 0)
         {
@@ -81,7 +70,6 @@ public class DatabaseService
             await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Carlos Ruiz", Legajo = "1003", Dni = "40555666", Comision = "Comisión B", Activo = true, Telefono = "+5491133333333", Email = "carlos@email.com" });
         }
 
-        // Precargar Clases / Cátedras de prueba
         var cantidadClases = await _dbConnection.Table<Clase>().CountAsync();
         if (cantidadClases == 0)
         {
@@ -113,7 +101,6 @@ public class DatabaseService
             });
         }
 
-        // Precargar Trabajos Prácticos de prueba
         var cantidadTps = await _dbConnection.Table<TrabajoPractico>().CountAsync();
         if (cantidadTps == 0)
         {
@@ -125,10 +112,6 @@ public class DatabaseService
             });
         }
     }
-
-    // ==========================================
-    // --- MÓDULO PERSONAS ---
-    // ==========================================
 
     public async Task<List<Persona>> GetPersonasAsync()
     {
@@ -155,10 +138,6 @@ public class DatabaseService
         return await _dbConnection!.DeleteAsync(persona);
     }
 
-    // ==========================================
-    // --- MÓDULO CLASES Y CÁTEDRAS ---
-    // ==========================================
-
     public async Task<List<Clase>> GetClasesAsync()
     {
         await InitAsync();
@@ -184,10 +163,6 @@ public class DatabaseService
         return await _dbConnection!.DeleteAsync(clase);
     }
 
-    // ==========================================
-    // --- MÓDULO ESTUDIANTES E INSCRIPCIONES ---
-    // ==========================================
-
     public async Task<List<Estudiante>> GetEstudiantesAsync()
     {
         await InitAsync();
@@ -203,10 +178,38 @@ public class DatabaseService
 
         string nombreLimpio = nombreComision.Trim();
 
-        var estudiantes = await _dbConnection!.Table<Estudiante>().ToListAsync();
+        var comision = await _dbConnection!.Table<Comision>()
+            .FirstOrDefaultAsync(c => c.Nombre != null && c.Nombre.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase));
+
+        if (comision != null)
+        {
+            return await GetEstudiantesPorComisionIdAsync(comision.Id);
+        }
+
+        var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
         return estudiantes
             .Where(e => !string.IsNullOrWhiteSpace(e.Comision) && e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase))
             .ToList();
+    }
+
+    public async Task<List<Estudiante>> GetEstudiantesPorComisionIdAsync(int comisionId)
+    {
+        await InitAsync();
+
+        var relaciones = await _dbConnection!.Table<EstudianteComision>()
+            .Where(ec => ec.ComisionId == comisionId)
+            .ToListAsync();
+
+        var estudianteIds = relaciones.Select(ec => ec.EstudianteId).ToList();
+
+        if (!estudianteIds.Any())
+        {
+            return new List<Estudiante>();
+        }
+
+        return await _dbConnection.Table<Estudiante>()
+            .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
+            .ToListAsync();
     }
 
     public async Task<List<Estudiante>> GetEstudiantesPorClaseIdAsync(int claseId)
@@ -265,10 +268,6 @@ public class DatabaseService
         return await _dbConnection!.DeleteAsync(estudiante);
     }
 
-    // ==========================================
-    // --- MÓDULO TRABAJOS PRÁCTICOS ---
-    // ==========================================
-
     public async Task<List<TrabajoPractico>> GetTrabajosPracticosAsync()
     {
         await InitAsync();
@@ -293,10 +292,6 @@ public class DatabaseService
         await InitAsync();
         return await _dbConnection!.DeleteAsync(tp);
     }
-
-    // ==========================================
-    // --- MÓDULO ASISTENCIAS ---
-    // ==========================================
 
     public async Task<List<Asistencia>> GetAsistenciasPorClaseAsync(int claseId)
     {
@@ -346,10 +341,6 @@ public class DatabaseService
             await _dbConnection!.UpdateAsync(estudiante);
         }
     }
-
-    // ==========================================
-    // --- MÓDULO ENTREGAS DE TPs ---
-    // ==========================================
 
     public async Task<List<EntregaTp>> GetEntregasPorTpAsync(int trabajoPracticoId)
     {
@@ -425,10 +416,6 @@ public class DatabaseService
 
         return true;
     }
-
-    // ==========================================
-    // --- MÓDULO REPORTES ---
-    // ==========================================
 
     public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, string? comisionFiltro, DateTime? fechaInicio, DateTime? fechaFin)
     {
@@ -521,10 +508,6 @@ public class DatabaseService
         return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
     }
 
-    // ==========================================
-    // --- MÓDULO COMISIONES Y UMBRALES DE RIESGO ---
-    // ==========================================
-
     public async Task<List<Comision>> GetComisionesAsync()
     {
         await InitAsync();
@@ -570,17 +553,13 @@ public class DatabaseService
         }
     }
 
-    // ==========================================
-    // --- MÓDULO INTERVENCIONES Y CONTACTOS (H10, H11) ---
-    // ==========================================
-
     public async Task<List<IntervencionContacto>> GetIntervencionesPorEstudianteAsync(int estudianteId)
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                            .Where(i => i.EstudianteId == estudianteId)
-                            .OrderByDescending(i => i.Fecha)
-                            .ToListAsync();
+                             .Where(i => i.EstudianteId == estudianteId)
+                             .OrderByDescending(i => i.Fecha)
+                             .ToListAsync();
     }
 
     public async Task<int> GuardarIntervencionAsync(IntervencionContacto intervencion)
@@ -593,14 +572,10 @@ public class DatabaseService
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                            .Where(i => i.EstudianteId == estudianteId)
-                            .OrderByDescending(i => i.Fecha)
-                            .FirstOrDefaultAsync();
+                             .Where(i => i.EstudianteId == estudianteId)
+                             .OrderByDescending(i => i.Fecha)
+                             .FirstOrDefaultAsync();
     }
-
-    // ==========================================
-    // --- IMPORTACIÓN MASIVA DESDE ARCHIVO TXT ---
-    // ==========================================
 
     public async Task<int> ImportarEstructuraCompletaDesdeTxtAsync(Stream fileStream)
     {
@@ -617,11 +592,9 @@ public class DatabaseService
                 {
                     string? linea = reader.ReadLine()?.Trim();
 
-                    // Ignorar líneas totalmente vacías
                     if (string.IsNullOrWhiteSpace(linea))
                         continue;
 
-                    // Detección flexible de secciones (soporta [seccion] y comentarios # --- SECCION ---)
                     string lineaUpper = linea.ToUpper();
                     if ((linea.StartsWith("[") && linea.EndsWith("]")) || lineaUpper.Contains("---"))
                     {
@@ -634,7 +607,6 @@ public class DatabaseService
                         continue;
                     }
 
-                    // Ignorar líneas de comentarios explicativos con #
                     if (linea.StartsWith("#"))
                         continue;
 
@@ -749,21 +721,27 @@ public class DatabaseService
     }
 
     /// <summary>
-    /// Inscribe o actualiza la comisión asignada a un estudiante específico por su ID.
+    /// Inscribe a un estudiante en una comisión mediante la tabla intermedia sin perder las anteriores.
     /// </summary>
     public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
     {
         await InitAsync();
 
-        var estudiante = await _dbConnection!.Table<Estudiante>().FirstOrDefaultAsync(e => e.Id == estudianteId);
-        var comision = await _dbConnection!.Table<Comision>().FirstOrDefaultAsync(c => c.Id == comisionId);
+        var existente = await _dbConnection!.Table<EstudianteComision>()
+            .FirstOrDefaultAsync(ec => ec.EstudianteId == estudianteId && ec.ComisionId == comisionId);
 
-        if (estudiante != null && comision != null)
+        if (existente != null)
         {
-            estudiante.Comision = comision.Nombre;
-            return await _dbConnection.UpdateAsync(estudiante);
+            return 0; // Ya está inscripto en esta comisión
         }
-        return 0;
+
+        var nuevaRelacion = new EstudianteComision
+        {
+            EstudianteId = estudianteId,
+            ComisionId = comisionId
+        };
+
+        return await _dbConnection.InsertAsync(nuevaRelacion);
     }
 
     public async Task<List<ReporteContactoItemModel>> GetReporteContactosDetalladoAsync(int comisionId)
@@ -802,9 +780,6 @@ public class DatabaseService
         return query.ToList();
     }
 
-    /// <summary>
-    /// Obtiene la lista completa de intervenciones de la base de datos (corregido con InitAsync y _dbConnection).
-    /// </summary>
     public async Task<List<IntervencionContacto>> GetIntervencionesAsync()
     {
         await InitAsync();
