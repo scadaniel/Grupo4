@@ -31,10 +31,15 @@
             ContentTemplate="{DataTemplate views:WelcomePage}" />
     </FlyoutItem>
 
+    <!-- 📚 NUEVO MÓDULO: GESTIÓN DE CLASES Y CÁTEDRAS -->
+    <FlyoutItem Title="CLASES Y CÁTEDRAS" Icon="dotnet_bot.png">
+        <ShellContent ContentTemplate="{DataTemplate views:GestionClasesPage}" />
+    </FlyoutItem>
+
     <!-- DEMÁS MÓDULOS DEL MENÚ LATERAL -->
     <FlyoutItem Title="ESTUDIANTES" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:GestionPersonasMenuPage}" />
-    </FlyoutItem>       
+    </FlyoutItem>
 
     <FlyoutItem Title="ASISTENCIAS" Icon="dotnet_bot.png">
         <ShellContent ContentTemplate="{DataTemplate views:AttendancePage}" />

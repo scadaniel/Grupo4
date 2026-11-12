@@ -15,31 +15,35 @@ public class GestionClasesViewModel : INotifyPropertyChanged
     public string NombreMateria
     {
         get => _nombreMateria;
-        set
-        {
-            if (_nombreMateria != value)
-            {
-                _nombreMateria = value;
-                OnPropertyChanged();
-            }
-        }
+        set { _nombreMateria = value; OnPropertyChanged(); }
     }
 
-    // Colección de comisiones para poblar el Picker
-    public ObservableCollection<Comision> ListaComisiones { get; } = new();
-
-    private Comision? _comisionSeleccionada;
-    public Comision? ComisionSeleccionada
+    private string _comisionInput = string.Empty;
+    public string ComisionInput
     {
-        get => _comisionSeleccionada;
-        set
-        {
-            if (_comisionSeleccionada != value)
-            {
-                _comisionSeleccionada = value;
-                OnPropertyChanged();
-            }
-        }
+        get => _comisionInput;
+        set { _comisionInput = value; OnPropertyChanged(); }
+    }
+
+    private string _nombreProfesor = string.Empty;
+    public string NombreProfesor
+    {
+        get => _nombreProfesor;
+        set { _nombreProfesor = value; OnPropertyChanged(); }
+    }
+
+    private string _dniProfesor = string.Empty;
+    public string DniProfesor
+    {
+        get => _dniProfesor;
+        set { _dniProfesor = value; OnPropertyChanged(); }
+    }
+
+    private string _telefonoProfesor = string.Empty;
+    public string TelefonoProfesor
+    {
+        get => _telefonoProfesor;
+        set { _telefonoProfesor = value; OnPropertyChanged(); }
     }
 
     public ObservableCollection<Clase> Clases { get; } = new();
@@ -50,7 +54,6 @@ public class GestionClasesViewModel : INotifyPropertyChanged
     public GestionClasesViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
-
         CargarClasesCommand = new Command(async () => await CargarDatosAsync());
         GuardarClaseCommand = new Command(async () => await GuardarClaseAsync());
 
@@ -59,23 +62,11 @@ public class GestionClasesViewModel : INotifyPropertyChanged
 
     private async Task CargarDatosAsync()
     {
-        // 1. Cargar clases existentes
         var listaClases = await _databaseService.GetClasesAsync();
         Clases.Clear();
         foreach (var clase in listaClases)
         {
             Clases.Add(clase);
-        }
-
-        // 2. Cargar comisiones disponibles para el Picker
-        var comisiones = await _databaseService.GetComisionesAsync();
-        ListaComisiones.Clear();
-        if (comisiones != null)
-        {
-            foreach (var com in comisiones)
-            {
-                ListaComisiones.Add(com);
-            }
         }
     }
 
@@ -88,30 +79,39 @@ public class GestionClasesViewModel : INotifyPropertyChanged
             return;
         }
 
-        if (ComisionSeleccionada == null || string.IsNullOrWhiteSpace(ComisionSeleccionada.Nombre))
+        if (string.IsNullOrWhiteSpace(ComisionInput))
         {
             if (Shell.Current != null)
-                await Shell.Current.DisplayAlert("Atención", "Debe seleccionar una comisión.", "Aceptar");
+                await Shell.Current.DisplayAlert("Atención", "Debe ingresar el nombre de la comisión (ej: Comisión A).", "Aceptar");
             return;
         }
 
         var nuevaClase = new Clase
         {
             NombreMateria = NombreMateria.Trim(),
-            Comision = ComisionSeleccionada.Nombre.Trim()
+            Comision = ComisionInput.Trim(),
+            NombreProfesor = NombreProfesor.Trim(),
+            DniProfesor = DniProfesor.Trim(),
+            TelefonoProfesor = TelefonoProfesor.Trim()
         };
 
+        // Guarda la clase y crea automáticamente la comisión en la tabla Comisiones si no existe
         await _databaseService.SaveClaseYComisionNuevaAsync(nuevaClase);
 
-        // Limpiar campos
+        // Limpiar formulario
         NombreMateria = string.Empty;
-        ComisionSeleccionada = null;
+        ComisionInput = string.Empty;
+        NombreProfesor = string.Empty;
+        DniProfesor = string.Empty;
+        TelefonoProfesor = string.Empty;
 
         await CargarDatosAsync();
+
+        if (Shell.Current != null)
+            await Shell.Current.DisplayAlert("Éxito", "Clase y comisión guardadas correctamente.", "Aceptar");
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

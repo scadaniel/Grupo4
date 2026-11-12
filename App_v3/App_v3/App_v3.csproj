@@ -38,6 +38,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="Resources\Splash\splash.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- Paquetes de MAUI, MVVM Toolkit y SQLite -->
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />

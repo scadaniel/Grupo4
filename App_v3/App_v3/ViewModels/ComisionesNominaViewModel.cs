@@ -10,6 +10,7 @@ namespace App_v3.ViewModels
     public class ComisionesNominaViewModel : INotifyPropertyChanged
     {
         private readonly DatabaseService _databaseService;
+        private bool _estaCargando = false;
 
         public ObservableCollection<Comision> ListaComisiones { get; } = new();
 
@@ -36,19 +37,31 @@ namespace App_v3.ViewModels
         {
             _databaseService = databaseService;
             VolverAlMenuCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
-            _ = CargarComisionesAsync();
+
+            // ELIMINADO de aquí para evitar la doble carga inicial junto con OnAppearing():
+            // _ = CargarComisionesAsync();
         }
 
         private async Task CargarComisionesAsync()
         {
+            if (_estaCargando) return; // Bloqueo anti-ejecuciones simultáneas
+
             try
             {
+                _estaCargando = true;
                 ListaComisiones.Clear();
                 var comisiones = await _databaseService.GetComisionesAsync();
 
                 if (comisiones != null)
                 {
-                    foreach (var comision in comisiones)
+                    // Agrupamos por nombre normalizado para asegurar elementos únicos en el Picker
+                    var comisionesUnicas = comisiones
+                        .Where(c => c != null && !string.IsNullOrWhiteSpace(c.Nombre))
+                        .GroupBy(c => c.Nombre.Trim())
+                        .Select(g => g.First())
+                        .ToList();
+
+                    foreach (var comision in comisionesUnicas)
                     {
                         ListaComisiones.Add(comision);
                     }
@@ -58,26 +71,30 @@ namespace App_v3.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine($"[Error Comisiones]: {ex.Message}");
             }
+            finally
+            {
+                _estaCargando = false;
+            }
         }
 
         private async Task CargarAlumnosDeComisionAsync(Comision? comision)
         {
             AlumnosDeComisionSeleccionada.Clear();
-            if (comision == null || string.IsNullOrWhiteSpace(comision.Nombre)) return;
+            if (comision == null) return;
 
             try
             {
-                var todosLosEstudiantes = await _databaseService.GetEstudiantesAsync();
+                // 1. Buscamos por el ID relacional en la tabla intermedia EstudianteComision
+                var alumnosFiltrados = await _databaseService.GetEstudiantesPorComisionIdAsync(comision.Id);
 
-                if (todosLosEstudiantes != null)
+                // 2. Respaldo por nombre de texto por si acaso
+                if ((alumnosFiltrados == null || !alumnosFiltrados.Any()) && !string.IsNullOrWhiteSpace(comision.Nombre))
                 {
-                    string nombreLimpio = comision.Nombre.Trim();
+                    alumnosFiltrados = await _databaseService.GetEstudiantesPorComisionAsync(comision.Nombre);
+                }
 
-                    var alumnosFiltrados = todosLosEstudiantes.Where(e =>
-                        !string.IsNullOrWhiteSpace(e.Comision) &&
-                        e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase)
-                    ).ToList();
-
+                if (alumnosFiltrados != null)
+                {
                     foreach (var alumno in alumnosFiltrados)
                     {
                         AlumnosDeComisionSeleccionada.Add(alumno);
@@ -88,6 +105,11 @@ namespace App_v3.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine($"[Error Nómina]: {ex.Message}");
             }
+        }
+
+        public async Task RecargarDatosAsync()
+        {
+            await CargarComisionesAsync();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

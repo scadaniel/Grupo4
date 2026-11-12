@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.AttendancePage"
              Title="Control de Asistencia"
              BackgroundColor="#0F172A"
@@ -9,14 +10,14 @@
     <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
     <Grid RowDefinitions="Auto, *">
 
-        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
+        <!-- ⭐ BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
         <Grid Grid.Row="0" 
               BackgroundColor="#1E293B" 
               Padding="20,15" 
               ColumnDefinitions="Auto, *, Auto">
 
             <Button Grid.Column="0"
-                    Text="☰  Menú" 
+                    Text="☰ Menú" 
                     BackgroundColor="#3B82F6" 
                     TextColor="White"
                     FontSize="18"
@@ -36,81 +37,137 @@
                    Margin="20,0,0,0" />
         </Grid>
 
-        <!-- CONTENIDO SCROLLABLE PARA EL CONTROL DE ASISTENCIA -->
+        <!-- CONTENIDO SCROLLABLE -->
         <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto, *, Auto" Padding="20" RowSpacing="10">
+            <VerticalStackLayout Padding="20" Spacing="15">
 
-                <!-- Título Interno -->
-                <Label Grid.Row="0" 
-                       Text="Control de Asistencia" 
-                       FontSize="20" 
-                       FontAttributes="Bold" 
-                       TextColor="#1A252C" />
+                <!-- Encabezado y Selección de Clase / Comisión -->
+                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Seleccionar Comisión" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="#2C3E50" />
 
-                <!-- Selección de Comisión / Clase -->
-                <VerticalStackLayout Grid.Row="1" Spacing="4">
-                    <Label Text="Seleccionar Clase / Comisión:" FontAttributes="Bold" TextColor="#1A252C" />
-                    <Picker ItemsSource="{Binding ComisionesList}"
-                            SelectedItem="{Binding ClaseSeleccionada}"
-                            ItemDisplayBinding="{Binding DescripcionCompleta}"
-                            Title="Elija una clase..." 
-                            BackgroundColor="White" />
-                </VerticalStackLayout>
+                        <Picker ItemDisplayBinding="{Binding Comision}"
+                                ItemsSource="{Binding ComisionesList}"
+                                SelectedItem="{Binding ClaseSeleccionada}"
+                                Title="Elija una comisión..."
+                                FontSize="15"
+                                BackgroundColor="#FFFFFF" />
 
-                <!-- Fecha de la Toma de Asistencia (Por defecto Hoy de Windows) -->
-                <VerticalStackLayout Grid.Row="2" Spacing="4">
-                    <Label Text="Fecha de Toma de Asistencia:" FontAttributes="Bold" TextColor="#1A252C" />
-                    <DatePicker Date="{Binding FechaSeleccionada}" BackgroundColor="White" />
-                </VerticalStackLayout>
+                        <Label Text="Fecha de Asistencia" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="#2C3E50" 
+                               Margin="0,5,0,0" />
 
-                <!-- Encabezado de la Lista de Alumnos -->
-                <Label Grid.Row="3" 
-                       Text="Nómina de Estudiantes" 
-                       FontAttributes="Bold" 
+                        <DatePicker Date="{Binding FechaSeleccionada}"
+                                    FontSize="15" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Sección de Búsqueda y Alta Rápida por DNI -->
+                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Inscribir Alumno por DNI" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="#2C3E50" />
+
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                            <Entry Grid.Column="0"
+                                   Placeholder="Ingrese DNI del alumno..."
+                                   Text="{Binding DniIngresado}"
+                                   Keyboard="Numeric" />
+                            <Button Grid.Column="1"
+                                    Text="Buscar"
+                                    Command="{Binding BuscarAlumnoCommand}"
+                                    BackgroundColor="#455A64"
+                                    TextColor="White" />
+                        </Grid>
+
+                        <!-- Vista previa del alumno encontrado -->
+                        <VerticalStackLayout IsVisible="{Binding IsAlumnoEncontradoVisible}" Spacing="5" Margin="0,5,0,0">
+                            <Label Text="{Binding NombreAlumnoEncontrado}" 
+                                   FontSize="13" 
+                                   TextColor="#37474F" />
+                            <Button Text="Inscribir a esta clase"
+                                    Command="{Binding InscribirAlumnoCommand}"
+                                    BackgroundColor="#2E7D32"
+                                    TextColor="White"
+                                    FontSize="13"
+                                    HeightRequest="40" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Titulo de la lista -->
+                <Label Text="Nómina de Estudiantes" 
                        FontSize="18" 
-                       TextColor="#1A252C" />
+                       FontAttributes="Bold" 
+                       TextColor="#1A252C" 
+                       Margin="0,5,0,0" />
 
-                <!-- CollectionView: Vacío al arrancar hasta seleccionar clase -->
-                <CollectionView Grid.Row="4" 
-                                ItemsSource="{Binding AlumnosAsistencia}"
-                                SelectionMode="None">
+                <!-- Lista de Alumnos con los 3 Checkboxes y 4 Columnas -->
+                <CollectionView ItemsSource="{Binding AlumnosAsistencia}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="0,4" 
-                                    Padding="10" 
-                                    BackgroundColor="#FFFFFF" 
-                                    Stroke="LightGray" 
-                                    StrokeThickness="1" 
-                                    StrokeShape="RoundRectangle 6">
-                                <Grid ColumnDefinitions="*, Auto, Auto" VerticalOptions="Center">
+                            <Frame BorderColor="#EFEFEF" 
+                                   CornerRadius="8" 
+                                   Padding="10" 
+                                   Margin="0,4" 
+                                   HasShadow="False" 
+                                   BackgroundColor="White">
+
+                                <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="8" VerticalOptions="Center">
+
+                                    <!-- Info Alumno -->
                                     <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
-                                        <Label Text="{Binding NombreCompleto}" FontSize="16" FontAttributes="Bold" TextColor="#212121" />
-                                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding NombreCompleto}" 
+                                               FontAttributes="Bold" 
+                                               FontSize="14" 
+                                               TextColor="#212121" />
+                                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" 
+                                               FontSize="11" 
+                                               TextColor="#757575" />
                                     </VerticalStackLayout>
 
-                                    <!-- Controles de Presente / Justificada -->
-                                    <HorizontalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center" Margin="10,0">
-                                        <Label Text="Presente" VerticalOptions="Center" FontSize="13" TextColor="#333333" />
-                                        <CheckBox IsChecked="{Binding EstaPresente}" VerticalOptions="Center" />
+                                    <!-- Presente -->
+                                    <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="Pres." FontSize="11" VerticalOptions="Center" TextColor="#2E7D32" />
+                                        <CheckBox IsChecked="{Binding EstaPresente}" Color="#2E7D32" />
                                     </HorizontalStackLayout>
+
+                                    <!-- Ausente -->
+                                    <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="Aus." FontSize="11" VerticalOptions="Center" TextColor="#D32F2F" />
+                                        <CheckBox IsChecked="{Binding EstaAusente}" Color="#D32F2F" />
+                                    </HorizontalStackLayout>
+
+                                    <!-- Justificada -->
+                                    <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="Just." FontSize="11" VerticalOptions="Center" TextColor="#F57C00" />
+                                        <CheckBox IsChecked="{Binding Justificada}" Color="#F57C00" />
+                                    </HorizontalStackLayout>
+
                                 </Grid>
-                            </Border>
+                            </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <!-- Botón de Guardado -->
-                <Button Grid.Row="5"
-                        Text="Guardar Asistencia" 
-                        Command="{Binding GuardarAsistenciaCommand}" 
-                        BackgroundColor="DarkGreen" 
-                        TextColor="White" 
+                <!-- Botón de Guardado General -->
+                <Button Text="Guardar Asistencia"
+                        Command="{Binding GuardarAsistenciaCommand}"
+                        BackgroundColor="#1976D2"
+                        TextColor="White"
+                        FontAttributes="Bold"
                         CornerRadius="8"
-                        Margin="0,5,0,0" 
-                        HeightRequest="45" />
+                        HeightRequest="50"
+                        Margin="0,10,0,20" />
 
-            </Grid>
+            </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
 </ContentPage>

@@ -76,7 +76,6 @@ namespace App_v3.ViewModels
         {
             if (estudiante == null) return;
 
-            // Validación: Si no hay comisión seleccionada, muestra error claro y permite reintentar al cerrar
             if (ComisionSeleccionada == null)
             {
                 if (Shell.Current is not null)
@@ -88,22 +87,9 @@ namespace App_v3.ViewModels
 
             try
             {
-                // 1. Verificamos si ya estaba inscripto en esta misma comisión
-                if (!string.IsNullOrEmpty(estudiante.Comision) &&
-                    estudiante.Comision.Equals(ComisionSeleccionada.Nombre, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (Shell.Current is not null)
-                        await Shell.Current.DisplayAlert("Información", $"{estudiante.NombreCompleto} ya se encuentra previamente inscripto en la comisión {ComisionSeleccionada.Nombre}.", "Aceptar");
-                    return;
-                }
-
-                // 2. Guardamos en la base de datos SQLite
+                // Guardamos formalmente la relación en la tabla intermedia de SQLite
                 await _databaseService.InscribirEstudianteEnComisionAsync(estudiante.Id, ComisionSeleccionada.Id);
 
-                // Actualizamos localmente para reflejarlo en la interfaz
-                estudiante.Comision = ComisionSeleccionada.Nombre;
-
-                // 3. Pop-up de Éxito confirmando el impacto correcto
                 if (Shell.Current is not null)
                     await Shell.Current.DisplayAlert("Éxito", $"¡Se inscribió correctamente a {estudiante.NombreCompleto} en la comisión {ComisionSeleccionada.Nombre}!", "Aceptar");
             }
@@ -111,8 +97,6 @@ namespace App_v3.ViewModels
             {
                 if (Shell.Current is not null)
                     await Shell.Current.DisplayAlert("Error", $"No se pudo completar la inscripción: {ex.Message}", "Aceptar");
-
-                System.Diagnostics.Debug.WriteLine($"[Error de Inscripción]: {ex.Message}");
             }
         }
 

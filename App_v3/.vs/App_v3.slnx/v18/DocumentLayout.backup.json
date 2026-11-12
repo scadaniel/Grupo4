@@ -3,28 +3,76 @@
   "WorkspaceRootPath": "C:\\GRUPO4\\Grupo4\\App_v3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\comision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\comision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\tomaasistenciapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\tomaasistenciapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\tomaasistenciaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\tomaasistenciaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\estudiantecomision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\estudiantecomision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\comisionesnominaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\comisionesnominaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\comisionesnominapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\comisionesnominapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\comisionesnominapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\comisionesnominapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\listadoestudiantesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\listadoestudiantesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionclasespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\gestionclasesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\clase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\comision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\comision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\estudiantecomision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\estudiantecomision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\models\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,20 +99,12 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\reporteasistenciasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\menureportespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\menureportespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\menureportespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -127,28 +167,12 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\estudiantelistviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\listadoestudiantesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\listadoestudiantesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\registrarintervencionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\registrarintervencionpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\attendancepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\attendancepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\gestionclasespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -183,10 +207,6 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\registroentregaspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\gestionpersonasmenupage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\gestionpersonasmenupage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -213,10 +233,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\tomaasistenciapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\tomaasistenciapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\tomaasistenciapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\tomaasistenciapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\16812eeb8f6708555498c4af04033259c267049b3fffe7248711c3efdc4daae4\\Views_WelcomePage.xaml.sg.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -249,10 +265,6 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\models\\reporteasistenciaitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\tomaasistenciaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\tomaasistenciaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\listadoestudiantespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\listadoestudiantespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -261,24 +273,12 @@
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\nuevoestudiantepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\comisionesnominapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\comisionesnominapage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\comisionesnominaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\comisionesnominaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\viewmodels\\nuevoestudianteviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\viewmodels\\nuevoestudianteviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\listadoestudiantespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\listadoestudiantespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\comisionesnominapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|solutionrelative:app_v3\\views\\comisionesnominapage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{06C5E944-D127-7740-E12A-92EE329A99C9}|App_v3\\App_v3.csproj|c:\\grupo4\\grupo4\\app_v3\\app_v3\\views\\nuevoestudiantepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -308,7 +308,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -316,396 +316,197 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AttendancePage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\AttendancePage.xaml",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAIwKwAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-11-04T14:32:43.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AttendancePage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\AttendancePage.xaml.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAqwAkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T03:07:33.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "TomaAsistenciaPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\TomaAsistenciaPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\TomaAsistenciaPage.xaml",
+              "ViewState": "AgIAAEkAAAAAAAAAAADwv18AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-30T01:31:58.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AttendanceViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\AttendanceViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\AttendanceViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\AttendanceViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\AttendanceViewModel.cs",
+              "ViewState": "AgIAAF0BAAAAAAAAAAAQwHoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T21:15:48.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TomaAsistenciaViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAIwDMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T21:38:02.436Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "DatabaseService.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Services\\DatabaseService.cs",
               "RelativeDocumentMoniker": "App_v3\\Services\\DatabaseService.cs",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Services\\DatabaseService.cs",
               "RelativeToolTip": "App_v3\\Services\\DatabaseService.cs",
-              "ViewState": "AgIAAPUCAAAAAAAAAAAIwBMDAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAPoCAAAAAAAAAAAQwBcDAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-30T05:19:38.936Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Comision.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Comision.cs",
-              "RelativeDocumentMoniker": "App_v3\\Models\\Comision.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Comision.cs",
-              "RelativeToolTip": "App_v3\\Models\\Comision.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ComisionesNominaPage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ComisionesNominaPage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\ComisionesNominaPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-29T22:48:00.199Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-30T04:57:11.094Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GestionClasesViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAIwHYAAAABAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "ComisionesNominaViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAQwHgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T14:18:31.735Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-30T04:53:24.499Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 8,
+              "Title": "ComisionesNominaPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ComisionesNominaPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\ComisionesNominaPage.xaml",
+              "ViewState": "AgIAAC4AAAAAAAAAAADwv0QAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-30T04:34:35.84Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ListadoEstudiantesViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAmwGQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T04:51:57.172Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "GestionClasesPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\GestionClasesPage.xaml",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml",
               "RelativeToolTip": "App_v3\\Views\\GestionClasesPage.xaml",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAIwFkAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAEYAAAAAAAAAAADwv1wAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-05T04:44:03.571Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-05T04:44:03.571Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EstudianteComision.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\EstudianteComision.cs",
-              "RelativeDocumentMoniker": "App_v3\\Models\\EstudianteComision.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\EstudianteComision.cs",
-              "RelativeToolTip": "App_v3\\Models\\EstudianteComision.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T19:49:33.448Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Asistencia.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Asistencia.cs",
-              "RelativeDocumentMoniker": "App_v3\\Models\\Asistencia.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Asistencia.cs",
-              "RelativeToolTip": "App_v3\\Models\\Asistencia.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAuwBUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T21:26:55.294Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Estudiante.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Estudiante.cs",
-              "RelativeDocumentMoniker": "App_v3\\Models\\Estudiante.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Estudiante.cs",
-              "RelativeToolTip": "App_v3\\Models\\Estudiante.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwB0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T01:09:46.635Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ReporteRiesgoComisionViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAAwG0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-09T23:21:22.224Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "Clase.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Clase.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\Clase.cs",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Clase.cs",
               "RelativeToolTip": "App_v3\\Models\\Clase.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAwwBwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-29T22:42:37.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-29T22:42:37.175Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ReporteAsistenciasViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
-              "ViewState": "AgIAAIMAAAAAAAAAAAAIwKEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-31T04:19:04.024Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ReporteRiesgoComisionPage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
-              "RelativeToolTip": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAQwI8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-09T23:23:38.691Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ReporteRiesgoComisionPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAIwGYAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-09T23:22:16.96Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MauiProgram.cs",
               "RelativeDocumentMoniker": "App_v3\\MauiProgram.cs",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MauiProgram.cs",
               "RelativeToolTip": "App_v3\\MauiProgram.cs",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAQwH0AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAIwIQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-30T04:27:42.788Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 11,
+              "Title": "GestionClasesViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\GestionClasesViewModel.cs",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAQwHYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T14:18:31.735Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "AppShell.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
               "RelativeDocumentMoniker": "App_v3\\AppShell.xaml",
               "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml",
               "RelativeToolTip": "App_v3\\AppShell.xaml",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAQwCoAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAIwFEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-10-29T19:29:06.782Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MenuReportesPage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml.cs",
-              "RelativeToolTip": "App_v3\\Views\\MenuReportesPage.xaml.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAADgv0QAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T17:48:44.697Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "MenuReportesPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\MenuReportesPage.xaml",
-              "ViewState": "AgIAAIQAAAAAAAAAAAD4v7EAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-30T04:46:08.237Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "AppShell.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml.cs",
-              "RelativeToolTip": "App_v3\\AppShell.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-29T19:28:35.297Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "BaseViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\BaseViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\BaseViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\BaseViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\BaseViewModel.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-07T00:51:34.531Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "ReporteContactosPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteContactosPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\ReporteContactosPage.xaml",
-              "ViewState": "AgIAACwAAAAAAAAAAAAUwEIAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-05T21:38:05.161Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "ConfiguracionViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ConfiguracionViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ConfiguracionViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ConfiguracionViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ConfiguracionViewModel.cs",
-              "ViewState": "AgIAAMQAAAAAAAAAAAAIwOQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T20:39:45.235Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "ReporteEntregasTpPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAUwK0AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-05T23:06:45.331Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "ReporteAsistenciasPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteAsistenciasPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\ReporteAsistenciasPage.xaml",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAUwKsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-31T04:26:57.254Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "RegistroEntregasPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\RegistroEntregasPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\RegistroEntregasPage.xaml",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAUwJAAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-30T01:32:03.509Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ReporteContactosViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteContactosViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteContactosViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteContactosViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ReporteContactosViewModel.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAA3wGwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T21:17:31.595Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ReporteContactosPage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteContactosPage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml.cs",
-              "RelativeToolTip": "App_v3\\Views\\ReporteContactosPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T21:39:47.361Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "MainPage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\MainPage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml.cs",
-              "RelativeToolTip": "App_v3\\MainPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T22:14:13.578Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\MainPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml",
-              "RelativeToolTip": "App_v3\\MainPage.xaml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-04T03:49:06.286Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ReporteContactoItemModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteContactoItemModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\Models\\ReporteContactoItemModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteContactoItemModel.cs",
-              "RelativeToolTip": "App_v3\\Models\\ReporteContactoItemModel.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA1wBMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T21:18:16.312Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ReporteEntregasTpViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAAwFYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T21:31:02.953Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "RegistroEntregasViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAAwJMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T21:15:52.444Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "EstudianteListViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
-              "ViewState": "AgIAABMBAAAAAAAAAAAQwCYBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T14:45:13.605Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 15,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\App.xaml.cs",
@@ -717,31 +518,307 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "ListadoEstudiantesViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ListadoEstudiantesViewModel.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAmwFgAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 16,
+              "Title": "Comision.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Comision.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Comision.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Comision.cs",
+              "RelativeToolTip": "App_v3\\Models\\Comision.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T04:51:57.172Z"
+              "WhenOpened": "2026-10-29T22:48:00.199Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "AttendancePage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\AttendancePage.xaml",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAQwHMAAAAOAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "EstudianteComision.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\EstudianteComision.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\EstudianteComision.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\EstudianteComision.cs",
+              "RelativeToolTip": "App_v3\\Models\\EstudianteComision.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T19:49:33.448Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Asistencia.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Asistencia.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Asistencia.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Asistencia.cs",
+              "RelativeToolTip": "App_v3\\Models\\Asistencia.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAuwBUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T21:26:55.294Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Estudiante.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Estudiante.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\Estudiante.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\Estudiante.cs",
+              "RelativeToolTip": "App_v3\\Models\\Estudiante.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T01:09:46.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ReporteRiesgoComisionViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ReporteRiesgoComisionViewModel.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAAwG0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-09T23:21:22.224Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ReporteAsistenciasViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ReporteAsistenciasViewModel.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAIwKEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-31T04:19:04.024Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ReporteRiesgoComisionPage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAQwI8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-09T23:23:38.691Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ReporteRiesgoComisionPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\ReporteRiesgoComisionPage.xaml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAIwGYAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-11-04T14:32:43.618Z"
+              "WhenOpened": "2026-11-09T23:22:16.96Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MenuReportesPage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\MenuReportesPage.xaml.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAADgv0QAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T17:48:44.697Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "MenuReportesPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\MenuReportesPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\MenuReportesPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\MenuReportesPage.xaml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAD4v7EAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-30T04:46:08.237Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\AppShell.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\AppShell.xaml.cs",
+              "RelativeToolTip": "App_v3\\AppShell.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T19:28:35.297Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "BaseViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\BaseViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\BaseViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\BaseViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\BaseViewModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-07T00:51:34.531Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ReporteContactosPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteContactosPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\ReporteContactosPage.xaml",
+              "ViewState": "AgIAACwAAAAAAAAAAAAUwEIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-11-05T21:38:05.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ConfiguracionViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ConfiguracionViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ConfiguracionViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ConfiguracionViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ConfiguracionViewModel.cs",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAIwOQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T20:39:45.235Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "ReporteEntregasTpPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteEntregasTpPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\ReporteEntregasTpPage.xaml",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAUwK0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-11-05T23:06:45.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "ReporteAsistenciasPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteAsistenciasPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\ReporteAsistenciasPage.xaml",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAUwKsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-31T04:26:57.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "RegistroEntregasPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\Views\\RegistroEntregasPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml",
+              "RelativeToolTip": "App_v3\\Views\\RegistroEntregasPage.xaml",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAUwJAAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-30T01:32:03.509Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 33,
+              "Title": "ReporteContactosViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteContactosViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteContactosViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteContactosViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ReporteContactosViewModel.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAA3wGwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T21:17:31.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "ReporteContactosPage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\Views\\ReporteContactosPage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteContactosPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\Views\\ReporteContactosPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T21:39:47.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "App_v3\\MainPage.xaml.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml.cs",
+              "RelativeToolTip": "App_v3\\MainPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T22:14:13.578Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml",
+              "RelativeDocumentMoniker": "App_v3\\MainPage.xaml",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\MainPage.xaml",
+              "RelativeToolTip": "App_v3\\MainPage.xaml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-11-04T03:49:06.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "ReporteContactoItemModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteContactoItemModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\Models\\ReporteContactoItemModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteContactoItemModel.cs",
+              "RelativeToolTip": "App_v3\\Models\\ReporteContactoItemModel.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wBMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T21:18:16.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ReporteEntregasTpViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\ReporteEntregasTpViewModel.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAAwFYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T21:31:02.953Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "RegistroEntregasViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\RegistroEntregasViewModel.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAAwJMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-05T21:15:52.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "EstudianteListViewModel.cs",
+              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "RelativeToolTip": "App_v3\\ViewModels\\EstudianteListViewModel.cs",
+              "ViewState": "AgIAABMBAAAAAAAAAAAQwCYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T14:45:13.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
               "Title": "RegistrarIntervencionPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistrarIntervencionPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\RegistrarIntervencionPage.xaml",
@@ -753,7 +830,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 42,
               "Title": "App.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\App.xaml",
               "RelativeDocumentMoniker": "App_v3\\App.xaml",
@@ -765,19 +842,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "AttendancePage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\Views\\AttendancePage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\AttendancePage.xaml.cs",
-              "RelativeToolTip": "App_v3\\Views\\AttendancePage.xaml.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAwwBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-05T03:07:33.896Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 43,
               "Title": "GestionClasesPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionClasesPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\GestionClasesPage.xaml.cs",
@@ -789,7 +854,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 45,
               "Title": "EstudianteListPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\EstudianteListPage.xaml",
@@ -801,7 +866,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 44,
               "Title": "EstudianteListPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\EstudianteListPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\EstudianteListPage.xaml.cs",
@@ -813,7 +878,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 46,
               "Title": "RegistrarIntervencionViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\RegistrarIntervencionViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\RegistrarIntervencionViewModel.cs",
@@ -825,7 +890,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 47,
               "Title": "GestionPersonasMenuPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionPersonasMenuPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\GestionPersonasMenuPage.xaml",
@@ -837,7 +902,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "CalendarPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\CalendarPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\CalendarPage.xaml",
@@ -849,7 +914,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 50,
               "Title": "RegistroEntregasPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistroEntregasPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\RegistroEntregasPage.xaml.cs",
@@ -861,7 +926,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 49,
               "Title": "CalendarPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\CalendarPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\CalendarPage.xaml.cs",
@@ -873,7 +938,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 52,
               "Title": "GestionPersonasMenuViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionPersonasMenuViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionPersonasMenuViewModel.cs",
@@ -885,19 +950,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "AttendanceViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\AttendanceViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\AttendanceViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\AttendanceViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\AttendanceViewModel.cs",
-              "ViewState": "AgIAAPkAAAAAAAAAAAA5wA4BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T21:15:48.055Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 51,
               "Title": "GestionPersonasMenuPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\GestionPersonasMenuPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\GestionPersonasMenuPage.xaml.cs",
@@ -909,7 +962,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 53,
               "Title": "ConfiguracionPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ConfiguracionPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ConfiguracionPage.xaml.cs",
@@ -921,7 +974,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 54,
               "Title": "ConfiguracionPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ConfiguracionPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\ConfiguracionPage.xaml",
@@ -933,7 +986,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 56,
               "Title": "WelcomePage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\WelcomePage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\WelcomePage.xaml",
@@ -945,7 +998,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 55,
               "Title": "WelcomePage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\WelcomePage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\WelcomePage.xaml.cs",
@@ -957,19 +1010,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
-              "Title": "TomaAsistenciaPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\TomaAsistenciaPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\TomaAsistenciaPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-30T01:31:58.137Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 57,
               "Title": "TomaAsistenciaPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\TomaAsistenciaPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\TomaAsistenciaPage.xaml.cs",
@@ -981,7 +1022,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 59,
               "Title": "AppShell.xaml.sg.cs",
               "DocumentMoniker": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\6c7edc8c603b7ad30d54e6571692768188a50b0c14a2ae3bdd1dcaa451bd7c5b\\AppShell.xaml.sg.cs",
@@ -993,7 +1034,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 58,
               "Title": "Views_WelcomePage.xaml.sg.cs",
               "DocumentMoniker": "C:\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\16812eeb8f6708555498c4af04033259c267049b3fffe7248711c3efdc4daae4\\Views_WelcomePage.xaml.sg.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\scada\\AppData\\Local\\Temp\\.vsdbgsrc\\16812eeb8f6708555498c4af04033259c267049b3fffe7248711c3efdc4daae4\\Views_WelcomePage.xaml.sg.cs",
@@ -1006,7 +1047,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 60,
               "Title": "RegistrarIntervencionPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\RegistrarIntervencionPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\RegistrarIntervencionPage.xaml.cs",
@@ -1018,7 +1059,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 61,
               "Title": "EstudianteItemViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\EstudianteItemViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\EstudianteItemViewModel.cs",
@@ -1030,7 +1071,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 62,
               "Title": "GestionPersonasViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\GestionPersonasViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\GestionPersonasViewModel.cs",
@@ -1042,7 +1083,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 63,
               "Title": "IntervencionContacto.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\IntervencionContacto.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\IntervencionContacto.cs",
@@ -1054,7 +1095,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 64,
               "Title": "ReporteAsistenciasPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ReporteAsistenciasPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ReporteAsistenciasPage.xaml.cs",
@@ -1066,7 +1107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 65,
               "Title": "ReporteAsistenciaItem.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Models\\ReporteAsistenciaItem.cs",
               "RelativeDocumentMoniker": "App_v3\\Models\\ReporteAsistenciaItem.cs",
@@ -1078,19 +1119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
-              "Title": "TomaAsistenciaViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\TomaAsistenciaViewModel.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAzwIMAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T21:38:02.436Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 66,
               "Title": "ListadoEstudiantesPage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ListadoEstudiantesPage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\ListadoEstudiantesPage.xaml",
@@ -1102,19 +1131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
-              "Title": "ComisionesNominaPage.xaml",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ComisionesNominaPage.xaml",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml",
-              "RelativeToolTip": "App_v3\\Views\\ComisionesNominaPage.xaml",
-              "ViewState": "AgIAACkAAAAAAAAAAAAQwEQAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-10-30T04:34:35.84Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 67,
               "Title": "NuevoEstudiantePage.xaml",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\NuevoEstudiantePage.xaml",
               "RelativeDocumentMoniker": "App_v3\\Views\\NuevoEstudiantePage.xaml",
@@ -1126,19 +1143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
-              "Title": "ComisionesNominaViewModel.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
-              "RelativeDocumentMoniker": "App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
-              "RelativeToolTip": "App_v3\\ViewModels\\ComisionesNominaViewModel.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAIwGIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T04:53:24.499Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "NuevoEstudianteViewModel.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\ViewModels\\NuevoEstudianteViewModel.cs",
               "RelativeDocumentMoniker": "App_v3\\ViewModels\\NuevoEstudianteViewModel.cs",
@@ -1150,7 +1155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "ListadoEstudiantesPage.xaml.cs",
               "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ListadoEstudiantesPage.xaml.cs",
               "RelativeDocumentMoniker": "App_v3\\Views\\ListadoEstudiantesPage.xaml.cs",
@@ -1159,18 +1164,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-30T04:57:51.788Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 69,
-              "Title": "ComisionesNominaPage.xaml.cs",
-              "DocumentMoniker": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml.cs",
-              "RelativeDocumentMoniker": "App_v3\\Views\\ComisionesNominaPage.xaml.cs",
-              "ToolTip": "C:\\GRUPO4\\Grupo4\\App_v3\\App_v3\\Views\\ComisionesNominaPage.xaml.cs",
-              "RelativeToolTip": "App_v3\\Views\\ComisionesNominaPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-30T04:57:11.094Z"
             },
             {
               "$type": "Document",

@@ -48,7 +48,7 @@ public class DatabaseService
         await _dbConnection.CreateTableAsync<EntregaTp>();
         await _dbConnection.CreateTableAsync<Inscripcion>();
         await _dbConnection.CreateTableAsync<Comision>();
-        await _dbConnection.CreateTableAsync<EstudianteComision>(); // <-- Tabla intermedia para comisiones múltiples
+        await _dbConnection.CreateTableAsync<EstudianteComision>();
         await _dbConnection.CreateTableAsync<IntervencionContacto>();
 
         await InicializarDatosPruebaAsync();
@@ -62,55 +62,7 @@ public class DatabaseService
 
     private async Task InicializarDatosPruebaAsync()
     {
-        var cantidadEstudiantes = await _dbConnection!.Table<Estudiante>().CountAsync();
-        if (cantidadEstudiantes == 0)
-        {
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Juan Pérez", Legajo = "1001", Dni = "40111222", Comision = "Comisión A", Activo = true, Telefono = "+5491111111111", Email = "juan@email.com" });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "María Gómez", Legajo = "1002", Dni = "40333444", Comision = "Comisión A", Activo = true, Telefono = "+5491122222222", Email = "maria@email.com" });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Carlos Ruiz", Legajo = "1003", Dni = "40555666", Comision = "Comisión B", Activo = true, Telefono = "+5491133333333", Email = "carlos@email.com" });
-        }
-
-        var cantidadClases = await _dbConnection.Table<Clase>().CountAsync();
-        if (cantidadClases == 0)
-        {
-            await _dbConnection.InsertAsync(new Clase
-            {
-                NombreMateria = "Robótica y Automatización",
-                Comision = "Comisión A",
-                NumeroClase = 1,
-                Tema = "Introducción a Arduino y Sensores",
-                Fecha = DateTime.Today.AddDays(-7)
-            });
-
-            await _dbConnection.InsertAsync(new Clase
-            {
-                NombreMateria = "Robótica y Automatización",
-                Comision = "Comisión A",
-                NumeroClase = 2,
-                Tema = "Motores paso a paso y Puentes H",
-                Fecha = DateTime.Today
-            });
-
-            await _dbConnection.InsertAsync(new Clase
-            {
-                NombreMateria = "Robótica y Automatización",
-                Comision = "Comisión B",
-                NumeroClase = 1,
-                Tema = "Introducción a Arduino y Sensores",
-                Fecha = DateTime.Today.AddDays(-7)
-            });
-        }
-
-        var cantidadTps = await _dbConnection.Table<TrabajoPractico>().CountAsync();
-        if (cantidadTps == 0)
-        {
-            await _dbConnection.InsertAsync(new TrabajoPractico
-            {
-                Nombre = "TP 1: Semáforo Inteligente",
-                Descripcion = "Montaje con LEDs y pulsadores",
-                FechaLimite = DateTime.Today.AddDays(5)
-            });
-        }
+        await Task.CompletedTask;
     }
 
     public async Task<List<Persona>> GetPersonasAsync()
@@ -169,6 +121,10 @@ public class DatabaseService
         return await _dbConnection!.Table<Estudiante>().ToListAsync();
     }
 
+    /// <summary>
+    /// Obtiene los estudiantes de una comisión buscando tanto en la tabla relacional (EstudianteComision)
+    /// como por coincidencia de texto directo o flexible.
+    /// </summary>
     public async Task<List<Estudiante>> GetEstudiantesPorComisionAsync(string nombreComision)
     {
         await InitAsync();
@@ -177,38 +133,83 @@ public class DatabaseService
             return new List<Estudiante>();
 
         string nombreLimpio = nombreComision.Trim();
-
-        var comision = await _dbConnection!.Table<Comision>()
-            .FirstOrDefaultAsync(c => c.Nombre != null && c.Nombre.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase));
-
-        if (comision != null)
+        if (nombreLimpio.Contains("[") && nombreLimpio.Contains("]"))
         {
-            return await GetEstudiantesPorComisionIdAsync(comision.Id);
+            int inicio = nombreLimpio.IndexOf('[') + 1;
+            int fin = nombreLimpio.IndexOf(']');
+            if (fin > inicio)
+            {
+                nombreLimpio = nombreLimpio.Substring(inicio, fin - inicio).Trim();
+            }
         }
 
-        var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
-        return estudiantes
-            .Where(e => !string.IsNullOrWhiteSpace(e.Comision) && e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        var resultado = new Dictionary<int, Estudiante>();
+
+        // 1. Traemos todas las comisiones de la tabla nueva y buscamos de forma flexible
+        var comisionesBD = await _dbConnection!.Table<Comision>().ToListAsync();
+
+        var comisionEncontrada = comisionesBD.FirstOrDefault(c =>
+            c.Nombre != null && (
+                c.Nombre.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase) ||
+                nombreLimpio.Contains(c.Nombre.Trim(), StringComparison.OrdinalIgnoreCase) ||
+                c.Nombre.Trim().Contains(nombreLimpio, StringComparison.OrdinalIgnoreCase)
+            )
+        );
+
+        if (comisionEncontrada != null)
+        {
+            var relaciones = await _dbConnection.Table<EstudianteComision>()
+                .Where(ec => ec.ComisionId == comisionEncontrada.Id)
+                .ToListAsync();
+
+            var ids = relaciones.Select(r => r.EstudianteId).ToList();
+            if (ids.Any())
+            {
+                var estRelacionados = await _dbConnection.Table<Estudiante>()
+                    .Where(e => ids.Contains(e.Id))
+                    .ToListAsync();
+
+                foreach (var est in estRelacionados)
+                    resultado[est.Id] = est;
+            }
+        }
+
+        // 2. Respaldo por coincidencia de texto plano en el campo Comision del estudiante
+        var todosEstudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
+        foreach (var est in todosEstudiantes)
+        {
+            if (!string.IsNullOrWhiteSpace(est.Comision) &&
+                (est.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase) ||
+                 nombreLimpio.Contains(est.Comision.Trim(), StringComparison.OrdinalIgnoreCase) ||
+                 est.Comision.Trim().Contains(nombreLimpio, StringComparison.OrdinalIgnoreCase)))
+            {
+                resultado[est.Id] = est;
+            }
+        }
+
+        return resultado.Values.OrderBy(e => e.NombreCompleto).ToList();
     }
 
+    /// <summary>
+    /// Obtiene los estudiantes de una comisión filtrando directamente por el ID numérico de la nueva tabla Comision.
+    /// </summary>
     public async Task<List<Estudiante>> GetEstudiantesPorComisionIdAsync(int comisionId)
     {
         await InitAsync();
+
+        if (comisionId <= 0)
+            return new List<Estudiante>();
 
         var relaciones = await _dbConnection!.Table<EstudianteComision>()
             .Where(ec => ec.ComisionId == comisionId)
             .ToListAsync();
 
-        var estudianteIds = relaciones.Select(ec => ec.EstudianteId).ToList();
-
-        if (!estudianteIds.Any())
-        {
+        var ids = relaciones.Select(r => r.EstudianteId).ToList();
+        if (!ids.Any())
             return new List<Estudiante>();
-        }
 
         return await _dbConnection.Table<Estudiante>()
-            .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
+            .Where(e => ids.Contains(e.Id))
             .ToListAsync();
     }
 
@@ -222,14 +223,20 @@ public class DatabaseService
 
         var estudianteIds = inscripciones.Select(i => i.EstudianteId).ToList();
 
-        if (!estudianteIds.Any())
+        if (estudianteIds.Any())
         {
-            return new List<Estudiante>();
+            return await _dbConnection.Table<Estudiante>()
+                .Where(e => estudianteIds.Contains(e.Id))
+                .ToListAsync();
         }
 
-        return await _dbConnection.Table<Estudiante>()
-            .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
-            .ToListAsync();
+        var clase = await _dbConnection.Table<Clase>().FirstOrDefaultAsync(c => c.Id == claseId);
+        if (clase != null && !string.IsNullOrWhiteSpace(clase.Comision))
+        {
+            return await GetEstudiantesPorComisionAsync(clase.Comision);
+        }
+
+        return new List<Estudiante>();
     }
 
     public async Task<int> InscribirEstudianteAsync(int estudianteId, int claseId)
@@ -475,7 +482,7 @@ public class DatabaseService
         var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
         var tps = await _dbConnection.Table<TrabajoPractico>().ToListAsync();
 
-        var listaCruda = from e in estudiantes.Where(x => x.Activo)
+        var listaCruda = from e in estudiantes
                          from tp in tps
                          join ent in entregas on new { EstudianteId = e.Id, TrabajoPracticoId = tp.Id }
                          equals new { ent.EstudianteId, ent.TrabajoPracticoId } into entregaJoin
@@ -557,9 +564,9 @@ public class DatabaseService
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                             .Where(i => i.EstudianteId == estudianteId)
-                             .OrderByDescending(i => i.Fecha)
-                             .ToListAsync();
+                                   .Where(i => i.EstudianteId == estudianteId)
+                                   .OrderByDescending(i => i.Fecha)
+                                   .ToListAsync();
     }
 
     public async Task<int> GuardarIntervencionAsync(IntervencionContacto intervencion)
@@ -572,9 +579,9 @@ public class DatabaseService
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                             .Where(i => i.EstudianteId == estudianteId)
-                             .OrderByDescending(i => i.Fecha)
-                             .FirstOrDefaultAsync();
+                                   .Where(i => i.EstudianteId == estudianteId)
+                                   .OrderByDescending(i => i.Fecha)
+                                   .FirstOrDefaultAsync();
     }
 
     public async Task<int> ImportarEstructuraCompletaDesdeTxtAsync(Stream fileStream)
@@ -720,9 +727,6 @@ public class DatabaseService
         return registrosProcesados;
     }
 
-    /// <summary>
-    /// Inscribe a un estudiante en una comisión mediante la tabla intermedia sin perder las anteriores.
-    /// </summary>
     public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
     {
         await InitAsync();
@@ -732,7 +736,7 @@ public class DatabaseService
 
         if (existente != null)
         {
-            return 0; // Ya está inscripto en esta comisión
+            return 0;
         }
 
         var nuevaRelacion = new EstudianteComision

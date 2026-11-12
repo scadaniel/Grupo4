@@ -9,9 +9,15 @@
             Valida que los valores de los umbrales no sean contradictorios ni negativos.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.InscribirEstudianteEnComisionAsync(System.Int32,System.Int32)">
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorComisionAsync(System.String)">
             <summary>
-            Inscribe a un estudiante en una comisión mediante la tabla intermedia sin perder las anteriores.
+            Obtiene los estudiantes de una comisión buscando tanto en la tabla relacional (EstudianteComision)
+            como por coincidencia de texto directo o flexible.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesPorComisionIdAsync(System.Int32)">
+            <summary>
+            Obtiene los estudiantes de una comisión filtrando directamente por el ID numérico de la nueva tabla Comision.
             </summary>
         </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">

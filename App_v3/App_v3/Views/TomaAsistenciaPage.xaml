@@ -9,7 +9,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <!-- Encabezado y Selección de Clase (H2 -> H3) -->
+            <!-- Encabezado y Selección de Clase -->
             <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Seleccionar Clase / Fecha" 
@@ -43,7 +43,8 @@
                                Margin="0,4" 
                                HasShadow="False" 
                                BackgroundColor="White">
-                            <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10" VerticalOptions="Center">
+                            <!-- Actualizado a 4 columnas: Info, Presente, Ausente, Justificada -->
+                            <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="10" VerticalOptions="Center">
 
                                 <!-- Info Alumno -->
                                 <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
@@ -56,16 +57,22 @@
                                            TextColor="#757575" />
                                 </VerticalStackLayout>
 
-                                <!-- Interruptor Presente/Ausente (H3) -->
+                                <!-- Interruptor Presente -->
                                 <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                                    <Label Text="Presente" FontSize="12" VerticalOptions="Center" />
+                                    <Label Text="Presente" FontSize="12" VerticalOptions="Center" TextColor="#2E7D32" />
                                     <CheckBox IsChecked="{Binding Presente}" Color="#2E7D32" />
                                 </HorizontalStackLayout>
 
-                                <!-- Interruptor Justificada (H4) -->
+                                <!-- Interruptor Ausente -->
                                 <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="4">
-                                    <Label Text="Justificada" FontSize="12" VerticalOptions="Center" TextColor="#D32F2F" />
-                                    <CheckBox IsChecked="{Binding Justificada}" Color="#D32F2F" />
+                                    <Label Text="Ausente" FontSize="12" VerticalOptions="Center" TextColor="#D32F2F" />
+                                    <CheckBox IsChecked="{Binding Ausente}" Color="#D32F2F" />
+                                </HorizontalStackLayout>
+
+                                <!-- Interruptor Justificada -->
+                                <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" Spacing="4">
+                                    <Label Text="Justificada" FontSize="12" VerticalOptions="Center" TextColor="#F57C00" />
+                                    <CheckBox IsChecked="{Binding Justificada}" Color="#F57C00" />
                                 </HorizontalStackLayout>
 
                             </Grid>

@@ -9,21 +9,19 @@ public class Clase
     public int Id { get; set; }
 
     public string NombreMateria { get; set; } = string.Empty;
-
     public string Comision { get; set; } = string.Empty;
 
-    // --- Campos para el Calendario de Clases ---
-    public DateTime Fecha { get; set; } = DateTime.Today; // Fecha programada de la clase
+    // --- Nuevos campos del profesor ---
+    public string NombreProfesor { get; set; } = string.Empty;
+    public string DniProfesor { get; set; } = string.Empty;
+    public string TelefonoProfesor { get; set; } = string.Empty;
 
-    public int NumeroClase { get; set; } = 1;             // Número secuencial de clase
-
-    public string Tema { get; set; } = string.Empty;      // Tema o contenido a dictar en la clase
+    public DateTime Fecha { get; set; } = DateTime.Today;
+    public int NumeroClase { get; set; } = 1;
+    public string Tema { get; set; } = string.Empty;
 
     [Ignore]
-    public string DescripcionCompleta => $"{NombreMateria} - [{Comision}] (Clase #{NumeroClase}: {Tema})";
+    public string DescripcionCompleta => $"{NombreMateria} - [{Comision}] (Prof. {NombreProfesor})";
 
-    public override string ToString()
-    {
-        return DescripcionCompleta;
-    }
+    public override string ToString() => DescripcionCompleta;
 }

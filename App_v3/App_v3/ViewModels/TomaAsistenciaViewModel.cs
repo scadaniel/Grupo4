@@ -16,7 +16,31 @@ namespace App_v3.ViewModels
         public bool Presente
         {
             get => _presente;
-            set { _presente = value; OnPropertyChanged(); }
+            set
+            {
+                if (_presente != value)
+                {
+                    _presente = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Ausente)); // Notifica el cambio al checkbox de ausente
+                }
+            }
+        }
+
+        // 🌟 Nueva propiedad Ausente sincronizada inversamente con Presente
+        public bool Ausente
+        {
+            get => !_presente;
+            set
+            {
+                bool nuevoPresente = !value;
+                if (_presente != nuevoPresente)
+                {
+                    _presente = nuevoPresente;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Presente)); // Notifica el cambio al checkbox de presente
+                }
+            }
         }
 
         private bool _justificada = false;
@@ -26,7 +50,6 @@ namespace App_v3.ViewModels
             set { _justificada = value; OnPropertyChanged(); }
         }
     }
-
     public class TomaAsistenciaViewModel : BindableObject
     {
         private readonly DatabaseService _databaseService;

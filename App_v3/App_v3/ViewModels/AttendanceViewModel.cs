@@ -10,10 +10,14 @@ namespace App_v3.ViewModels
         private readonly DatabaseService _databaseService;
 
         private Clase? _claseSeleccionada;
-        private DateTime _fechaSeleccionada = DateTime.Today; // Por defecto hoy de Windows
+        private DateTime _fechaSeleccionada = DateTime.Today;
         private string _dniIngresado = string.Empty;
 
-        // El Picker vuelve a alimentar objetos Clase tal como espera la vista XAML
+        // Propiedades para la vista previa del alumno encontrado
+        private string _nombreAlumnoEncontrado = string.Empty;
+        private bool _isAlumnoEncontradoVisible = false;
+        private Estudiante? _estudianteParaInscribir;
+
         public ObservableCollection<Clase> ComisionesList { get; set; } = new();
         public ObservableCollection<AlumnoAsistenciaItem> AlumnosAsistencia { get; set; } = new();
 
@@ -27,7 +31,6 @@ namespace App_v3.ViewModels
                     _claseSeleccionada = value;
                     OnPropertyChanged();
 
-                    // Solo carga alumnos si realmente se seleccionó una clase válida
                     if (_claseSeleccionada != null)
                     {
                         _ = CargarAlumnosAsync();
@@ -49,6 +52,10 @@ namespace App_v3.ViewModels
                 {
                     _fechaSeleccionada = value;
                     OnPropertyChanged();
+                    if (ClaseSeleccionada != null)
+                    {
+                        _ = CargarAlumnosAsync();
+                    }
                 }
             }
         }
@@ -66,8 +73,21 @@ namespace App_v3.ViewModels
             }
         }
 
+        public string NombreAlumnoEncontrado
+        {
+            get => _nombreAlumnoEncontrado;
+            set { _nombreAlumnoEncontrado = value; OnPropertyChanged(); }
+        }
+
+        public bool IsAlumnoEncontradoVisible
+        {
+            get => _isAlumnoEncontradoVisible;
+            set { _isAlumnoEncontradoVisible = value; OnPropertyChanged(); }
+        }
+
         public ICommand CargarComisionesCommand { get; }
         public ICommand GuardarAsistenciaCommand { get; }
+        public ICommand BuscarAlumnoCommand { get; }
         public ICommand InscribirAlumnoCommand { get; }
 
         public AttendanceViewModel(DatabaseService databaseService)
@@ -76,16 +96,16 @@ namespace App_v3.ViewModels
 
             CargarComisionesCommand = new Command(async () => await CargarComisionesAsync());
             GuardarAsistenciaCommand = new Command(async () => await GuardarAsistenciaAsync());
-            InscribirAlumnoCommand = new Command(async () => await InscribirAlumnoPorDniAsync());
+            BuscarAlumnoCommand = new Command(async () => await BuscarAlumnoPorDniAsync());
+            InscribirAlumnoCommand = new Command(async () => await InscribirAlumnoConfirmadoAsync());
 
-            // Inicializamos cargando las comisiones/clases
             _ = InicializarPantallaAsync();
         }
 
         private async Task InicializarPantallaAsync()
         {
             await CargarComisionesAsync();
-            ClaseSeleccionada = null; // Evita autoselección por defecto
+            ClaseSeleccionada = null;
             AlumnosAsistencia.Clear();
         }
 
@@ -118,28 +138,43 @@ namespace App_v3.ViewModels
 
             try
             {
-                // 1. Intentamos buscar por ID de clase en la tabla de inscripciones
-                var estudiantesBD = await _databaseService.GetEstudiantesPorClaseIdAsync(ClaseSeleccionada.Id);
+                List<Estudiante> estudiantesBD = new();
 
-                // 2. Si viene vacío, respaldamos buscando por el nombre de la comisión de esta clase en los alumnos cargados
+                if (!string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
+                {
+                    string nombreComisionLimpio = LimpiarTextoComision(ClaseSeleccionada.Comision);
+                    estudiantesBD = await _databaseService.GetEstudiantesPorComisionAsync(nombreComisionLimpio);
+                }
+
                 if (estudiantesBD == null || !estudiantesBD.Any())
                 {
-                    if (!string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
-                    {
-                        estudiantesBD = await _databaseService.GetEstudiantesPorComisionAsync(ClaseSeleccionada.Comision);
-                    }
+                    estudiantesBD = await _databaseService.GetEstudiantesPorClaseIdAsync(ClaseSeleccionada.Id);
                 }
+
+                if (estudiantesBD == null || !estudiantesBD.Any())
+                {
+                    estudiantesBD = await _databaseService.GetEstudiantesAsync();
+                }
+
+                var asistenciasGuardadas = await _databaseService.GetAsistenciasPorClaseAsync(ClaseSeleccionada.Id);
 
                 if (estudiantesBD != null)
                 {
                     foreach (var est in estudiantesBD)
                     {
+                        var registroPrevio = asistenciasGuardadas
+                            .FirstOrDefault(a => a.EstudianteId == est.Id && a.Fecha.Date == FechaSeleccionada.Date);
+
+                        bool estaPresente = registroPrevio != null ? registroPrevio.Presente : true;
+                        bool justificada = registroPrevio != null ? registroPrevio.Justificada : false;
+
                         AlumnosAsistencia.Add(new AlumnoAsistenciaItem
                         {
                             EstudianteId = est.Id,
-                            NombreCompleto = est.NombreCompleto,
-                            Legajo = est.Legajo,
-                            EstaPresente = true
+                            NombreCompleto = est.NombreCompleto ?? "Sin Nombre",
+                            Legajo = est.Legajo ?? "S/N",
+                            EstaPresente = estaPresente,
+                            Justificada = justificada
                         });
                     }
                 }
@@ -150,7 +185,40 @@ namespace App_v3.ViewModels
             }
         }
 
-        private async Task InscribirAlumnoPorDniAsync()
+        private async Task BuscarAlumnoPorDniAsync()
+        {
+            if (string.IsNullOrWhiteSpace(DniIngresado))
+            {
+                await Shell.Current.DisplayAlert("Atención", "Debe cargar un número de DNI.", "OK");
+                IsAlumnoEncontradoVisible = false;
+                return;
+            }
+
+            try
+            {
+                string dniTrim = DniIngresado.Trim();
+                var estudiantes = await _databaseService.GetEstudiantesAsync();
+                _estudianteParaInscribir = estudiantes.FirstOrDefault(e => e.Dni != null && e.Dni.Trim() == dniTrim);
+
+                if (_estudianteParaInscribir != null)
+                {
+                    NombreAlumnoEncontrado = $"Nombre: {_estudianteParaInscribir.NombreCompleto}\nLegajo: {_estudianteParaInscribir.Legajo}\nEmail: {_estudianteParaInscribir.Email ?? "No registrado"}";
+                    IsAlumnoEncontradoVisible = true;
+                }
+                else
+                {
+                    _estudianteParaInscribir = null;
+                    IsAlumnoEncontradoVisible = false;
+                    await Shell.Current.DisplayAlert("Aviso", "El DNI ingresado no existe.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Ocurrió un error al buscar: {ex.Message}", "OK");
+            }
+        }
+
+        private async Task InscribirAlumnoConfirmadoAsync()
         {
             if (ClaseSeleccionada == null)
             {
@@ -158,51 +226,34 @@ namespace App_v3.ViewModels
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(DniIngresado))
+            if (_estudianteParaInscribir == null)
             {
-                await Shell.Current.DisplayAlert("Atención", "Ingrese un número de DNI válido.", "OK");
+                await Shell.Current.DisplayAlert("Atención", "Primero debe buscar y encontrar un alumno válido.", "OK");
                 return;
             }
 
             try
             {
-                bool exito = await _databaseService.InscribirEstudiantePorDniAsync(DniIngresado.Trim(), ClaseSeleccionada.Id);
+                await _databaseService.InscribirEstudianteAsync(_estudianteParaInscribir.Id, ClaseSeleccionada.Id);
 
-                if (exito)
+                if (!string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
                 {
-                    await Shell.Current.DisplayAlert("Éxito", "Alumno inscripto correctamente a la clase.", "OK");
-                    DniIngresado = string.Empty;
-                    await CargarAlumnosAsync();
-                }
-                else
-                {
-                    // Respaldo: buscamos al alumno por DNI y le asignamos la comisión por texto
-                    var todosEstudiantes = await _databaseService.GetEstudiantesAsync();
-                    App_v3.Models.Estudiante? estudianteEncontrado = null;
-
-                    foreach (var e in todosEstudiantes)
+                    string comisionLimpiada = LimpiarTextoComision(ClaseSeleccionada.Comision);
+                    var comisiones = await _databaseService.GetComisionesAsync();
+                    var comisionObj = comisiones.FirstOrDefault(c => c.Nombre != null && c.Nombre.Trim().Equals(comisionLimpiada, StringComparison.OrdinalIgnoreCase));
+                    if (comisionObj != null)
                     {
-                        if (e.Dni != null && e.Dni.Trim() == DniIngresado.Trim())
-                        {
-                            estudianteEncontrado = e;
-                            break;
-                        }
-                    }
-
-                    if (estudianteEncontrado != null && !string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
-                    {
-                        estudianteEncontrado.Comision = ClaseSeleccionada.Comision;
-                        await _databaseService.SaveEstudianteAsync(estudianteEncontrado);
-
-                        await Shell.Current.DisplayAlert("Éxito", $"Alumno {estudianteEncontrado.NombreCompleto} asignado a la comisión correctamente.", "OK");
-                        DniIngresado = string.Empty;
-                        await CargarAlumnosAsync();
-                    }
-                    else
-                    {
-                        await Shell.Current.DisplayAlert("Error", "No se encontró ningún estudiante activo con ese DNI.", "OK");
+                        await _databaseService.InscribirEstudianteEnComisionAsync(_estudianteParaInscribir.Id, comisionObj.Id);
                     }
                 }
+
+                await Shell.Current.DisplayAlert("Éxito", $"Alumno {_estudianteParaInscribir.NombreCompleto} inscripto correctamente a la clase.", "OK");
+
+                DniIngresado = string.Empty;
+                IsAlumnoEncontradoVisible = false;
+                _estudianteParaInscribir = null;
+
+                await CargarAlumnosAsync();
             }
             catch (Exception ex)
             {
@@ -223,23 +274,42 @@ namespace App_v3.ViewModels
                 var listaAsistencias = new List<Asistencia>();
                 foreach (var item in AlumnosAsistencia)
                 {
-                    var nuevaAsistencia = new Asistencia();
-                    nuevaAsistencia.ClaseId = ClaseSeleccionada.Id;
-                    nuevaAsistencia.EstudianteId = item.EstudianteId;
-                    nuevaAsistencia.Presente = item.EstaPresente;
-                    nuevaAsistencia.Fecha = FechaSeleccionada;
-
-                    listaAsistencias.Add(nuevaAsistencia);
+                    listaAsistencias.Add(new Asistencia
+                    {
+                        ClaseId = ClaseSeleccionada.Id,
+                        EstudianteId = item.EstudianteId,
+                        Presente = item.EstaPresente,
+                        Justificada = item.Justificada,
+                        Fecha = FechaSeleccionada
+                    });
                 }
 
                 await _databaseService.GuardarListaAsistenciasAsync(ClaseSeleccionada.Id, listaAsistencias);
 
-                await Shell.Current.DisplayAlert("Éxito", $"Asistencia guardada para la fecha {FechaSeleccionada:dd/MM/yyyy}.", "OK");
+                await Shell.Current.DisplayAlert("Éxito", $"Asistencia guardada correctamente para la fecha {FechaSeleccionada:dd/MM/yyyy}.", "OK");
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error", $"No se pudo guardar: {ex.Message}", "OK");
             }
+        }
+
+        private string LimpiarTextoComision(string textoComision)
+        {
+            if (string.IsNullOrWhiteSpace(textoComision))
+                return string.Empty;
+
+            string limpio = textoComision.Trim();
+            if (limpio.Contains("[") && limpio.Contains("]"))
+            {
+                int inicio = limpio.IndexOf('[') + 1;
+                int fin = limpio.IndexOf(']');
+                if (fin > inicio)
+                {
+                    limpio = limpio.Substring(inicio, fin - inicio).Trim();
+                }
+            }
+            return limpio;
         }
     }
 
@@ -265,7 +335,45 @@ namespace App_v3.ViewModels
         public bool EstaPresente
         {
             get => _estaPresente;
-            set { _estaPresente = value; OnPropertyChanged(); }
+            set
+            {
+                if (_estaPresente != value)
+                {
+                    _estaPresente = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(EstaAusente)); // Sincroniza el ausente automáticamente
+                    OnPropertyChanged(nameof(EstadoTexto));
+                    OnPropertyChanged(nameof(EstadoColor));
+                }
+            }
         }
+
+        // 🌟 Nueva propiedad para manejar el checkbox de Ausente de forma inversa
+        public bool EstaAusente
+        {
+            get => !_estaPresente;
+            set
+            {
+                bool nuevoPresente = !value;
+                if (_estaPresente != nuevoPresente)
+                {
+                    _estaPresente = nuevoPresente;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(EstaPresente)); // Sincroniza el presente automáticamente
+                    OnPropertyChanged(nameof(EstadoTexto));
+                    OnPropertyChanged(nameof(EstadoColor));
+                }
+            }
+        }
+
+        private bool _justificada = false;
+        public bool Justificada
+        {
+            get => _justificada;
+            set { _justificada = value; OnPropertyChanged(); }
+        }
+
+        public string EstadoTexto => EstaPresente ? "Presente" : "Ausente";
+        public Color EstadoColor => EstaPresente ? Colors.Green : Colors.Red;
     }
 }
