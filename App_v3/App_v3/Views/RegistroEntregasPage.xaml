@@ -7,18 +7,17 @@
              BackgroundColor="#0F172A"
              Shell.NavBarIsVisible="False">
 
-    <!-- Grid principal dividido en Barra Superior (Fila 0) y Contenido (Fila 1) -->
     <Grid RowDefinitions="Auto, *">
 
-        <!-- 🌟 BARRA SUPERIOR PERSONALIZADA CON BOTÓN MENÚ -->
-        <Grid Grid.Row="0" 
-              BackgroundColor="#1E293B" 
-              Padding="20,15" 
+        <!-- BARRA SUPERIOR -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#1E293B"
+              Padding="20,15"
               ColumnDefinitions="Auto, *, Auto">
 
             <Button Grid.Column="0"
-                    Text="☰  Menú" 
-                    BackgroundColor="#3B82F6" 
+                    Text="☰  Menú"
+                    BackgroundColor="#3B82F6"
                     TextColor="White"
                     FontSize="18"
                     FontAttributes="Bold"
@@ -28,12 +27,12 @@
                     VerticalOptions="Center"
                     Clicked="OnBotonMenuFlyoutClicked" />
 
-            <Label Grid.Column="1" 
-                   Text="Registro de TPs" 
-                   TextColor="White" 
-                   FontSize="18" 
-                   FontAttributes="Bold" 
-                   VerticalOptions="Center" 
+            <Label Grid.Column="1"
+                   Text="Registro de TPs"
+                   TextColor="White"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
                    Margin="20,0,0,0" />
         </Grid>
 
@@ -41,15 +40,14 @@
         <ScrollView Grid.Row="1" BackgroundColor="#F4F6F9">
             <VerticalStackLayout Padding="20" Spacing="15">
 
-                <!-- Selección de Clase / Comisión -->
-                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True">
+                <!-- 1. Selección de Clase / Comisión -->
+                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="Seleccionar Clase / Comisión" 
-                               FontSize="14" 
-                               FontAttributes="Bold" 
+                        <Label Text="Seleccionar Clase / Comisión"
+                               FontSize="14"
+                               FontAttributes="Bold"
                                TextColor="#2C3E50" />
 
-                        <!-- Usamos ItemDisplayBinding apuntando directamente a una propiedad o dejamos que use el formato limpio -->
                         <Picker ItemsSource="{Binding Clases}"
                                 SelectedItem="{Binding ClaseSeleccionada}"
                                 Title="Elija una clase..."
@@ -67,60 +65,103 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Selección de Trabajo Práctico -->
-                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Seleccionar Trabajo Práctico" 
-                               FontSize="14" 
-                               FontAttributes="Bold" 
+                <!-- 2. Selección y Eliminación de Trabajo Práctico -->
+                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Seleccionar Trabajo Práctico"
+                               FontSize="14"
+                               FontAttributes="Bold"
                                TextColor="#2C3E50" />
 
-                        <Picker ItemDisplayBinding="{Binding Nombre}"
-                                ItemsSource="{Binding TrabajosPracticos}"
-                                SelectedItem="{Binding TpSeleccionado}"
-                                Title="Elija un TP..."
-                                FontSize="15"
-                                BackgroundColor="#FFFFFF" />
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                            <Picker Grid.Column="0"
+                                    ItemDisplayBinding="{Binding Nombre}"
+                                    ItemsSource="{Binding TrabajosPracticos}"
+                                    SelectedItem="{Binding TpSeleccionado}"
+                                    Title="Elija un TP..."
+                                    FontSize="15"
+                                    BackgroundColor="#FFFFFF" />
+
+                            <Button Grid.Column="1"
+                                    Text="🗑️ Eliminar TP"
+                                    Command="{Binding EliminarTpCommand}"
+                                    BackgroundColor="#DC2626"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="8"
+                                    Padding="12,0"
+                                    HeightRequest="44" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- 3. Crear Nuevo Trabajo Práctico en esta Comisión -->
+                <Frame BorderColor="#3B82F6" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#F8FAFC">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="➕ Nuevo Trabajo Práctico para esta Comisión"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#1E3A8A" />
+
+                        <Grid ColumnDefinitions="*, *, Auto" ColumnSpacing="10">
+                            <Entry Grid.Column="0"
+                                   Placeholder="Nombre del TP (ej: TP 1: Ley de Ohm)"
+                                   Text="{Binding NuevoTpNombre}"
+                                   BackgroundColor="White" />
+
+                            <Entry Grid.Column="1"
+                                   Placeholder="Descripción (opcional)"
+                                   Text="{Binding NuevoTpDescripcion}"
+                                   BackgroundColor="White" />
+
+                            <Button Grid.Column="2"
+                                    Text="Crear TP"
+                                    Command="{Binding CrearTpCommand}"
+                                    BackgroundColor="#2563EB"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="8"
+                                    Padding="16,0"
+                                    HeightRequest="44" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
                 <!-- Título de la lista -->
-                <Label Text="Control de Entregas por Alumno" 
-                       FontSize="18" 
-                       FontAttributes="Bold" 
-                       TextColor="#1A252C" 
+                <Label Text="Control de Entregas por Alumno"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#1A252C"
                        Margin="0,10,0,0" />
 
                 <!-- Lista de Alumnos Inscriptos -->
                 <CollectionView ItemsSource="{Binding ListaAlumnos}">
                     <CollectionView.EmptyView>
-                        <Label Text="No hay estudiantes inscriptos en esta clase." 
-                               HorizontalOptions="Center" 
-                               TextColor="Gray" 
+                        <Label Text="No hay estudiantes inscriptos en esta comisión."
+                               HorizontalOptions="Center"
+                               TextColor="Gray"
                                Margin="0,20" />
                     </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="#EFEFEF" 
-                                   CornerRadius="8" 
-                                   Padding="12" 
-                                   Margin="0,4" 
-                                   HasShadow="False" 
+                            <Frame BorderColor="#EFEFEF"
+                                   CornerRadius="8"
+                                   Padding="12"
+                                   Margin="0,4"
+                                   HasShadow="False"
                                    BackgroundColor="White">
                                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
 
-                                    <!-- Info Alumno -->
                                     <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
-                                        <Label Text="{Binding NombreEstudiante}" 
-                                               FontAttributes="Bold" 
-                                               FontSize="15" 
+                                        <Label Text="{Binding NombreEstudiante}"
+                                               FontAttributes="Bold"
+                                               FontSize="15"
                                                TextColor="#212121" />
-                                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}" 
-                                               FontSize="12" 
+                                        <Label Text="{Binding Legajo, StringFormat='Legajo: {0}'}"
+                                               FontSize="12"
                                                TextColor="#757575" />
                                     </VerticalStackLayout>
 
-                                    <!-- Interruptor Entregado / Pendiente -->
                                     <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="6">
                                         <Label Text="Entregado" FontSize="12" VerticalOptions="Center" TextColor="#2E7D32" />
                                         <CheckBox IsChecked="{Binding Entregado}" Color="#2E7D32" />

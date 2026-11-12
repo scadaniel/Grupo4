@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿// App_v3/App_v3/ViewModels/ReporteEntregasTpViewModel.cs
+
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using App_v3.Models;
 using App_v3.Services;
-using App_v3.Views;
 
 namespace App_v3.ViewModels;
 
@@ -10,34 +11,52 @@ public class ReporteEntregasTpViewModel : BindableObject
 {
     private readonly DatabaseService _databaseService;
 
-    public ObservableCollection<TrabajoPractico> TrabajosPracticos { get; set; } = new();
-    public ObservableCollection<ReporteTpItem> ListaReporteTp { get; set; } = new();
+    // Propiedad renombrada para coincidir exactamente con el XAML (ListaTrabajosPracticos)
+    public ObservableCollection<TrabajoPractico> ListaTrabajosPracticos { get; set; } = new();
+
+    // Propiedad renombrada para coincidir exactamente con el XAML (ListaReporteTps)
+    public ObservableCollection<ReporteTpItem> ListaReporteTps { get; set; } = new();
 
     private TrabajoPractico? _tpSeleccionado;
     public TrabajoPractico? TpSeleccionado
     {
         get => _tpSeleccionado;
-        set { _tpSeleccionado = value; OnPropertyChanged(); }
+        set
+        {
+            if (_tpSeleccionado != value)
+            {
+                _tpSeleccionado = value;
+                OnPropertyChanged();
+                _ = CargarReporteAsync(); // Filtra automáticamente al cambiar el TP
+            }
+        }
     }
 
     private string _dniFiltro = string.Empty;
     public string DniFiltro
     {
         get => _dniFiltro;
-        set { _dniFiltro = value; OnPropertyChanged(); }
+        set
+        {
+            if (_dniFiltro != value)
+            {
+                _dniFiltro = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
-    public ICommand BuscarCommand { get; }
+    public ICommand AplicarFiltrosCommand { get; }
     public ICommand LimpiarFiltrosCommand { get; }
     public ICommand VolverAlMenuCommand { get; }
 
     public ReporteEntregasTpViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
-        BuscarCommand = new Command(async () => await CargarReporteAsync());
-        LimpiarFiltrosCommand = new Command(async () => await LimpiarFiltrosAsync());
 
-        // Inicializamos el comando de retorno absoluto al menú de reportes
+        // Coincide con el comando del botón en el XAML
+        AplicarFiltrosCommand = new Command(async () => await CargarReporteAsync());
+        LimpiarFiltrosCommand = new Command(async () => await LimpiarFiltrosAsync());
         VolverAlMenuCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
 
         _ = InicializarAsync();
@@ -51,37 +70,69 @@ public class ReporteEntregasTpViewModel : BindableObject
 
     private async Task CargarTrabajosPracticosAsync()
     {
-        var tps = await _databaseService.GetTrabajosPracticosAsync();
-        TrabajosPracticos.Clear();
-
-        // Opción comodín para ver todos los TPs a la vez
-        TrabajosPracticos.Add(new TrabajoPractico { Id = 0, Nombre = "Todos los Trabajos Prácticos" });
-
-        foreach (var tp in tps)
+        try
         {
-            TrabajosPracticos.Add(tp);
+            var tps = await _databaseService.GetTrabajosPracticosAsync();
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                ListaTrabajosPracticos.Clear();
+                // Opción comodín para ver todos los TPs a la vez
+                ListaTrabajosPracticos.Add(new TrabajoPractico { Id = 0, Nombre = "Todos los Trabajos Prácticos" });
+
+                if (tps != null)
+                {
+                    foreach (var tp in tps)
+                    {
+                        ListaTrabajosPracticos.Add(tp);
+                    }
+                }
+
+                if (ListaTrabajosPracticos.Count > 0 && TpSeleccionado == null)
+                {
+                    TpSeleccionado = ListaTrabajosPracticos.First();
+                }
+            });
         }
-        TpSeleccionado = TrabajosPracticos.First();
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Error al cargar TPs]: {ex.Message}");
+        }
     }
 
     public async Task CargarReporteAsync()
-
     {
-        int? tpId = (TpSeleccionado != null && TpSeleccionado.Id > 0) ? TpSeleccionado.Id : (int?)null;
-
-        var resultados = await _databaseService.ObtenerReporteEntregasTpAsync(DniFiltro, tpId);
-
-        ListaReporteTp.Clear();
-        foreach (var item in resultados)
+        try
         {
-            ListaReporteTp.Add(item);
+            int? tpId = (TpSeleccionado != null && TpSeleccionado.Id > 0) ? TpSeleccionado.Id : (int?)null;
+
+            var resultados = await _databaseService.ObtenerReporteEntregasTpAsync(DniFiltro, tpId);
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                ListaReporteTps.Clear();
+                if (resultados != null)
+                {
+                    foreach (var item in resultados)
+                    {
+                        ListaReporteTps.Add(item);
+                    }
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Error al cargar reporte de TPs]: {ex.Message}");
         }
     }
 
     private async Task LimpiarFiltrosAsync()
     {
         DniFiltro = string.Empty;
-        if (TrabajosPracticos.Count > 0) TpSeleccionado = TrabajosPracticos.First();
+        if (ListaTrabajosPracticos.Count > 0)
+        {
+            TpSeleccionado = ListaTrabajosPracticos.First();
+        }
         await CargarReporteAsync();
     }
 }

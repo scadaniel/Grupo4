@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿// App_v3/Models/TrabajoPractico.cs
+using SQLite;
 
 namespace App_v3.Models;
 
@@ -9,9 +10,12 @@ public class TrabajoPractico
     public int Id { get; set; }
 
     [Indexed]
-    public string Nombre { get; set; } = string.Empty; // CA 2.2: Nombre del TP
+    public string Comision { get; set; } = string.Empty; // 👈 En string para matchear con Clases
+
+    [Indexed]
+    public string Nombre { get; set; } = string.Empty;
 
     public string Descripcion { get; set; } = string.Empty;
 
-    public DateTime FechaLimite { get; set; } = DateTime.Today.AddDays(7); // CA 2.2: Fecha límite de entrega
+    public DateTime FechaLimite { get; set; } = DateTime.Today.AddDays(7);
 }
