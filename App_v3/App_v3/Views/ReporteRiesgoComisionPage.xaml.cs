@@ -16,6 +16,12 @@ public partial class ReporteRiesgoComisionPage : ContentPage
         {
             _comisionSeleccionada = value;
             Title = $"Comisión: {_comisionSeleccionada}";
+
+            // 🌟 DISPARADOR AUTOMÁTICO: Tan pronto como MAUI inyecta la comisión, cargamos los datos
+            if (!string.IsNullOrWhiteSpace(_comisionSeleccionada))
+            {
+                _ = CargarDatosAsync();
+            }
         }
     }
 
@@ -28,10 +34,14 @@ public partial class ReporteRiesgoComisionPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await CargarDatosAsync();
+
+        // Refresco por si acaso ya tenía valor asignado
+        if (!string.IsNullOrEmpty(ComisionSeleccionada))
+        {
+            await CargarDatosAsync();
+        }
     }
 
-    // 🌟 MÉTODO PARA EL BOTÓN AZUL "← VOLVER"
     private async void OnVolverClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("..");
@@ -41,33 +51,57 @@ public partial class ReporteRiesgoComisionPage : ContentPage
     {
         if (string.IsNullOrEmpty(ComisionSeleccionada)) return;
 
-        var estudiantes = await _databaseService.GetEstudiantesAsync();
-        var filtradosEstudiantes = estudiantes
-            .Where(e => e.Comision.Equals(ComisionSeleccionada, StringComparison.OrdinalIgnoreCase))
+        // 1. Obtenemos TODOS los estudiantes de la base de datos
+        var todosEstudiantes = await _databaseService.GetEstudiantesAsync();
+
+        if (todosEstudiantes == null || !todosEstudiantes.Any())
+        {
+            TotalAlumnosLabel.Text = "0";
+            RiesgoRojoLabel.Text = "0";
+            EstudiantesCollection.ItemsSource = new List<EstudianteModelDto>();
+            return;
+        }
+
+        string comisionLimpia = ComisionSeleccionada.Trim().ToLower();
+
+        // 2. Filtro robusto tolerante a espacios y mayúsculas/minúsculas
+        var filtradosEstudiantes = todosEstudiantes
+            .Where(e => !string.IsNullOrWhiteSpace(e.Comision) &&
+                        e.Comision.Trim().ToLower().Equals(comisionLimpia))
             .ToList();
 
-        TotalAlumnosLabel.Text = filtradosEstudiantes.Count.ToString();
-        int riesgoRojo = filtradosEstudiantes.Count(e => e.TpsNoEntregados >= 3 || e.Inasistencias >= 5);
-        RiesgoRojoLabel.Text = riesgoRojo.ToString();
+        // Respaldo por si el nombre contiene variaciones parciales
+        if (!filtradosEstudiantes.Any())
+        {
+            filtradosEstudiantes = todosEstudiantes
+                .Where(e => !string.IsNullOrWhiteSpace(e.Comision) &&
+                            e.Comision.Trim().ToLower().Contains(comisionLimpia))
+                .ToList();
+        }
 
-        // Obtenemos las intervenciones/llamadas registradas para enriquecer el reporte
+        int totalAlumnos = filtradosEstudiantes.Count;
+        TotalAlumnosLabel.Text = totalAlumnos.ToString();
+
+        int riesgoRojo = 0;
+
+        // Obtenemos las intervenciones/llamadas registradas
         List<IntervencionContacto> todasIntervenciones = new();
         try
         {
             todasIntervenciones = await _databaseService.GetIntervencionesAsync();
         }
-        catch
-        {
-            // Manejo silencioso si la consulta no devuelve datos
-        }
+        catch { }
 
-        // Creamos una lista enriquecida para mostrar en la interfaz
         var listaDetalle = new List<EstudianteModelDto>();
+
         foreach (var est in filtradosEstudiantes)
         {
             bool enRiesgo = est.TpsNoEntregados >= 3 || est.Inasistencias >= 5;
+            if (enRiesgo)
+            {
+                riesgoRojo++;
+            }
 
-            // Buscar la última intervención o llamada registrada para este estudiante
             var ultimaIntervencion = todasIntervenciones
                 .Where(i => i.EstudianteId == est.Id)
                 .OrderByDescending(i => i.Fecha)
@@ -81,9 +115,9 @@ public partial class ReporteRiesgoComisionPage : ContentPage
 
             listaDetalle.Add(new EstudianteModelDto
             {
-                NombreCompleto = est.NombreCompleto,
-                Legajo = est.Legajo,
-                Email = est.Email,
+                NombreCompleto = est.NombreCompleto ?? "Sin Nombre",
+                Legajo = est.Legajo ?? "S/N",
+                Email = est.Email ?? "",
                 Inasistencias = est.Inasistencias,
                 TpsNoEntregados = est.TpsNoEntregados,
                 EstaEnRiesgo = enRiesgo,
@@ -92,6 +126,7 @@ public partial class ReporteRiesgoComisionPage : ContentPage
             });
         }
 
+        RiesgoRojoLabel.Text = riesgoRojo.ToString();
         EstudiantesCollection.ItemsSource = listaDetalle;
     }
 
@@ -116,7 +151,6 @@ public partial class ReporteRiesgoComisionPage : ContentPage
                           $"----------------------------------------\n";
             }
 
-            // Copia automáticamente el texto listo al portapapeles de la PC
             await Clipboard.Default.SetTextAsync(cuerpo);
 
             await DisplayAlert("¡Copiado al Portapapeles!",
@@ -130,7 +164,6 @@ public partial class ReporteRiesgoComisionPage : ContentPage
     }
 }
 
-// Modelo auxiliar DTO para mostrar toda la info junta en pantalla
 public class EstudianteModelDto
 {
     public string NombreCompleto { get; set; } = string.Empty;

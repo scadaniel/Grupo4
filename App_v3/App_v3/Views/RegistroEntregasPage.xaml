@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:App_v3.ViewModels"
              x:Class="App_v3.Views.RegistroEntregasPage"
-             Title="Registro de Trabajos Prácticos"
+             Title="Registro de Trabajos Prácticos 2"
              BackgroundColor="#0F172A"
              Shell.NavBarIsVisible="False">
 
@@ -50,22 +50,14 @@
 
                         <Picker ItemsSource="{Binding Clases}"
                                 SelectedItem="{Binding ClaseSeleccionada}"
+                                ItemDisplayBinding="{Binding DescripcionCompleta}"
                                 Title="Elija una clase..."
                                 FontSize="15"
-                                BackgroundColor="#FFFFFF">
-                            <Picker.ItemDisplayBinding>
-                                <MultiBinding StringFormat="{}{0} - [{1}] (Clase #{2}: {3})">
-                                    <Binding Path="NombreMateria" />
-                                    <Binding Path="Comision" />
-                                    <Binding Path="NumeroClase" />
-                                    <Binding Path="Tema" />
-                                </MultiBinding>
-                            </Picker.ItemDisplayBinding>
-                        </Picker>
+                                BackgroundColor="#FFFFFF" />
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- 2. Crear Nuevo Trabajo Práctico en esta Comisión (¡Ahora arriba!) -->
+                <!-- 2. Crear Nuevo Trabajo Práctico en esta Comisión -->
                 <Frame BorderColor="#3B82F6" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#F8FAFC">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="➕ Nuevo Trabajo Práctico para esta Comisión"
@@ -97,7 +89,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- 3. Selección y Eliminación de Trabajo Práctico (¡Ahora abajo!) -->
+                <!-- 3. Selección y Eliminación de Trabajo Práctico -->
                 <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Seleccionar Trabajo Práctico Existente"

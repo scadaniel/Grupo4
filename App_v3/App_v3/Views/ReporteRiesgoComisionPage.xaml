@@ -8,7 +8,7 @@
 
     <Grid RowDefinitions="Auto, *">
 
-        <!-- 🌟 BARRA SUPERIOR CON EL BOTÓN AZUL "VOLVER" -->
+        <!-- BARRA SUPERIOR CON EL BOTÓN AZUL "VOLVER" -->
         <Grid Grid.Row="0" 
               BackgroundColor="#1E293B" 
               Padding="20,15" 
@@ -35,7 +35,7 @@
                    VerticalOptions="Center" />
         </Grid>
 
-        <!-- CONTENIDO PRINCIPAL (El que ya te funciona) -->
+        <!-- CONTENIDO PRINCIPAL -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20" Spacing="20">
 
@@ -51,7 +51,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Sección opcional para copiar el reporte -->
+                <!-- Sección para copiar el reporte -->
                 <Frame BackgroundColor="#F1F5F9" CornerRadius="10" Padding="15">
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Copiar reporte completo para enviar por correo" FontAttributes="Bold" FontSize="14" TextColor="#334155" />
@@ -62,7 +62,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Lista detallada de estudiantes con faltas, TPs y llamadas -->
+                <!-- Lista detallada de estudiantes -->
                 <Label Text="Detalle de Estudiantes" FontSize="18" FontAttributes="Bold" TextColor="White" />
                 <CollectionView x:Name="EstudiantesCollection">
                     <CollectionView.ItemTemplate>

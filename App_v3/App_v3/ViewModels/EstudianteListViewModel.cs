@@ -124,7 +124,9 @@ namespace App_v3.ViewModels
                 }
 
                 string nombreComision = ComisionSeleccionada.Nombre.Trim();
-                var alumnosDeComision = await _databaseService.GetEstudiantesPorComisionAsync(nombreComision);
+
+                // 🌟 Llamada a la nueva función exclusiva de riesgo en DatabaseService
+                var alumnosDeComision = await _databaseService.GetEstudiantesParaRiesgoExclusivoAsync(nombreComision);
 
                 var listaTemporal = new List<EstudianteItemViewModel>();
 

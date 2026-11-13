@@ -25,6 +25,39 @@
             Si no existe fila de entrega, también cuenta como pendiente.
             </summary>
         </member>
+        <member name="M:App_v3.Services.DatabaseService.GetComisionesParaReportesExclusivoAsync">
+            <summary>
+            Método 100% NUEVO y EXCLUSIVO para obtener la lista limpia y única de comisiones para los Reportes.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.String)">
+            <summary>
+            Método exclusivo para el módulo de Trabajos Prácticos para obtener los estudiantes de una comisión de forma segura.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaReporteRiesgoAsync(System.String)">
+            <summary>
+            Función 100% nueva y exclusiva para el Módulo de Reporte de Riesgo.
+            No comparte lógica ni sobrecarga con ningún otro módulo.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaModuloTpsExclusivoAsync(System.String)">
+            <summary>
+            Función 100% nueva y exclusiva para el Módulo de Trabajos Prácticos (TPs).
+            Completamente aislada y segura.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.Int32,System.String)">
+            <summary>
+            Método puente exacto para el módulo de TPs para que acepte 2 argumentos 
+            sin necesidad de modificar RegistroEntregasViewModel.cs
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.String,System.Int32)">
+            <summary>
+            Sobrecarga adicional por si el orden de los argumentos en el ViewModel fuera al revés (string, int)
+            </summary>
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.
@@ -149,8 +182,11 @@
         <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.TotalAlumnos">
             <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.totalAlumnos"/>
         </member>
-        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.AlumnosEnRiesgoRojo">
-            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.alumnosEnRiesgoRojo"/>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.AlumnosEnRiesgoCount">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.alumnosEnRiesgoCount"/>
+        </member>
+        <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EstadoRiesgoTexto">
+            <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.estadoRiesgoTexto"/>
         </member>
         <member name="P:App_v3.ViewModels.ReporteRiesgoComisionViewModel.EmailDestinatario">
             <inheritdoc cref="F:App_v3.ViewModels.ReporteRiesgoComisionViewModel.emailDestinatario"/>
@@ -206,8 +242,11 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalAlumnos">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalAlumnos" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AlumnosEnRiesgoRojo">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AlumnosEnRiesgoRojo" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AlumnosEnRiesgoCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AlumnosEnRiesgoCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EstadoRiesgoTexto">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EstadoRiesgoTexto" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EmailDestinatario">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EmailDestinatario" generated properties.</summary>
@@ -245,8 +284,11 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalAlumnos">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalAlumnos" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AlumnosEnRiesgoRojo">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AlumnosEnRiesgoRojo" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AlumnosEnRiesgoCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AlumnosEnRiesgoCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EstadoRiesgoTexto">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EstadoRiesgoTexto" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EmailDestinatario">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EmailDestinatario" generated properties.</summary>

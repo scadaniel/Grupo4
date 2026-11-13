@@ -84,7 +84,16 @@ namespace App_v3.ViewModels
             CrearTpCommand = new Command(async () => await CrearNuevoTpAsync());
             EliminarTpCommand = new Command(async () => await EliminarTpActualAsync());
 
-            _ = CargarClasesAsync();
+            _ = InicializarPantallaAsync();
+        }
+
+        private async Task InicializarPantallaAsync()
+        {
+            await CargarClasesAsync();
+            if (ClaseSeleccionada != null)
+            {
+                await AlCambiarClaseAsync();
+            }
         }
 
         private string LimpiarTextoComision(string textoComision)
@@ -108,12 +117,16 @@ namespace App_v3.ViewModels
             try
             {
                 var clases = await _databaseService.GetClasesAsync();
-                Clases.Clear();
-                foreach (var c in clases)
-                    Clases.Add(c);
 
-                if (Clases.Count > 0 && ClaseSeleccionada == null)
-                    ClaseSeleccionada = Clases.First();
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    Clases.Clear();
+                    foreach (var c in clases)
+                        Clases.Add(c);
+
+                    if (Clases.Count > 0 && ClaseSeleccionada == null)
+                        ClaseSeleccionada = Clases.First();
+                });
             }
             catch (Exception ex)
             {
@@ -144,14 +157,17 @@ namespace App_v3.ViewModels
                 if (tps == null || !tps.Any())
                     tps = await _databaseService.GetTrabajosPracticosPorComisionAsync(ClaseSeleccionada.Comision);
 
-                if (tps != null)
+                await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    foreach (var tp in tps)
-                        TrabajosPracticos.Add(tp);
-                }
+                    if (tps != null)
+                    {
+                        foreach (var tp in tps)
+                            TrabajosPracticos.Add(tp);
+                    }
 
-                if (TrabajosPracticos.Count > 0)
-                    TpSeleccionado = TrabajosPracticos.First();
+                    if (TrabajosPracticos.Count > 0)
+                        TpSeleccionado = TrabajosPracticos.First();
+                });
             }
             catch (Exception ex)
             {
@@ -161,24 +177,22 @@ namespace App_v3.ViewModels
 
         public async Task CargarListaAlumnosAsync()
         {
-            ListaAlumnos.Clear();
-
             if (ClaseSeleccionada == null)
                 return;
 
             try
             {
-                // LLAMADA 100% EXCLUSIVA: No toca asistencias ni altera otras tablas
-                List<Estudiante> estudiantesBD = await _databaseService.GetEstudiantesParaTpExclusivoAsync(
+                // LLAMADA EXCLUSIVA NUEVA (No toca asistencias ni nóminas)
+                List<Estudiante> estudiantesBD = await _databaseService.GetEstudiantesExclusivoParaModuloTpsAsync(
                     ClaseSeleccionada.Id,
                     ClaseSeleccionada.Comision ?? string.Empty
                 );
 
-                // Obtener las entregas existentes para este TP específico
                 var entregasExistentes = TpSeleccionado != null
                     ? await _databaseService.GetEntregasPorTpAsync(TpSeleccionado.Id)
                     : new List<EntregaTp>();
 
+                var nuevaLista = new List<EntregaTpItemViewModel>();
                 if (estudiantesBD != null)
                 {
                     foreach (var est in estudiantesBD)
@@ -186,7 +200,7 @@ namespace App_v3.ViewModels
                         var entregaExistente = entregasExistentes
                             .FirstOrDefault(e => e.EstudianteId == est.Id);
 
-                        ListaAlumnos.Add(new EntregaTpItemViewModel
+                        nuevaLista.Add(new EntregaTpItemViewModel
                         {
                             EstudianteId = est.Id,
                             EntregaId = entregaExistente?.Id ?? 0,
@@ -196,10 +210,19 @@ namespace App_v3.ViewModels
                         });
                     }
                 }
+
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    ListaAlumnos.Clear();
+                    foreach (var item in nuevaLista)
+                    {
+                        ListaAlumnos.Add(item);
+                    }
+                });
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[Error exclusivo cargando alumnos TP]: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[Error cargando alumnos TP]: {ex.Message}");
             }
         }
 
@@ -279,7 +302,6 @@ namespace App_v3.ViewModels
 
             try
             {
-                // Guardamos ids de alumnos para recalcular después
                 var idsAlumnos = ListaAlumnos.Select(a => a.EstudianteId).ToList();
 
                 await _databaseService.DeleteTrabajoPracticoAsync(TpSeleccionado);
@@ -325,10 +347,7 @@ namespace App_v3.ViewModels
                     FechaEntrega = item.Entregado ? DateTime.Now : null
                 }).ToList();
 
-                // Método NUEVO: no toca GuardarListaEntregasTpAsync ni Asistencias
                 await _databaseService.GuardarEntregasTrabajosPracticosAsync(TpSeleccionado.Id, listaAGuardar);
-
-                // Refrescar lista (para actualizar EntregaId de los recién insertados)
                 await CargarListaAlumnosAsync();
 
                 if (Shell.Current != null)
@@ -342,4 +361,6 @@ namespace App_v3.ViewModels
             }
         }
     }
+
+
 }
