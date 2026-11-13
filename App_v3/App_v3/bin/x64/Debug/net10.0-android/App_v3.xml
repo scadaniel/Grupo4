@@ -9,61 +9,6 @@
             Valida que los valores de los umbrales no sean contradictorios ni negativos.
             </summary>
         </member>
-        <member name="M:App_v3.Services.DatabaseService.GuardarListaEntregasTpAsync(System.Int32,System.Collections.Generic.List{App_v3.Models.EntregaTp})">
-            <summary>
-            Método original (compatibilidad). Usa recálculo robusto.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GuardarEntregasTrabajosPracticosAsync(System.Int32,System.Collections.Generic.List{App_v3.Models.EntregaTp})">
-            <summary>
-            Método NUEVO para el módulo de Registro de Entregas de TP.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.RecalcularTpsPendientesEstudianteRobustoAsync(System.Int32)">
-            <summary>
-            Cuenta como pendiente cada TP de la comisión del alumno que NO esté Entregado.
-            Si no existe fila de entrega, también cuenta como pendiente.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetComisionesParaReportesExclusivoAsync">
-            <summary>
-            Método 100% NUEVO y EXCLUSIVO para obtener la lista limpia y única de comisiones para los Reportes.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.String)">
-            <summary>
-            Método exclusivo para el módulo de Trabajos Prácticos para obtener los estudiantes de una comisión de forma segura.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaReporteRiesgoAsync(System.String)">
-            <summary>
-            Función 100% nueva y exclusiva para el Módulo de Reporte de Riesgo.
-            No comparte lógica ni sobrecarga con ningún otro módulo.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaModuloTpsExclusivoAsync(System.String)">
-            <summary>
-            Función 100% nueva y exclusiva para el Módulo de Trabajos Prácticos (TPs).
-            Completamente aislada y segura.
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.Int32,System.String)">
-            <summary>
-            Método puente exacto para el módulo de TPs para que acepte 2 argumentos 
-            sin necesidad de modificar RegistroEntregasViewModel.cs
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.GetEstudiantesExclusivoParaModuloTpsAsync(System.String,System.Int32)">
-            <summary>
-            Sobrecarga adicional por si el orden de los argumentos en el ViewModel fuera al revés (string, int)
-            </summary>
-        </member>
-        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(System.String)">
-            <summary>
-            Función exclusiva para el Módulo de Reporte de Riesgo con búsqueda flexible y robusta,
-            garantizando que traiga el total real de alumnos de la comisión sin romper otras ventanas.
-            </summary>
-        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.

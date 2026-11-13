@@ -363,9 +363,6 @@ public class DatabaseService
             .ToListAsync();
     }
 
-    /// <summary>
-    /// Método original (compatibilidad). Usa recálculo robusto.
-    /// </summary>
     public async Task GuardarListaEntregasTpAsync(int trabajoPracticoId, List<EntregaTp> entregas)
     {
         await InitAsync();
@@ -389,9 +386,6 @@ public class DatabaseService
         }
     }
 
-    /// <summary>
-    /// Método NUEVO para el módulo de Registro de Entregas de TP.
-    /// </summary>
     public async Task GuardarEntregasTrabajosPracticosAsync(int trabajoPracticoId, List<EntregaTp> entregas)
     {
         await InitAsync();
@@ -415,10 +409,6 @@ public class DatabaseService
         }
     }
 
-    /// <summary>
-    /// Cuenta como pendiente cada TP de la comisión del alumno que NO esté Entregado.
-    /// Si no existe fila de entrega, también cuenta como pendiente.
-    /// </summary>
     public async Task RecalcularTpsPendientesEstudianteRobustoAsync(int estudianteId)
     {
         await InitAsync();
@@ -467,12 +457,6 @@ public class DatabaseService
 
         estudiante.TpsNoEntregados = pendientes;
         await _dbConnection.UpdateAsync(estudiante);
-    }
-
-    // Compatibilidad con llamadas antiguas
-    private async Task RecalcularTpsNoEntregadosEstudianteAsync(int estudianteId)
-    {
-        await RecalcularTpsPendientesEstudianteRobustoAsync(estudianteId);
     }
 
     // =========================
@@ -880,7 +864,6 @@ public class DatabaseService
                             break;
 
                         case "trabajospracticos":
-                            // Nombre;Descripcion;FechaLimite[;Comision]
                             if (datos.Length >= 3)
                             {
                                 var tp = new TrabajoPractico
@@ -934,14 +917,12 @@ public class DatabaseService
         return registrosProcesados;
     }
 
-
     public async Task<List<Estudiante>> GetEstudiantesParaTpExclusivoAsync(int claseId, string comisionClase)
     {
         await InitAsync();
 
         List<Estudiante> estudiantes = new();
 
-        // 1. Limpiar el texto de la comisión por si viene con corchetes
         string comisionLimpia = comisionClase?.Trim() ?? string.Empty;
         if (comisionLimpia.Contains("[") && comisionLimpia.Contains("]"))
         {
@@ -951,7 +932,6 @@ public class DatabaseService
                 comisionLimpia = comisionLimpia.Substring(inicio, fin - inicio).Trim();
         }
 
-        // 2. Usar el método oficial que ya funciona en Asistencias y Nóminas
         if (!string.IsNullOrWhiteSpace(comisionLimpia))
         {
             estudiantes = await GetEstudiantesPorComisionAsync(comisionLimpia);
@@ -962,13 +942,11 @@ public class DatabaseService
             estudiantes = await GetEstudiantesPorComisionAsync(comisionClase);
         }
 
-        // 3. Si aún está vacío, buscar por los inscriptos a la clase
         if (estudiantes == null || !estudiantes.Any())
         {
             estudiantes = await GetEstudiantesPorClaseIdAsync(claseId);
         }
 
-        // 4. Respaldo de seguridad absoluto: trae todos los estudiantes activos
         if (estudiantes == null || !estudiantes.Any())
         {
             estudiantes = await _dbConnection!.Table<Estudiante>()
@@ -978,7 +956,6 @@ public class DatabaseService
 
         return estudiantes ?? new List<Estudiante>();
     }
-
 
     public async Task<List<Estudiante>> GetEstudiantesParaRiesgoExclusivoAsync(string nombreComision)
     {
@@ -1000,7 +977,6 @@ public class DatabaseService
 
             string limpio = nombreComision.Trim().ToLower();
 
-            // Filtrado estricto solo para la comisión seleccionada
             var filtrados = activos.Where(e =>
                 !string.IsNullOrWhiteSpace(e.Comision) &&
                 (e.Comision.Trim().Equals(limpio, StringComparison.OrdinalIgnoreCase) ||
@@ -1016,11 +992,6 @@ public class DatabaseService
         }
     }
 
-
-
-    /// <summary>
-    /// Método 100% NUEVO y EXCLUSIVO para obtener la lista limpia y única de comisiones para los Reportes.
-    /// </summary>
     public async Task<List<Comision>> GetComisionesParaReportesExclusivoAsync()
     {
         await InitAsync();
@@ -1031,7 +1002,6 @@ public class DatabaseService
 
             if (comisionesDb == null || !comisionesDb.Any())
             {
-                // Respaldo por si la tabla Comisiones está vacía: extraerlas de los textos de estudiantes o clases
                 var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
                 var comisionesTexto = estudiantes
                     .Where(e => !string.IsNullOrWhiteSpace(e.Comision))
@@ -1043,7 +1013,6 @@ public class DatabaseService
                 return comisionesTexto;
             }
 
-            // Filtrar únicas por nombre para evitar duplicados y ordenar alfabéticamente
             var unicas = comisionesDb
                 .Where(c => !string.IsNullOrWhiteSpace(c.Nombre))
                 .GroupBy(c => c.Nombre.Trim())
@@ -1060,51 +1029,6 @@ public class DatabaseService
         }
     }
 
-
-    /// <summary>
-    /// Método exclusivo para el módulo de Trabajos Prácticos para obtener los estudiantes de una comisión de forma segura.
-    /// </summary>
-    public async Task<List<Estudiante>> GetEstudiantesExclusivoParaModuloTpsAsync(string nombreComision)
-    {
-        await InitAsync();
-
-        try
-        {
-            var todosEstudiantes = await _dbConnection!.Table<Estudiante>().ToListAsync();
-
-            if (todosEstudiantes == null || !todosEstudiantes.Any())
-                return new List<Estudiante>();
-
-            var activos = todosEstudiantes.Where(e => e.Activo).ToList();
-            if (!activos.Any())
-                activos = todosEstudiantes;
-
-            if (string.IsNullOrWhiteSpace(nombreComision))
-                return activos;
-
-            string limpio = nombreComision.Trim().ToLower();
-
-            // Filtrado estricto por comisión para TPs
-            var filtrados = activos.Where(e =>
-                !string.IsNullOrWhiteSpace(e.Comision) &&
-                (e.Comision.Trim().Equals(limpio, StringComparison.OrdinalIgnoreCase) ||
-                 e.Comision.Trim().ToLower().Contains(limpio))
-            ).ToList();
-
-            return filtrados.Any() ? filtrados : activos;
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"[Error en TPs Exclusivo]: {ex.Message}");
-            return new List<Estudiante>();
-        }
-    }
-
-
-    /// <summary>
-    /// Función 100% nueva y exclusiva para el Módulo de Reporte de Riesgo.
-    /// No comparte lógica ni sobrecarga con ningún otro módulo.
-    /// </summary>
     public async Task<List<Estudiante>> ObtenerEstudiantesParaReporteRiesgoAsync(string nombreComision)
     {
         await InitAsync();
@@ -1119,7 +1043,6 @@ public class DatabaseService
 
             string comisionBuscada = nombreComision.Trim();
 
-            // Filtro exclusivo y estricto por nombre de comisión
             return todos.Where(e =>
                 !string.IsNullOrWhiteSpace(e.Comision) &&
                 e.Comision.Trim().Equals(comisionBuscada, StringComparison.OrdinalIgnoreCase)
@@ -1132,10 +1055,10 @@ public class DatabaseService
         }
     }
 
-    /// <summary>
-    /// Función 100% nueva y exclusiva para el Módulo de Trabajos Prácticos (TPs).
-    /// Completamente aislada y segura.
-    /// </summary>
+    // =========================================================================
+    // MÉTODOS LIMPIOS Y ÚNICOS PARA TRABAJOS PRÁCTICOS (SIN DUPLICADOS / CS0111)
+    // =========================================================================
+
     public async Task<List<Estudiante>> ObtenerEstudiantesParaModuloTpsExclusivoAsync(string nombreComision)
     {
         await InitAsync();
@@ -1145,18 +1068,36 @@ public class DatabaseService
             var todos = await _dbConnection!.Table<Estudiante>().ToListAsync();
             if (todos == null || !todos.Any()) return new List<Estudiante>();
 
+            var activos = todos.Where(e => e.Activo).ToList();
+
             if (string.IsNullOrWhiteSpace(nombreComision))
-                return todos.Where(e => e.Activo).ToList();
+                return activos;
 
-            string comisionBuscada = nombreComision.Trim();
+            string comisionBuscada = LimpiarTextoComisionAux(nombreComision).ToLower();
 
-            // Filtro exclusivo para TPs
-            var filtrados = todos.Where(e =>
+            var filtrados = activos.Where(e =>
                 !string.IsNullOrWhiteSpace(e.Comision) &&
-                e.Comision.Trim().Equals(comisionBuscada, StringComparison.OrdinalIgnoreCase)
+                (
+                    LimpiarTextoComisionAux(e.Comision).ToLower().Equals(comisionBuscada, StringComparison.OrdinalIgnoreCase) ||
+                    LimpiarTextoComisionAux(e.Comision).ToLower().Contains(comisionBuscada) ||
+                    comisionBuscada.Contains(LimpiarTextoComisionAux(e.Comision).ToLower())
+                )
             ).ToList();
 
-            return filtrados.Any() ? filtrados : todos;
+            if (!filtrados.Any())
+            {
+                var comisionesDb = await _dbConnection.Table<Comision>().ToListAsync();
+                var comisionMatch = comisionesDb.FirstOrDefault(c =>
+                    !string.IsNullOrWhiteSpace(c.Nombre) &&
+                    LimpiarTextoComisionAux(c.Nombre).Equals(LimpiarTextoComisionAux(nombreComision), StringComparison.OrdinalIgnoreCase));
+
+                if (comisionMatch != null)
+                {
+                    filtrados = await GetEstudiantesPorComisionIdAsync(comisionMatch.Id);
+                }
+            }
+
+            return filtrados ?? new List<Estudiante>();
         }
         catch (Exception ex)
         {
@@ -1165,29 +1106,37 @@ public class DatabaseService
         }
     }
 
+    private string LimpiarTextoComisionAux(string textoComision)
+    {
+        if (string.IsNullOrWhiteSpace(textoComision))
+            return string.Empty;
 
-    /// <summary>
-    /// Método puente exacto para el módulo de TPs para que acepte 2 argumentos 
-    /// sin necesidad de modificar RegistroEntregasViewModel.cs
-    /// </summary>
+        string limpio = textoComision.Trim();
+        if (limpio.Contains("[") && limpio.Contains("]"))
+        {
+            int inicio = limpio.IndexOf('[') + 1;
+            int fin = limpio.IndexOf(']');
+            if (fin > inicio)
+                limpio = limpio.Substring(inicio, fin - inicio).Trim();
+        }
+        return limpio;
+    }
+
     public async Task<List<Estudiante>> GetEstudiantesExclusivoParaModuloTpsAsync(int comisionId, string nombreComision)
     {
-        // Redirige internamente a nuestra función limpia y nueva de TPs
-        return await ObtenerEstudiantesParaModuloTpsExclusivoAsync(nombreComision);
+        var lista = await ObtenerEstudiantesParaModuloTpsExclusivoAsync(nombreComision);
+        if ((lista == null || !lista.Any()) && comisionId > 0)
+        {
+            lista = await GetEstudiantesPorComisionIdAsync(comisionId);
+        }
+        return lista;
     }
 
-    /// <summary>
-    /// Sobrecarga adicional por si el orden de los argumentos en el ViewModel fuera al revés (string, int)
-    /// </summary>
-    public async Task<List<Estudiante>> GetEstudiantesExclusivoParaModuloTpsAsync(string nombreComision, int comisionId)
+    public async Task<List<Estudiante>> GetEstudiantesExclusivoParaModuloTpsAsync(string nombreComision)
     {
         return await ObtenerEstudiantesParaModuloTpsExclusivoAsync(nombreComision);
     }
 
-    /// <summary>
-    /// Función exclusiva para el Módulo de Reporte de Riesgo con búsqueda flexible y robusta,
-    /// garantizando que traiga el total real de alumnos de la comisión sin romper otras ventanas.
-    /// </summary>
     public async Task<List<Estudiante>> ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(string nombreComision)
     {
         await InitAsync();
@@ -1202,7 +1151,6 @@ public class DatabaseService
 
             string comisionBuscada = nombreComision.Trim().ToLower();
 
-            // 1. Búsqueda flexible y tolerante a variaciones de texto
             var filtrados = todos.Where(e =>
                 !string.IsNullOrWhiteSpace(e.Comision) &&
                 (e.Comision.Trim().Equals(comisionBuscada, StringComparison.OrdinalIgnoreCase) ||
@@ -1210,7 +1158,6 @@ public class DatabaseService
                  comisionBuscada.Contains(e.Comision.Trim().ToLower()))
             ).ToList();
 
-            // 2. Respaldo por ID relacional si el texto difiere
             if (!filtrados.Any())
             {
                 var comisionesDb = await _dbConnection.Table<Comision>().ToListAsync();
@@ -1232,6 +1179,4 @@ public class DatabaseService
             return new List<Estudiante>();
         }
     }
-
-
 }
