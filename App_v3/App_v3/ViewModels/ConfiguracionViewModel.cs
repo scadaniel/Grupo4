@@ -55,23 +55,54 @@ public class UmbralesViewModel : BaseViewModel
 public class DatosViewModel : BaseViewModel
 {
     private readonly DatosDeEjemplo _ejemplo;
+    private readonly ImportadorCsvService _importador;
     private readonly IRepositorio _repositorio;
     private readonly SelectorComisionViewModel _selector;
 
     public DatosViewModel(
-        DatosDeEjemplo ejemplo, IRepositorio repositorio, SelectorComisionViewModel selector, IDialogService dialogos)
+        DatosDeEjemplo ejemplo, ImportadorCsvService importador, IRepositorio repositorio, SelectorComisionViewModel selector, IDialogService dialogos)
         : base(dialogos)
     {
         _ejemplo = ejemplo;
+        _importador = importador;
         _repositorio = repositorio;
         _selector = selector;
         CargarEjemploCommand = Comando(CargarEjemploAsync);
+        ImportarCsvCommand = Comando(ImportarCsvAsync);
         BorrarTodoCommand = Comando(BorrarTodoAsync);
     }
 
     public ICommand CargarEjemploCommand { get; }
+    public ICommand ImportarCsvCommand { get; }
     public ICommand BorrarTodoCommand { get; }
 
+    private async Task ImportarCsvAsync()
+    {
+        var comisionId = _selector.ExigirComision();
+        var nombreComision = $"{_selector.MateriaSeleccionada?.Nombre} · Comisión {_selector.ComisionSeleccionada?.Nombre}";
+
+        var opciones = new PickOptions
+        {
+            PickerTitle = $"Seleccione el CSV histórico para {nombreComision}",
+            FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.WinUI, new[] { ".csv" } },
+                { DevicePlatform.Android, new[] { "text/csv" } },
+                { DevicePlatform.iOS, new[] { "public.comma-separated-values-text" } },
+                { DevicePlatform.MacCatalyst, new[] { "public.comma-separated-values-text" } }
+            })
+        };
+
+        var archivo = await FilePicker.Default.PickAsync(opciones);
+        if (archivo is null) return;
+
+        using var stream = await archivo.OpenReadAsync();
+        int cantidad = await _importador.ImportarHistorialAsync(comisionId, stream);
+
+        await Dialogos.AlertAsync(
+            "Importación completada",
+            $"Se importaron {cantidad} historiales de estudiantes en {nombreComision}. Ya puede consultarlos en los Reportes filtrando por las fechas correspondientes.");
+    }
     private async Task CargarEjemploAsync()
     {
         if (!await Dialogos.ConfirmarAsync("Datos de ejemplo", "Se borrará todo lo cargado y se reemplazará por datos de ejemplo. ¿Continuar?"))

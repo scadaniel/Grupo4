@@ -59,6 +59,7 @@ public static class MauiProgram
         servicios.AddSingleton<ContactoService>();
         servicios.AddSingleton<ReporteService>();
         servicios.AddSingleton<DatosDeEjemplo>();
+        servicios.AddSingleton<ImportadorCsvService>(); //carga masiva
     }
 
     // El selector de materia y comisión es uno solo para toda la app; el resto se arma de nuevo en cada uso.

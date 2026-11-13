@@ -28,6 +28,9 @@
             <Border Style="{StaticResource Tarjeta}" BindingContext="{Binding Datos}">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Datos" Style="{StaticResource TituloTarjeta}" />
+                
+                    <Button Text="Carga Masiva" Command="{Binding ImportarCsvCommand}" />
+                            
                     <Button Text="Cargar datos de ejemplo" Command="{Binding CargarEjemploCommand}" Style="{StaticResource BotonSecundario}" />
                     <Button Text="Borrar todos los datos" Command="{Binding BorrarTodoCommand}" Style="{StaticResource BotonPeligro}" />
                 </VerticalStackLayout>

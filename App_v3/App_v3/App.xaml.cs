@@ -35,10 +35,8 @@ public partial class App : Application
     {
         try
         {
-            // Solo se cargan los datos de ejemplo si no hay nada guardado.
-            // Si ya hay materias, no se toca nada: así lo que carga el usuario se conserva.
-            if ((await repositorio.ListarAsync<Materia>()).Count == 0)
-                await datos.CargarAsync();
+            // Forzamos la limpieza y recarga de los datos originales limpios para sanear la BD
+            await datos.CargarAsync();
 
             ventana.Page = new Views.BienvenidaPage();
         }

@@ -78,7 +78,6 @@ public class ReporteEntregasViewModel : PaginaViewModel
     private readonly INavegacionService _navegacion;
     private string _dni = string.Empty;
     private TrabajoOpcion _trabajo = TodosLosTrabajos;
-
     private static readonly TrabajoOpcion TodosLosTrabajos = new(null, "Todos los trabajos prácticos");
 
     public ReporteEntregasViewModel(
@@ -98,7 +97,6 @@ public class ReporteEntregasViewModel : PaginaViewModel
     public ICommand BuscarCommand { get; }
     public ICommand LimpiarCommand { get; }
     public ICommand VolverCommand { get; }
-
     public string Dni { get => _dni; set => SetProperty(ref _dni, value); }
     public TrabajoOpcion Trabajo { get => _trabajo; set => SetProperty(ref _trabajo, value ?? TodosLosTrabajos); }
 
@@ -108,8 +106,12 @@ public class ReporteEntregasViewModel : PaginaViewModel
         Trabajos.Clear();
         Trabajos.Add(TodosLosTrabajos);
         if (Selector.ComisionId is { } comisionId)
+        {
             foreach (var trabajo in await _calendario.ListarTrabajosAsync(comisionId))
+            {
                 Trabajos.Add(TrabajoOpcion.De(trabajo));
+            }
+        }
 
         _trabajo = Trabajos.FirstOrDefault(t => t.Trabajo?.Id == elegido) ?? TodosLosTrabajos;
         OnPropertyChanged(nameof(Trabajo));
@@ -118,12 +120,27 @@ public class ReporteEntregasViewModel : PaginaViewModel
 
     private async Task CargarFilasAsync()
     {
-        Filas.Clear();
-        if (Selector.ComisionId is not { } comisionId) return;
+        try
+        {
+            Filas.Clear();
+            if (Selector.ComisionId is not { } comisionId) return;
 
-        foreach (var fila in await _reportes.EntregasAsync(comisionId, Dni, Trabajo.Trabajo?.Id))
-            Filas.Add(new RenglonDeReporte(
-                fila.Estudiante.NombreCompleto, $"DNI {fila.Estudiante.Dni} · {Textos.De(fila.Trabajo)}", Textos.De(fila.Estado), fila.Estado));
+            // Obtenemos los registros de forma segura asegurando la ejecución asíncrona
+            var listaEntregas = await _reportes.EntregasAsync(comisionId, Dni, Trabajo.Trabajo?.Id);
+
+            foreach (var fila in listaEntregas)
+            {
+                Filas.Add(new RenglonDeReporte(
+                    fila.Estudiante.NombreCompleto,
+                    $"DNI {fila.Estudiante.Dni} · {Textos.De(fila.Trabajo)}",
+                    Textos.De(fila.Estado),
+                    fila.Estado));
+            }
+        }
+        catch (Exception ex)
+        {
+            await Dialogos.AlertAsync("Atención", $"No se pudo cargar el reporte: {ex.Message}");
+        }
     }
 
     private async Task LimpiarAsync()
