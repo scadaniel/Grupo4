@@ -140,17 +140,40 @@ namespace App_v3.ViewModels
             {
                 List<Estudiante> estudiantesBD = new();
 
-                if (!string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
+                // 1. Buscar el ID de la comisión por nombre para hacer la consulta relacional exacta
+                try
+                {
+                    var comisiones = await _databaseService.GetComisionesAsync();
+                    if (comisiones != null && !string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
+                    {
+                        var comisionMatch = comisiones.FirstOrDefault(c =>
+                            c.Nombre != null && c.Nombre.Trim().Equals(ClaseSeleccionada.Comision.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                        if (comisionMatch != null)
+                        {
+                            estudiantesBD = await _databaseService.GetEstudiantesPorComisionIdAsync(comisionMatch.Id);
+                        }
+                    }
+                }
+                catch
+                {
+                    // Si falla el vínculo por ID, continuamos con los respaldos por texto/clase
+                }
+
+                // 2. Respaldo por nombre de comisión directo
+                if ((estudiantesBD == null || !estudiantesBD.Any()) && !string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
                 {
                     string nombreComisionLimpio = LimpiarTextoComision(ClaseSeleccionada.Comision);
                     estudiantesBD = await _databaseService.GetEstudiantesPorComisionAsync(nombreComisionLimpio);
                 }
 
+                // 3. Respaldo por ID de clase
                 if (estudiantesBD == null || !estudiantesBD.Any())
                 {
                     estudiantesBD = await _databaseService.GetEstudiantesPorClaseIdAsync(ClaseSeleccionada.Id);
                 }
 
+                // 4. Último respaldo: todos los estudiantes
                 if (estudiantesBD == null || !estudiantesBD.Any())
                 {
                     estudiantesBD = await _databaseService.GetEstudiantesAsync();
@@ -162,7 +185,7 @@ namespace App_v3.ViewModels
                 {
                     foreach (var est in estudiantesBD)
                     {
-                        var registroPrevio = asistenciasGuardadas
+                        var registroPrevio = asistenciasGuardadas?
                             .FirstOrDefault(a => a.EstudianteId == est.Id && a.Fecha.Date == FechaSeleccionada.Date);
 
                         bool estaPresente = registroPrevio != null ? registroPrevio.Presente : true;
@@ -341,14 +364,13 @@ namespace App_v3.ViewModels
                 {
                     _estaPresente = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(EstaAusente)); // Sincroniza el ausente automáticamente
+                    OnPropertyChanged(nameof(EstaAusente));
                     OnPropertyChanged(nameof(EstadoTexto));
                     OnPropertyChanged(nameof(EstadoColor));
                 }
             }
         }
 
-        // 🌟 Nueva propiedad para manejar el checkbox de Ausente de forma inversa
         public bool EstaAusente
         {
             get => !_estaPresente;
@@ -359,7 +381,7 @@ namespace App_v3.ViewModels
                 {
                     _estaPresente = nuevoPresente;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(EstaPresente)); // Sincroniza el presente automáticamente
+                    OnPropertyChanged(nameof(EstaPresente));
                     OnPropertyChanged(nameof(EstadoTexto));
                     OnPropertyChanged(nameof(EstadoColor));
                 }

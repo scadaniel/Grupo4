@@ -61,15 +61,39 @@
                            BackgroundColor="#F8FAFC"
                            ClearButtonVisibility="WhileEditing" />
 
+                    <!-- Dentro del VerticalStackLayout del Panel de Filtros -->
+
+                    <Label Text="Filtros de Trabajos Prácticos" 
+       FontSize="14" 
+       FontAttributes="Bold" 
+       TextColor="#0F172A" />
+
+                    <!-- NUEVO: Filtro por Comisión -->
+                    <Picker ItemsSource="{Binding ListaComisiones}"
+        SelectedItem="{Binding ComisionSeleccionada}"
+        ItemDisplayBinding="{Binding Nombre}"
+        Title="Filtrar por Comisión"
+        FontSize="14"
+        TextColor="#1E293B"
+        BackgroundColor="#F8FAFC" />
+
                     <!-- Filtro por Trabajo Práctico -->
                     <Picker ItemsSource="{Binding ListaTrabajosPracticos}"
-                            SelectedItem="{Binding TpSeleccionado}"
-                            ItemDisplayBinding="{Binding Nombre}"
-                            Title="Filtrar por Trabajo Práctico"
-                            FontSize="14"
-                            TextColor="#1E293B"
-                            BackgroundColor="#F8FAFC" />
+                        SelectedItem="{Binding TpSeleccionado}"
+                        ItemDisplayBinding="{Binding Nombre}"
+                        Title="Filtrar por Trabajo Práctico"
+                        FontSize="14"
+                        TextColor="#1E293B"
+                        BackgroundColor="#F8FAFC" />
 
+                    <!-- Filtro por DNI -->
+                    <Entry Placeholder="Buscar por DNI del alumno..." 
+                       Text="{Binding DniFiltro}" 
+                       Keyboard="Numeric" 
+                       FontSize="14"
+                       BackgroundColor="#F8FAFC"
+                       ClearButtonVisibility="WhileEditing" />
+                    
                     <!-- Botones de Acción de Filtro -->
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="10" VerticalOptions="End" Margin="0,5,0,0">
                         <Button Grid.Column="0" 

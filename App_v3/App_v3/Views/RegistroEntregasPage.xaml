@@ -65,37 +65,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- 2. Selección y Eliminación de Trabajo Práctico -->
-                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Seleccionar Trabajo Práctico"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               TextColor="#2C3E50" />
-
-                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                            <Picker Grid.Column="0"
-                                    ItemDisplayBinding="{Binding Nombre}"
-                                    ItemsSource="{Binding TrabajosPracticos}"
-                                    SelectedItem="{Binding TpSeleccionado}"
-                                    Title="Elija un TP..."
-                                    FontSize="15"
-                                    BackgroundColor="#FFFFFF" />
-
-                            <Button Grid.Column="1"
-                                    Text="🗑️ Eliminar TP"
-                                    Command="{Binding EliminarTpCommand}"
-                                    BackgroundColor="#DC2626"
-                                    TextColor="White"
-                                    FontAttributes="Bold"
-                                    CornerRadius="8"
-                                    Padding="12,0"
-                                    HeightRequest="44" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!-- 3. Crear Nuevo Trabajo Práctico en esta Comisión -->
+                <!-- 2. Crear Nuevo Trabajo Práctico en esta Comisión (¡Ahora arriba!) -->
                 <Frame BorderColor="#3B82F6" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="#F8FAFC">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="➕ Nuevo Trabajo Práctico para esta Comisión"
@@ -127,6 +97,36 @@
                     </VerticalStackLayout>
                 </Frame>
 
+                <!-- 3. Selección y Eliminación de Trabajo Práctico (¡Ahora abajo!) -->
+                <Frame BorderColor="#E0E0E0" CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Seleccionar Trabajo Práctico Existente"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#2C3E50" />
+
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                            <Picker Grid.Column="0"
+                                    ItemDisplayBinding="{Binding Nombre}"
+                                    ItemsSource="{Binding TrabajosPracticos}"
+                                    SelectedItem="{Binding TpSeleccionado}"
+                                    Title="Elija un TP..."
+                                    FontSize="15"
+                                    BackgroundColor="#FFFFFF" />
+
+                            <Button Grid.Column="1"
+                                    Text="🗑️ Eliminar TP"
+                                    Command="{Binding EliminarTpCommand}"
+                                    BackgroundColor="#DC2626"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="8"
+                                    Padding="12,0"
+                                    HeightRequest="44" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
                 <!-- Título de la lista -->
                 <Label Text="Control de Entregas por Alumno"
                        FontSize="18"
@@ -137,7 +137,7 @@
                 <!-- Lista de Alumnos Inscriptos -->
                 <CollectionView ItemsSource="{Binding ListaAlumnos}">
                     <CollectionView.EmptyView>
-                        <Label Text="No hay estudiantes inscriptos en esta comisión."
+                        <Label Text="No hay estudiantes inscriptos en esta comisión o debe seleccionar un TP."
                                HorizontalOptions="Center"
                                TextColor="Gray"
                                Margin="0,20" />

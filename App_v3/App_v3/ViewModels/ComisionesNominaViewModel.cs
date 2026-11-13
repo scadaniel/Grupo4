@@ -24,7 +24,15 @@ namespace App_v3.ViewModels
                 {
                     _comisionSeleccionada = value;
                     OnPropertyChanged();
-                    _ = CargarAlumnosDeComisionAsync(_comisionSeleccionada);
+
+                    if (value != null)
+                    {
+                        _ = CargarAlumnosDeComisionAsync(value);
+                    }
+                    else
+                    {
+                        AlumnosDeComisionSeleccionada.Clear();
+                    }
                 }
             }
         }
@@ -37,14 +45,11 @@ namespace App_v3.ViewModels
         {
             _databaseService = databaseService;
             VolverAlMenuCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
-
-            // ELIMINADO de aquí para evitar la doble carga inicial junto con OnAppearing():
-            // _ = CargarComisionesAsync();
         }
 
         private async Task CargarComisionesAsync()
         {
-            if (_estaCargando) return; // Bloqueo anti-ejecuciones simultáneas
+            if (_estaCargando) return;
 
             try
             {
@@ -54,7 +59,6 @@ namespace App_v3.ViewModels
 
                 if (comisiones != null)
                 {
-                    // Agrupamos por nombre normalizado para asegurar elementos únicos en el Picker
                     var comisionesUnicas = comisiones
                         .Where(c => c != null && !string.IsNullOrWhiteSpace(c.Nombre))
                         .GroupBy(c => c.Nombre.Trim())
@@ -84,10 +88,10 @@ namespace App_v3.ViewModels
 
             try
             {
-                // 1. Buscamos por el ID relacional en la tabla intermedia EstudianteComision
+                // 1. Búsqueda relacional por ID en la tabla intermedia
                 var alumnosFiltrados = await _databaseService.GetEstudiantesPorComisionIdAsync(comision.Id);
 
-                // 2. Respaldo por nombre de texto por si acaso
+                // 2. Respaldo por nombre de comisión si la búsqueda por ID no arroja resultados
                 if ((alumnosFiltrados == null || !alumnosFiltrados.Any()) && !string.IsNullOrWhiteSpace(comision.Nombre))
                 {
                     alumnosFiltrados = await _databaseService.GetEstudiantesPorComisionAsync(comision.Nombre);

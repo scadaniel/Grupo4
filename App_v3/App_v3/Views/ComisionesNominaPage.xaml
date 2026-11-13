@@ -5,45 +5,49 @@
              Title="Nómina por Comisión"
              BackgroundColor="#F4F6F9">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <!-- 1. Cambiamos VerticalStackLayout por un Grid con filas proporcionales -->
+    <Grid RowDefinitions="Auto, *" Padding="20" RowSpacing="15">
 
-        <!-- Botón Volver -->
-        <Button Text="⬅️ Volver al Menú"
-                Command="{Binding VolverAlMenuCommand}"
-                BackgroundColor="#78909C"
-                TextColor="White"
-                FontAttributes="Bold"
-                CornerRadius="8"
-                HeightRequest="40"
-                HorizontalOptions="Start"
-                WidthRequest="150" />
+        <!-- Fila 0: Todos los controles fijos (Botón, Selector y Título de la lista) -->
+        <VerticalStackLayout Grid.Row="0" Spacing="15">
+            <!-- Botón Volver -->
+            <Button Text="⬅️ Volver al Menú"
+                    Command="{Binding VolverAlMenuCommand}"
+                    BackgroundColor="#78909C"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    HeightRequest="40"
+                    HorizontalOptions="Start"
+                    WidthRequest="150" />
 
-        <!-- Selector de Comisión -->
-        <Frame BorderColor="#E0E0E0" CornerRadius="12" Padding="15" HasShadow="True" BackgroundColor="White">
-            <VerticalStackLayout Spacing="8">
-                <Label Text="Seleccionar Comisión" 
-                       FontSize="15" 
-                       FontAttributes="Bold" 
-                       TextColor="#1A252C" />
+            <!-- Selector de Comisión -->
+            <Frame BorderColor="#E0E0E0" CornerRadius="12" Padding="15" HasShadow="True" BackgroundColor="White">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Seleccionar Comisión" 
+                           FontSize="15" 
+                           FontAttributes="Bold" 
+                           TextColor="#1A252C" />
 
-                <Picker ItemsSource="{Binding ListaComisiones}"
-                        SelectedItem="{Binding ComisionSeleccionada}"
-                        ItemDisplayBinding="{Binding Nombre}"
-                        Title="Elija una comisión..."
-                        FontSize="15"
-                        BackgroundColor="#FFFFFF" />
-            </VerticalStackLayout>
-        </Frame>
+                    <Picker ItemsSource="{Binding ListaComisiones}"
+                            SelectedItem="{Binding ComisionSeleccionada}"
+                            ItemDisplayBinding="{Binding Nombre}"
+                            Title="Elija una comisión..."
+                            FontSize="15"
+                            BackgroundColor="#FFFFFF" />
+                </VerticalStackLayout>
+            </Frame>
 
-        <Label Text="Alumnos Inscriptos" 
-               FontSize="16" 
-               FontAttributes="Bold" 
-               TextColor="#1A252C" 
-               Margin="0,5,0,0" />
+            <Label Text="Alumnos Inscriptos" 
+                   FontSize="16" 
+                   FontAttributes="Bold" 
+                   TextColor="#1A252C" 
+                   Margin="0,5,0,0" />
+        </VerticalStackLayout>
 
-        <!-- Nómina -->
-        <CollectionView ItemsSource="{Binding AlumnosDeComisionSeleccionada}"
-                        VerticalOptions="FillAndExpand">
+        <!-- Fila 1: Nómina con su propio scroll automático y delimitada al espacio restante (*) -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding AlumnosDeComisionSeleccionada}">
             <CollectionView.EmptyView>
                 <Label Text="Seleccione una comisión para ver su nómina o no hay alumnos inscriptos." 
                        HorizontalOptions="Center" 
@@ -65,5 +69,5 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

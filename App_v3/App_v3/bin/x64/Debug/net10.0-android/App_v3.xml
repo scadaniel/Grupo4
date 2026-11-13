@@ -9,6 +9,22 @@
             Valida que los valores de los umbrales no sean contradictorios ni negativos.
             </summary>
         </member>
+        <member name="M:App_v3.Services.DatabaseService.GuardarListaEntregasTpAsync(System.Int32,System.Collections.Generic.List{App_v3.Models.EntregaTp})">
+            <summary>
+            Método original (compatibilidad). Usa recálculo robusto.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.GuardarEntregasTrabajosPracticosAsync(System.Int32,System.Collections.Generic.List{App_v3.Models.EntregaTp})">
+            <summary>
+            Método NUEVO para el módulo de Registro de Entregas de TP.
+            </summary>
+        </member>
+        <member name="M:App_v3.Services.DatabaseService.RecalcularTpsPendientesEstudianteRobustoAsync(System.Int32)">
+            <summary>
+            Cuenta como pendiente cada TP de la comisión del alumno que NO esté Entregado.
+            Si no existe fila de entrega, también cuenta como pendiente.
+            </summary>
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.

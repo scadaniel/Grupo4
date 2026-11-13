@@ -12,7 +12,7 @@ namespace App_v3.ViewModels
         public string NombreEstudiante { get; set; } = string.Empty;
         public string Legajo { get; set; } = string.Empty;
 
-        private bool _entregado = false;
+        private bool _entregado;
         public bool Entregado
         {
             get => _entregado;
@@ -58,7 +58,6 @@ namespace App_v3.ViewModels
             }
         }
 
-        // --- Propiedades para el formulario de Creación de TP ---
         private string _nuevoTpNombre = string.Empty;
         public string NuevoTpNombre
         {
@@ -73,7 +72,6 @@ namespace App_v3.ViewModels
             set { _nuevoTpDescripcion = value; OnPropertyChanged(); }
         }
 
-        // --- Comandos ---
         public ICommand GuardarEntregasCommand { get; }
         public ICommand CrearTpCommand { get; }
         public ICommand EliminarTpCommand { get; }
@@ -89,6 +87,22 @@ namespace App_v3.ViewModels
             _ = CargarClasesAsync();
         }
 
+        private string LimpiarTextoComision(string textoComision)
+        {
+            if (string.IsNullOrWhiteSpace(textoComision))
+                return string.Empty;
+
+            string limpio = textoComision.Trim();
+            if (limpio.Contains("[") && limpio.Contains("]"))
+            {
+                int inicio = limpio.IndexOf('[') + 1;
+                int fin = limpio.IndexOf(']');
+                if (fin > inicio)
+                    limpio = limpio.Substring(inicio, fin - inicio).Trim();
+            }
+            return limpio;
+        }
+
         public async Task CargarClasesAsync()
         {
             try
@@ -96,18 +110,14 @@ namespace App_v3.ViewModels
                 var clases = await _databaseService.GetClasesAsync();
                 Clases.Clear();
                 foreach (var c in clases)
-                {
                     Clases.Add(c);
-                }
 
-                if (Clases.Count > 0)
-                {
+                if (Clases.Count > 0 && ClaseSeleccionada == null)
                     ClaseSeleccionada = Clases.First();
-                }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[Error cargando clases]: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[Error cargando clases TP]: {ex.Message}");
             }
         }
 
@@ -127,16 +137,21 @@ namespace App_v3.ViewModels
 
             try
             {
-                var tps = await _databaseService.GetTrabajosPracticosPorComisionAsync(ClaseSeleccionada.Comision);
-                foreach (var tp in tps)
+                string comisionLimpia = LimpiarTextoComision(ClaseSeleccionada.Comision);
+                var tps = await _databaseService.GetTrabajosPracticosPorComisionAsync(comisionLimpia);
+
+                // Respaldo por si el texto original no coincide tras limpiar
+                if (tps == null || !tps.Any())
+                    tps = await _databaseService.GetTrabajosPracticosPorComisionAsync(ClaseSeleccionada.Comision);
+
+                if (tps != null)
                 {
-                    TrabajosPracticos.Add(tp);
+                    foreach (var tp in tps)
+                        TrabajosPracticos.Add(tp);
                 }
 
                 if (TrabajosPracticos.Count > 0)
-                {
                     TpSeleccionado = TrabajosPracticos.First();
-                }
             }
             catch (Exception ex)
             {
@@ -153,39 +168,38 @@ namespace App_v3.ViewModels
 
             try
             {
-                // 1. Intentamos buscar por ID de clase en inscripciones
-                var estudiantes = await _databaseService.GetEstudiantesPorClaseIdAsync(ClaseSeleccionada.Id);
+                // LLAMADA 100% EXCLUSIVA: No toca asistencias ni altera otras tablas
+                List<Estudiante> estudiantesBD = await _databaseService.GetEstudiantesParaTpExclusivoAsync(
+                    ClaseSeleccionada.Id,
+                    ClaseSeleccionada.Comision ?? string.Empty
+                );
 
-                // 2. Si la lista viene vacía, respaldamos buscando directamente por el texto de la comisión
-                if (estudiantes == null || !estudiantes.Any())
-                {
-                    if (!string.IsNullOrWhiteSpace(ClaseSeleccionada.Comision))
-                    {
-                        estudiantes = await _databaseService.GetEstudiantesPorComisionAsync(ClaseSeleccionada.Comision);
-                    }
-                }
-
+                // Obtener las entregas existentes para este TP específico
                 var entregasExistentes = TpSeleccionado != null
                     ? await _databaseService.GetEntregasPorTpAsync(TpSeleccionado.Id)
                     : new List<EntregaTp>();
 
-                foreach (var est in estudiantes)
+                if (estudiantesBD != null)
                 {
-                    var entregaExistente = entregasExistentes.FirstOrDefault(e => e.EstudianteId == est.Id);
-
-                    ListaAlumnos.Add(new EntregaTpItemViewModel
+                    foreach (var est in estudiantesBD)
                     {
-                        EstudianteId = est.Id,
-                        EntregaId = entregaExistente?.Id ?? 0,
-                        NombreEstudiante = est.NombreCompleto,
-                        Legajo = est.Legajo,
-                        Entregado = entregaExistente?.Entregado ?? false
-                    });
+                        var entregaExistente = entregasExistentes
+                            .FirstOrDefault(e => e.EstudianteId == est.Id);
+
+                        ListaAlumnos.Add(new EntregaTpItemViewModel
+                        {
+                            EstudianteId = est.Id,
+                            EntregaId = entregaExistente?.Id ?? 0,
+                            NombreEstudiante = est.NombreCompleto ?? "Sin Nombre",
+                            Legajo = est.Legajo ?? "S/N",
+                            Entregado = entregaExistente?.Entregado ?? false
+                        });
+                    }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[Error cargando alumnos]: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[Error exclusivo cargando alumnos TP]: {ex.Message}");
             }
         }
 
@@ -207,28 +221,33 @@ namespace App_v3.ViewModels
 
             try
             {
+                string comisionLimpia = LimpiarTextoComision(ClaseSeleccionada.Comision);
+
                 var nuevoTp = new TrabajoPractico
                 {
-                    Comision = ClaseSeleccionada.Comision.Trim(),
+                    Comision = string.IsNullOrWhiteSpace(comisionLimpia)
+                        ? ClaseSeleccionada.Comision.Trim()
+                        : comisionLimpia,
                     Nombre = NuevoTpNombre.Trim(),
-                    Descripcion = NuevoTpDescripcion.Trim(),
+                    Descripcion = NuevoTpDescripcion?.Trim() ?? string.Empty,
                     FechaLimite = DateTime.Today.AddDays(14)
                 };
 
                 await _databaseService.SaveTrabajoPracticoAsync(nuevoTp);
 
-                // Limpiar campos del formulario
                 NuevoTpNombre = string.Empty;
                 NuevoTpDescripcion = string.Empty;
 
-                // Recargar lista de TPs y alumnos
                 await CargarTrabajosPracticosPorComisionAsync();
                 await CargarListaAlumnosAsync();
 
+                // Actualizar contadores de pendientes de los alumnos de la comisión
+                foreach (var item in ListaAlumnos)
+                    await _databaseService.RecalcularTpsPendientesEstudianteRobustoAsync(item.EstudianteId);
+
                 if (Shell.Current != null)
-                {
-                    await Shell.Current.DisplayAlert("Éxito", $"El TP se creó correctamente para la comisión {ClaseSeleccionada.Comision}.", "OK");
-                }
+                    await Shell.Current.DisplayAlert("Éxito",
+                        $"El TP se creó correctamente para la comisión {nuevoTp.Comision}.", "OK");
             }
             catch (Exception ex)
             {
@@ -260,13 +279,17 @@ namespace App_v3.ViewModels
 
             try
             {
+                // Guardamos ids de alumnos para recalcular después
+                var idsAlumnos = ListaAlumnos.Select(a => a.EstudianteId).ToList();
+
                 await _databaseService.DeleteTrabajoPracticoAsync(TpSeleccionado);
                 await AlCambiarClaseAsync();
 
+                foreach (var id in idsAlumnos)
+                    await _databaseService.RecalcularTpsPendientesEstudianteRobustoAsync(id);
+
                 if (Shell.Current != null)
-                {
                     await Shell.Current.DisplayAlert("Eliminado", "El Trabajo Práctico ha sido borrado con éxito.", "OK");
-                }
             }
             catch (Exception ex)
             {
@@ -284,6 +307,13 @@ namespace App_v3.ViewModels
                 return;
             }
 
+            if (!ListaAlumnos.Any())
+            {
+                if (Shell.Current != null)
+                    await Shell.Current.DisplayAlert("Atención", "No hay alumnos en la lista para guardar.", "OK");
+                return;
+            }
+
             try
             {
                 var listaAGuardar = ListaAlumnos.Select(item => new EntregaTp
@@ -295,12 +325,15 @@ namespace App_v3.ViewModels
                     FechaEntrega = item.Entregado ? DateTime.Now : null
                 }).ToList();
 
-                await _databaseService.GuardarListaEntregasTpAsync(TpSeleccionado.Id, listaAGuardar);
+                // Método NUEVO: no toca GuardarListaEntregasTpAsync ni Asistencias
+                await _databaseService.GuardarEntregasTrabajosPracticosAsync(TpSeleccionado.Id, listaAGuardar);
+
+                // Refrescar lista (para actualizar EntregaId de los recién insertados)
+                await CargarListaAlumnosAsync();
 
                 if (Shell.Current != null)
-                {
-                    await Shell.Current.DisplayAlert("Entregas Guardadas", "Se registraron las entregas del TP correctamente.", "OK");
-                }
+                    await Shell.Current.DisplayAlert("Entregas Guardadas",
+                        "Se registraron las entregas del TP y se actualizó el contador de pendientes.", "OK");
             }
             catch (Exception ex)
             {

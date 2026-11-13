@@ -62,12 +62,61 @@ public class DatabaseService
 
     private async Task InicializarDatosPruebaAsync()
     {
-        var cantidadEstudiantes = await _dbConnection!.Table<Estudiante>().CountAsync();
+        // Comisiones base
+        var cantidadComisiones = await _dbConnection!.Table<Comision>().CountAsync();
+        if (cantidadComisiones == 0)
+        {
+            await _dbConnection.InsertAsync(new Comision
+            {
+                Nombre = "Comisión A",
+                InasistenciasBajo = 2,
+                InasistenciasMedio = 4,
+                TpsBajo = 1,
+                TpsMedio = 2
+            });
+            await _dbConnection.InsertAsync(new Comision
+            {
+                Nombre = "Comisión B",
+                InasistenciasBajo = 2,
+                InasistenciasMedio = 4,
+                TpsBajo = 1,
+                TpsMedio = 2
+            });
+        }
+
+        var cantidadEstudiantes = await _dbConnection.Table<Estudiante>().CountAsync();
         if (cantidadEstudiantes == 0)
         {
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Juan Pérez", Legajo = "1001", Dni = "40111222", Comision = "Comisión A", Activo = true, Telefono = "+5491111111111", Email = "juan@email.com" });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "María Gómez", Legajo = "1002", Dni = "40333444", Comision = "Comisión A", Activo = true, Telefono = "+5491122222222", Email = "maria@email.com" });
-            await _dbConnection.InsertAsync(new Estudiante { NombreCompleto = "Carlos Ruiz", Legajo = "1003", Dni = "40555666", Comision = "Comisión B", Activo = true, Telefono = "+5491133333333", Email = "carlos@email.com" });
+            await _dbConnection.InsertAsync(new Estudiante
+            {
+                NombreCompleto = "Juan Pérez",
+                Legajo = "1001",
+                Dni = "40111222",
+                Comision = "Comisión A",
+                Activo = true,
+                Telefono = "+5491111111111",
+                Email = "juan@email.com"
+            });
+            await _dbConnection.InsertAsync(new Estudiante
+            {
+                NombreCompleto = "María Gómez",
+                Legajo = "1002",
+                Dni = "40333444",
+                Comision = "Comisión A",
+                Activo = true,
+                Telefono = "+5491122222222",
+                Email = "maria@email.com"
+            });
+            await _dbConnection.InsertAsync(new Estudiante
+            {
+                NombreCompleto = "Carlos Ruiz",
+                Legajo = "1003",
+                Dni = "40555666",
+                Comision = "Comisión B",
+                Activo = true,
+                Telefono = "+5491133333333",
+                Email = "carlos@email.com"
+            });
         }
 
         var cantidadClases = await _dbConnection.Table<Clase>().CountAsync();
@@ -105,6 +154,10 @@ public class DatabaseService
         }
     }
 
+    // =========================
+    // PERSONAS
+    // =========================
+
     public async Task<List<Persona>> GetPersonasAsync()
     {
         await InitAsync();
@@ -115,13 +168,8 @@ public class DatabaseService
     {
         await InitAsync();
         if (persona.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(persona);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(persona);
-        }
+        return await _dbConnection!.InsertAsync(persona);
     }
 
     public async Task<int> DeletePersonaAsync(Persona persona)
@@ -129,6 +177,10 @@ public class DatabaseService
         await InitAsync();
         return await _dbConnection!.DeleteAsync(persona);
     }
+
+    // =========================
+    // CLASES
+    // =========================
 
     public async Task<List<Clase>> GetClasesAsync()
     {
@@ -140,13 +192,8 @@ public class DatabaseService
     {
         await InitAsync();
         if (clase.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(clase);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(clase);
-        }
+        return await _dbConnection!.InsertAsync(clase);
     }
 
     public async Task<int> DeleteClaseAsync(Clase clase)
@@ -154,6 +201,10 @@ public class DatabaseService
         await InitAsync();
         return await _dbConnection!.DeleteAsync(clase);
     }
+
+    // =========================
+    // ESTUDIANTES
+    // =========================
 
     public async Task<List<Estudiante>> GetEstudiantesAsync()
     {
@@ -170,27 +221,27 @@ public class DatabaseService
 
         string nombreLimpio = nombreComision.Trim();
 
+        // 1. Tabla Comisiones + relación EstudianteComision
         var comision = await _dbConnection!.Table<Comision>()
-            .FirstOrDefaultAsync(c => c.Nombre != null && c.Nombre.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefaultAsync(c => c.Nombre != null &&
+                                      c.Nombre.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase));
 
         if (comision != null)
         {
             var estComision = await GetEstudiantesPorComisionIdAsync(comision.Id);
-            if (estComision.Any()) return estComision;
+            if (estComision != null && estComision.Any())
+                return estComision;
         }
 
+        // 2. Fallback: campo Comision del estudiante
         var estudiantes = await _dbConnection.Table<Estudiante>().ToListAsync();
 
-        // Filtro flexible con respaldo por si hay diferencias de texto en los datos de prueba
         var filtrados = estudiantes
             .Where(e => e.Activo && !string.IsNullOrWhiteSpace(e.Comision) &&
-                        e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase))
+                        (e.Comision.Trim().Equals(nombreLimpio, StringComparison.OrdinalIgnoreCase) ||
+                         e.Comision.Trim().Contains(nombreLimpio, StringComparison.OrdinalIgnoreCase) ||
+                         nombreLimpio.Contains(e.Comision.Trim(), StringComparison.OrdinalIgnoreCase)))
             .ToList();
-
-        if (!filtrados.Any() && estudiantes.Any(e => e.Activo))
-        {
-            return estudiantes.Where(e => e.Activo).ToList();
-        }
 
         return filtrados;
     }
@@ -206,9 +257,7 @@ public class DatabaseService
         var estudianteIds = relaciones.Select(ec => ec.EstudianteId).ToList();
 
         if (!estudianteIds.Any())
-        {
             return new List<Estudiante>();
-        }
 
         return await _dbConnection.Table<Estudiante>()
             .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
@@ -226,9 +275,7 @@ public class DatabaseService
         var estudianteIds = inscripciones.Select(i => i.EstudianteId).ToList();
 
         if (!estudianteIds.Any())
-        {
             return new List<Estudiante>();
-        }
 
         return await _dbConnection.Table<Estudiante>()
             .Where(e => estudianteIds.Contains(e.Id) && e.Activo)
@@ -256,13 +303,8 @@ public class DatabaseService
     {
         await InitAsync();
         if (estudiante.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(estudiante);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(estudiante);
-        }
+        return await _dbConnection!.InsertAsync(estudiante);
     }
 
     public async Task<int> DeleteEstudianteAsync(Estudiante estudiante)
@@ -271,7 +313,10 @@ public class DatabaseService
         return await _dbConnection!.DeleteAsync(estudiante);
     }
 
-    // --- MÉTODOS DE TRABAJOS PRÁCTICOS ---
+    // =========================
+    // TRABAJOS PRÁCTICOS
+    // =========================
+
     public async Task<List<TrabajoPractico>> GetTrabajosPracticosAsync()
     {
         await InitAsync();
@@ -281,14 +326,17 @@ public class DatabaseService
     public async Task<List<TrabajoPractico>> GetTrabajosPracticosPorComisionAsync(string comision)
     {
         await InitAsync();
-        if (string.IsNullOrWhiteSpace(comision)) return new List<TrabajoPractico>();
+        if (string.IsNullOrWhiteSpace(comision))
+            return new List<TrabajoPractico>();
 
         string comisionLimpia = comision.Trim();
         var todosLosTps = await _dbConnection!.Table<TrabajoPractico>().ToListAsync();
 
         return todosLosTps
             .Where(tp => !string.IsNullOrWhiteSpace(tp.Comision) &&
-                         tp.Comision.Trim().Equals(comisionLimpia, StringComparison.OrdinalIgnoreCase))
+                         (tp.Comision.Trim().Equals(comisionLimpia, StringComparison.OrdinalIgnoreCase) ||
+                          tp.Comision.Trim().Contains(comisionLimpia, StringComparison.OrdinalIgnoreCase) ||
+                          comisionLimpia.Contains(tp.Comision.Trim(), StringComparison.OrdinalIgnoreCase)))
             .ToList();
     }
 
@@ -296,13 +344,8 @@ public class DatabaseService
     {
         await InitAsync();
         if (tp.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(tp);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(tp);
-        }
+        return await _dbConnection!.InsertAsync(tp);
     }
 
     public async Task<int> DeleteTrabajoPracticoAsync(TrabajoPractico tp)
@@ -311,6 +354,130 @@ public class DatabaseService
         await _dbConnection!.ExecuteAsync("DELETE FROM EntregasTp WHERE TrabajoPracticoId = ?", tp.Id);
         return await _dbConnection!.DeleteAsync(tp);
     }
+
+    public async Task<List<EntregaTp>> GetEntregasPorTpAsync(int trabajoPracticoId)
+    {
+        await InitAsync();
+        return await _dbConnection!.Table<EntregaTp>()
+            .Where(e => e.TrabajoPracticoId == trabajoPracticoId)
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Método original (compatibilidad). Usa recálculo robusto.
+    /// </summary>
+    public async Task GuardarListaEntregasTpAsync(int trabajoPracticoId, List<EntregaTp> entregas)
+    {
+        await InitAsync();
+
+        foreach (var entrega in entregas)
+        {
+            entrega.TrabajoPracticoId = trabajoPracticoId;
+
+            if (entrega.Entregado && !entrega.FechaEntrega.HasValue)
+                entrega.FechaEntrega = DateTime.Now;
+
+            if (!entrega.Entregado)
+                entrega.FechaEntrega = null;
+
+            if (entrega.Id != 0)
+                await _dbConnection!.UpdateAsync(entrega);
+            else
+                await _dbConnection!.InsertAsync(entrega);
+
+            await RecalcularTpsPendientesEstudianteRobustoAsync(entrega.EstudianteId);
+        }
+    }
+
+    /// <summary>
+    /// Método NUEVO para el módulo de Registro de Entregas de TP.
+    /// </summary>
+    public async Task GuardarEntregasTrabajosPracticosAsync(int trabajoPracticoId, List<EntregaTp> entregas)
+    {
+        await InitAsync();
+
+        foreach (var entrega in entregas)
+        {
+            entrega.TrabajoPracticoId = trabajoPracticoId;
+
+            if (entrega.Entregado && !entrega.FechaEntrega.HasValue)
+                entrega.FechaEntrega = DateTime.Now;
+
+            if (!entrega.Entregado)
+                entrega.FechaEntrega = null;
+
+            if (entrega.Id != 0)
+                await _dbConnection!.UpdateAsync(entrega);
+            else
+                await _dbConnection!.InsertAsync(entrega);
+
+            await RecalcularTpsPendientesEstudianteRobustoAsync(entrega.EstudianteId);
+        }
+    }
+
+    /// <summary>
+    /// Cuenta como pendiente cada TP de la comisión del alumno que NO esté Entregado.
+    /// Si no existe fila de entrega, también cuenta como pendiente.
+    /// </summary>
+    public async Task RecalcularTpsPendientesEstudianteRobustoAsync(int estudianteId)
+    {
+        await InitAsync();
+
+        var estudiante = await _dbConnection!.Table<Estudiante>()
+            .FirstOrDefaultAsync(e => e.Id == estudianteId);
+
+        if (estudiante == null)
+            return;
+
+        string comision = (estudiante.Comision ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(comision))
+        {
+            estudiante.TpsNoEntregados = 0;
+            await _dbConnection.UpdateAsync(estudiante);
+            return;
+        }
+
+        var tpsComision = await _dbConnection.Table<TrabajoPractico>().ToListAsync();
+        var idsTps = tpsComision
+            .Where(tp => !string.IsNullOrWhiteSpace(tp.Comision) &&
+                         (tp.Comision.Trim().Equals(comision, StringComparison.OrdinalIgnoreCase) ||
+                          tp.Comision.Trim().Contains(comision, StringComparison.OrdinalIgnoreCase) ||
+                          comision.Contains(tp.Comision.Trim(), StringComparison.OrdinalIgnoreCase)))
+            .Select(tp => tp.Id)
+            .ToList();
+
+        if (!idsTps.Any())
+        {
+            estudiante.TpsNoEntregados = 0;
+            await _dbConnection.UpdateAsync(estudiante);
+            return;
+        }
+
+        var entregasAlumno = await _dbConnection.Table<EntregaTp>()
+            .Where(e => e.EstudianteId == estudianteId)
+            .ToListAsync();
+
+        int pendientes = 0;
+        foreach (var tpId in idsTps)
+        {
+            var reg = entregasAlumno.FirstOrDefault(e => e.TrabajoPracticoId == tpId);
+            if (reg == null || !reg.Entregado)
+                pendientes++;
+        }
+
+        estudiante.TpsNoEntregados = pendientes;
+        await _dbConnection.UpdateAsync(estudiante);
+    }
+
+    // Compatibilidad con llamadas antiguas
+    private async Task RecalcularTpsNoEntregadosEstudianteAsync(int estudianteId)
+    {
+        await RecalcularTpsPendientesEstudianteRobustoAsync(estudianteId);
+    }
+
+    // =========================
+    // ASISTENCIAS
+    // =========================
 
     public async Task<List<Asistencia>> GetAsistenciasPorClaseAsync(int claseId)
     {
@@ -328,18 +495,12 @@ public class DatabaseService
         {
             ast.ClaseId = claseId;
             if (ast.Fecha == default)
-            {
                 ast.Fecha = DateTime.Today;
-            }
 
             if (ast.Id != 0)
-            {
                 await _dbConnection!.UpdateAsync(ast);
-            }
             else
-            {
                 await _dbConnection!.InsertAsync(ast);
-            }
 
             await RecalcularInasistenciasEstudianteAsync(ast.EstudianteId);
         }
@@ -361,57 +522,11 @@ public class DatabaseService
         }
     }
 
-    public async Task<List<EntregaTp>> GetEntregasPorTpAsync(int trabajoPracticoId)
-    {
-        await InitAsync();
-        return await _dbConnection!.Table<EntregaTp>()
-            .Where(e => e.TrabajoPracticoId == trabajoPracticoId)
-            .ToListAsync();
-    }
-
-    public async Task GuardarListaEntregasTpAsync(int trabajoPracticoId, List<EntregaTp> entregas)
-    {
-        await InitAsync();
-
-        foreach (var entrega in entregas)
-        {
-            entrega.TrabajoPracticoId = trabajoPracticoId;
-
-            if (entrega.Id != 0)
-            {
-                await _dbConnection!.UpdateAsync(entrega);
-            }
-            else
-            {
-                await _dbConnection!.InsertAsync(entrega);
-            }
-
-            await RecalcularTpsNoEntregadosEstudianteAsync(entrega.EstudianteId);
-        }
-    }
-
-    private async Task RecalcularTpsNoEntregadosEstudianteAsync(int estudianteId)
-    {
-        var tpsSinEntregar = await _dbConnection!.Table<EntregaTp>()
-            .Where(e => e.EstudianteId == estudianteId && !e.Entregado)
-            .CountAsync();
-
-        var estudiante = await _dbConnection!.Table<Estudiante>()
-            .FirstOrDefaultAsync(e => e.Id == estudianteId);
-
-        if (estudiante != null)
-        {
-            estudiante.TpsNoEntregados = tpsSinEntregar;
-            await _dbConnection!.UpdateAsync(estudiante);
-        }
-    }
-
     public async Task<bool> InscribirEstudiantePorDniAsync(string dni, int claseId)
     {
         await InitAsync();
 
         string dniLimpio = dni?.Trim() ?? string.Empty;
-
         if (string.IsNullOrWhiteSpace(dniLimpio))
             return false;
 
@@ -436,7 +551,12 @@ public class DatabaseService
         return true;
     }
 
-    public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(string? dniFiltro, string? comisionFiltro, DateTime? fechaInicio, DateTime? fechaFin)
+    // =========================
+    // REPORTES
+    // =========================
+
+    public async Task<List<ReporteAsistenciaItem>> ObtenerReporteAsistenciasAsync(
+        string? dniFiltro, string? comisionFiltro, DateTime? fechaInicio, DateTime? fechaFin)
     {
         await InitAsync();
 
@@ -465,23 +585,23 @@ public class DatabaseService
         if (!string.IsNullOrWhiteSpace(dniFiltro))
         {
             string dniTrim = dniFiltro.Trim();
-            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) && x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) &&
+                                     x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
         }
 
-        if (!string.IsNullOrWhiteSpace(comisionFiltro) && comisionFiltro != "Todas las comisiones" && comisionFiltro != "General")
+        if (!string.IsNullOrWhiteSpace(comisionFiltro) &&
+            comisionFiltro != "Todas las comisiones" &&
+            comisionFiltro != "General")
         {
-            query = query.Where(x => !string.IsNullOrEmpty(x.Comision) && x.Comision.Trim().Equals(comisionFiltro.Trim(), StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => !string.IsNullOrEmpty(x.Comision) &&
+                                     x.Comision.Trim().Equals(comisionFiltro.Trim(), StringComparison.OrdinalIgnoreCase));
         }
 
         if (fechaInicio.HasValue)
-        {
             query = query.Where(x => x.FechaClase.Date >= fechaInicio.Value.Date);
-        }
 
         if (fechaFin.HasValue)
-        {
             query = query.Where(x => x.FechaClase.Date <= fechaFin.Value.Date);
-        }
 
         return query.OrderByDescending(x => x.FechaClase).ToList();
     }
@@ -516,16 +636,19 @@ public class DatabaseService
         if (!string.IsNullOrWhiteSpace(dniFiltro))
         {
             string dniTrim = dniFiltro.Trim();
-            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) && x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => !string.IsNullOrEmpty(x.Dni) &&
+                                     x.Dni.Contains(dniTrim, StringComparison.OrdinalIgnoreCase));
         }
 
         if (trabajoPracticoIdFiltro.HasValue && trabajoPracticoIdFiltro.Value > 0)
-        {
             query = query.Where(x => x.TrabajoPracticoId == trabajoPracticoIdFiltro.Value);
-        }
 
         return query.OrderBy(x => x.NombreEstudiante).ThenBy(x => x.NombreTp).ToList();
     }
+
+    // =========================
+    // COMISIONES / CLASES
+    // =========================
 
     public async Task<List<Comision>> GetComisionesAsync()
     {
@@ -537,13 +660,8 @@ public class DatabaseService
     {
         await InitAsync();
         if (comision.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(comision);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(comision);
-        }
+        return await _dbConnection!.InsertAsync(comision);
     }
 
     public async Task<int> SaveClaseYComisionNuevaAsync(Clase clase)
@@ -558,27 +676,33 @@ public class DatabaseService
 
             if (comisionExistente == null)
             {
-                await _dbConnection.InsertAsync(new Comision { Nombre = nombreLimpio });
+                await _dbConnection.InsertAsync(new Comision
+                {
+                    Nombre = nombreLimpio,
+                    InasistenciasBajo = 2,
+                    InasistenciasMedio = 4,
+                    TpsBajo = 1,
+                    TpsMedio = 2
+                });
             }
         }
 
         if (clase.Id != 0)
-        {
             return await _dbConnection!.UpdateAsync(clase);
-        }
-        else
-        {
-            return await _dbConnection!.InsertAsync(clase);
-        }
+        return await _dbConnection!.InsertAsync(clase);
     }
+
+    // =========================
+    // INTERVENCIONES / CONTACTOS
+    // =========================
 
     public async Task<List<IntervencionContacto>> GetIntervencionesPorEstudianteAsync(int estudianteId)
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                             .Where(i => i.EstudianteId == estudianteId)
-                             .OrderByDescending(i => i.Fecha)
-                             .ToListAsync();
+            .Where(i => i.EstudianteId == estudianteId)
+            .OrderByDescending(i => i.Fecha)
+            .ToListAsync();
     }
 
     public async Task<int> GuardarIntervencionAsync(IntervencionContacto intervencion)
@@ -591,9 +715,9 @@ public class DatabaseService
     {
         await InitAsync();
         return await _dbConnection!.Table<IntervencionContacto>()
-                             .Where(i => i.EstudianteId == estudianteId)
-                             .OrderByDescending(i => i.Fecha)
-                             .FirstOrDefaultAsync();
+            .Where(i => i.EstudianteId == estudianteId)
+            .OrderByDescending(i => i.Fecha)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<int> InscribirEstudianteEnComisionAsync(int estudianteId, int comisionId)
@@ -604,17 +728,13 @@ public class DatabaseService
             .FirstOrDefaultAsync(ec => ec.EstudianteId == estudianteId && ec.ComisionId == comisionId);
 
         if (existente != null)
-        {
             return 0;
-        }
 
-        var nuevaRelacion = new EstudianteComision
+        return await _dbConnection.InsertAsync(new EstudianteComision
         {
             EstudianteId = estudianteId,
             ComisionId = comisionId
-        };
-
-        return await _dbConnection.InsertAsync(nuevaRelacion);
+        });
     }
 
     public async Task<List<ReporteContactoItemModel>> GetReporteContactosDetalladoAsync(int comisionId)
@@ -634,7 +754,9 @@ public class DatabaseService
 
         var query = from contacto in intervenciones
                     join est in estudiantes on contacto.EstudianteId equals est.Id
-                    where comisionId == 0 || (est.Comision != null && est.Comision.Trim().Equals(nombreComisionFiltro, StringComparison.OrdinalIgnoreCase))
+                    where comisionId == 0 ||
+                          (est.Comision != null &&
+                           est.Comision.Trim().Equals(nombreComisionFiltro, StringComparison.OrdinalIgnoreCase))
                     orderby contacto.Fecha descending
                     select new ReporteContactoItemModel
                     {
@@ -644,7 +766,9 @@ public class DatabaseService
                         FechaContacto = contacto.Fecha,
                         MedioContacto = contacto.Medio ?? string.Empty,
                         Motivo = "Intervención Registrada",
-                        ReporteSituacion = string.IsNullOrWhiteSpace(contacto.Resultado) ? "Sin observaciones" : contacto.Resultado,
+                        ReporteSituacion = string.IsNullOrWhiteSpace(contacto.Resultado)
+                            ? "Sin observaciones"
+                            : contacto.Resultado,
                         AsistenciasAlMomento = est.Inasistencias,
                         TpsNoEntregadosAlMomento = est.TpsNoEntregados,
                         Mensaje = contacto.Resultado
@@ -659,6 +783,10 @@ public class DatabaseService
         return await _dbConnection!.Table<IntervencionContacto>().ToListAsync();
     }
 
+    // =========================
+    // IMPORTACIÓN MASIVA
+    // =========================
+
     public async Task<int> ImportarEstructuraCompletaDesdeTxtAsync(Stream fileStream)
     {
         await InitAsync();
@@ -666,18 +794,19 @@ public class DatabaseService
 
         using (var reader = new StreamReader(fileStream))
         {
-            string? seccionActual = string.Empty;
+            string seccionActual = string.Empty;
 
             await _dbConnection!.RunInTransactionAsync((SQLiteConnection db) =>
             {
                 while (!reader.EndOfStream)
                 {
                     string? linea = reader.ReadLine()?.Trim();
-
                     if (string.IsNullOrWhiteSpace(linea))
                         continue;
 
-                    string lineaUpper = linea.ToUpper();
+                    string lineaUpper = linea.ToUpperInvariant();
+
+                    // Detección de sección
                     if ((linea.StartsWith("[") && linea.EndsWith("]")) || lineaUpper.Contains("---"))
                     {
                         if (lineaUpper.Contains("COMISIONES")) seccionActual = "comisiones";
@@ -693,9 +822,10 @@ public class DatabaseService
                         continue;
 
                     var datos = linea.Split(';');
-                    if (datos.Length < 2) continue;
+                    if (datos.Length < 2)
+                        continue;
 
-                    switch (seccionActual?.ToLower())
+                    switch (seccionActual)
                     {
                         case "comisiones":
                             if (datos.Length >= 5)
@@ -750,13 +880,15 @@ public class DatabaseService
                             break;
 
                         case "trabajospracticos":
+                            // Nombre;Descripcion;FechaLimite[;Comision]
                             if (datos.Length >= 3)
                             {
                                 var tp = new TrabajoPractico
                                 {
                                     Nombre = datos[0].Trim(),
                                     Descripcion = datos[1].Trim(),
-                                    FechaLimite = DateTime.TryParse(datos[2], out var fTp) ? fTp : DateTime.Today.AddDays(5)
+                                    FechaLimite = DateTime.TryParse(datos[2], out var fTp) ? fTp : DateTime.Today.AddDays(5),
+                                    Comision = datos.Length >= 4 ? datos[3].Trim() : string.Empty
                                 };
                                 db.Insert(tp);
                                 registrosProcesados++;
@@ -800,5 +932,70 @@ public class DatabaseService
         }
 
         return registrosProcesados;
+    }
+
+
+    public async Task<List<Estudiante>> GetEstudiantesParaTpExclusivoAsync(int claseId, string comisionClase)
+    {
+        await InitAsync();
+
+        List<Estudiante> estudiantes = new();
+
+        string nombreComisionExtraido = comisionClase?.Trim() ?? string.Empty;
+        if (nombreComisionExtraido.Contains("[") && nombreComisionExtraido.Contains("]"))
+        {
+            int inicio = nombreComisionExtraido.IndexOf('[') + 1;
+            int fin = nombreComisionExtraido.IndexOf(']');
+            if (fin > inicio)
+            {
+                nombreComisionExtraido = nombreComisionExtraido.Substring(inicio, fin - inicio).Trim();
+            }
+        }
+
+        System.Diagnostics.Debug.WriteLine($"[TP DEBUG] Buscando alumnos para ClaseId: {claseId}, Comisión extraída: '{nombreComisionExtraido}'");
+
+        // 1. Buscar por la tabla de Comisiones y EstudianteComision
+        var comisionObj = await _dbConnection!.Table<Comision>()
+            .FirstOrDefaultAsync(c => c.Nombre != null && c.Nombre.Trim().Equals(nombreComisionExtraido, StringComparison.OrdinalIgnoreCase));
+
+        if (comisionObj != null)
+        {
+            var relaciones = await _dbConnection.Table<EstudianteComision>()
+                .Where(ec => ec.ComisionId == comisionObj.Id)
+                .ToListAsync();
+
+            var idsEstudiantes = relaciones.Select(ec => ec.EstudianteId).ToList();
+            if (idsEstudiantes.Any())
+            {
+                estudiantes = await _dbConnection.Table<Estudiante>()
+                    .Where(e => idsEstudiantes.Contains(e.Id) && e.Activo)
+                    .ToListAsync();
+            }
+        }
+
+        // 2. Si no hay, buscar por el campo texto 'Comision' en Estudiantes
+        if (!estudiantes.Any() && !string.IsNullOrWhiteSpace(nombreComisionExtraido))
+        {
+            var todosEstudiantes = await _dbConnection.Table<Estudiante>()
+                .Where(e => e.Activo && !string.IsNullOrWhiteSpace(e.Comision))
+                .ToListAsync();
+
+            estudiantes = todosEstudiantes
+                .Where(e => e.Comision!.Trim().Equals(nombreComisionExtraido, StringComparison.OrdinalIgnoreCase) ||
+                            e.Comision!.Trim().Contains(nombreComisionExtraido, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        // 3. Fallback absoluto: Si aun así está vacío, traemos TODOS los alumnos activos para asegurarnos de que la interfaz pinte la lista y puedas trabajar
+        if (!estudiantes.Any())
+        {
+            System.Diagnostics.Debug.WriteLine("[TP DEBUG] No se encontraron por comisión. Usando respaldo general de alumnos activos.");
+            estudiantes = await _dbConnection.Table<Estudiante>()
+                .Where(e => e.Activo)
+                .ToListAsync();
+        }
+
+        System.Diagnostics.Debug.WriteLine($"[TP DEBUG] Total alumnos encontrados para la vista: {estudiantes.Count}");
+        return estudiantes;
     }
 }
