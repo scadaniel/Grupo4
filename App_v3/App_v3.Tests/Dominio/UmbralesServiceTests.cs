@@ -60,7 +60,7 @@ public sealed class UmbralesServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Umbrales.GuardarAsync(inasistenciasMedio, inasistenciasAlto, tpsMedio, tpsAlto));
 
-        Assert.IsTrue(ex.Message.Contains("números enteros"));
+        Assert.Contains("números enteros", ex.Message);
         Assert.IsEmpty(await _e.Repositorio.ListarAsync<UmbralesRiesgo>());
     }
 

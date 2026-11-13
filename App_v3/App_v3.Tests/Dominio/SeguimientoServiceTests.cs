@@ -463,6 +463,6 @@ public sealed class SeguimientoServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Seguimiento.ObtenerFichaAsync(otro.Id, comision.Id));
 
-        Assert.IsTrue(ex.Message.Contains("no está inscripto"));
+        Assert.Contains("no está inscripto", ex.Message);
     }
 }

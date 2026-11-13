@@ -49,7 +49,7 @@ public sealed class RegistrosViewModelTests
 
         await Ejecutar(p.GuardarClaseCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Complete los campos obligatorios"));
+        Assert.Contains("Complete los campos obligatorios", _v.Dialogos.Ultima.Mensaje);
         Assert.IsEmpty(p.Eventos);
     }
 
@@ -61,7 +61,7 @@ public sealed class RegistrosViewModelTests
 
         await Ejecutar(p.GuardarTrabajoCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Nombre"));
+        Assert.Contains("Nombre", _v.Dialogos.Ultima.Mensaje);
     }
 
     // ---------- Asistencia (H3 y H4) ----------
@@ -112,7 +112,7 @@ public sealed class RegistrosViewModelTests
         p.ClaseSeleccionada = p.Clases.Single();
 
         Assert.IsTrue(p.YaRegistrada);
-        Assert.IsTrue(p.Aviso.Contains("Ya existe un registro"));
+        Assert.Contains("Ya existe un registro", p.Aviso);
         Assert.IsFalse(p.Lineas[0].Editable);
         Assert.IsFalse(p.MostrarGuardar);
         Assert.IsTrue(p.MostrarModificar);
@@ -182,7 +182,7 @@ public sealed class RegistrosViewModelTests
 
         await Ejecutar(p.GuardarCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Elija una clase"));
+        Assert.Contains("Elija una clase", _v.Dialogos.Ultima.Mensaje);
     }
 
     // ---------- Entregas (H5) ----------
@@ -219,7 +219,7 @@ public sealed class RegistrosViewModelTests
 
         Assert.IsTrue(p.Lineas[0].Entregado);
         Assert.AreEqual("Entregó", p.Lineas[0].TextoEstado);
-        Assert.IsTrue(p.Aviso.Contains("ya tiene entregas"));
+        Assert.Contains("ya tiene entregas", p.Aviso);
     }
 
     [TestMethod]
@@ -231,6 +231,6 @@ public sealed class RegistrosViewModelTests
 
         await Ejecutar(p.GuardarCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Elija un trabajo práctico"));
+        Assert.Contains("Elija un trabajo práctico", _v.Dialogos.Ultima.Mensaje);
     }
 }

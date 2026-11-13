@@ -52,7 +52,7 @@ public sealed class ContactoServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() =>
             _e.Contactos.RegistrarAsync(new DatosContacto(otro.Id, comision.Id, _e.Hoy, MedioContacto.Llamada, "Respondió", "ok")));
 
-        Assert.IsTrue(ex.Message.Contains("no está inscripto"));
+        Assert.Contains("no está inscripto", ex.Message);
     }
 
     [TestMethod]

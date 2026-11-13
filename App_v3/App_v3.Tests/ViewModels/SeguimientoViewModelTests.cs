@@ -164,7 +164,7 @@ public sealed class SeguimientoViewModelTests
 
         await Ejecutar(p.Contacto.EnviarEmailCommand);
 
-        Assert.IsTrue(_v.Enlaces.Abiertos.Single().StartsWith("mailto:"));
+        Assert.StartsWith("mailto:", _v.Enlaces.Abiertos.Single());
         Assert.AreEqual("Email", p.Contacto.MedioSeleccionado);
     }
 
@@ -181,7 +181,7 @@ public sealed class SeguimientoViewModelTests
         await Ejecutar(p.Contacto.LlamarCommand);
 
         Assert.AreEqual("tel:1155550000", _v.Enlaces.Abiertos.Single());
-        Assert.IsTrue(p.Contacto.MensajeError.Contains("11-5555-0000"));
+        Assert.Contains("11-5555-0000", p.Contacto.MensajeError);
         Assert.AreEqual(carla.Id, p.Filas.Single().Estudiante.Id);
     }
 

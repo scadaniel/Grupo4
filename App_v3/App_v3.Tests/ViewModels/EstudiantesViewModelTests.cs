@@ -73,7 +73,7 @@ public sealed class EstudiantesViewModelTests
 
         await Ejecutar(p.GuardarCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("DNI"));
+        Assert.Contains("DNI", _v.Dialogos.Ultima.Mensaje);
         Assert.IsEmpty(await _v.Dominio.Estudiantes.ListarAsync());
     }
 
@@ -87,11 +87,11 @@ public sealed class EstudiantesViewModelTests
 
         Completar(p, legajo: "L-1", dni: "40999888", nombre: "Beto", apellido: "Pérez", email: "b@b.com");
         await Ejecutar(p.GuardarCommand);
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("legajo"));
+        Assert.Contains("legajo", _v.Dialogos.Ultima.Mensaje);
 
         Completar(p, legajo: "L-2", dni: "30123456", nombre: "Beto", apellido: "Pérez", email: "b@b.com");
         await Ejecutar(p.GuardarCommand);
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("DNI"));
+        Assert.Contains("DNI", _v.Dialogos.Ultima.Mensaje);
 
         Assert.HasCount(1, await _v.Dominio.Estudiantes.ListarAsync());
     }
@@ -105,7 +105,7 @@ public sealed class EstudiantesViewModelTests
 
         await Ejecutar(p.GuardarCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Elija una comisión"));
+        Assert.Contains("Elija una comisión", _v.Dialogos.Ultima.Mensaje);
         Assert.IsEmpty(await _v.Dominio.Estudiantes.ListarAsync());
     }
 
@@ -137,7 +137,7 @@ public sealed class EstudiantesViewModelTests
 
         await Ejecutar(p.InscribirExistenteCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("No hay ningún estudiante"));
+        Assert.Contains("No hay ningún estudiante", _v.Dialogos.Ultima.Mensaje);
     }
 
     [TestMethod]
@@ -152,7 +152,7 @@ public sealed class EstudiantesViewModelTests
         Assert.HasCount(1, _v.Dialogos.Preguntas);
         Assert.HasCount(1, p.Nomina);
         Assert.IsFalse(p.Nomina[0].Activo);
-        Assert.IsTrue(p.Nomina[0].TextoEstado.StartsWith("Inactivo desde"));
+        Assert.StartsWith("Inactivo desde", p.Nomina[0].TextoEstado);
         Assert.AreEqual("Reactivar", p.Nomina[0].TextoAccion);
         Assert.HasCount(1, await _v.Dominio.Estudiantes.ListarAsync());
     }
@@ -200,7 +200,7 @@ public sealed class EstudiantesViewModelTests
         await Ejecutar(p.Nomina[0].CambiarEstadoCommand);
 
         Assert.IsTrue(p.Nomina[0].Activo);
-        Assert.AreEqual(0, _v.Dialogos.Preguntas.Count);
+        Assert.IsEmpty(_v.Dialogos.Preguntas);
     }
 
     [TestMethod]
@@ -240,7 +240,7 @@ public sealed class EstudiantesViewModelTests
 
         Assert.IsFalse(p.Ficha!.TieneNivel);
         Assert.AreEqual("—", p.Ficha.TextoNivel);
-        Assert.IsTrue(p.Ficha.TextoEstado.StartsWith("Inactivo desde"));
+        Assert.StartsWith("Inactivo desde", p.Ficha.TextoEstado);
         Assert.HasCount(1, p.Ficha.Asistencias);
     }
 
@@ -294,7 +294,7 @@ public sealed class EstudiantesViewModelTests
 
         await Ejecutar(p.Ficha.ContactarCommand);
         Assert.IsTrue(p.Contacto.FormularioVisible);
-        Assert.IsTrue(p.Contacto.TituloFormulario.Contains("Ana Gómez"));
+        Assert.Contains("Ana Gómez", p.Contacto.TituloFormulario);
 
         p.Contacto.FechaContacto = new DateTime(2026, 10, 28);
         p.Contacto.ResultadoSeleccionado = "Respondió";
@@ -304,7 +304,7 @@ public sealed class EstudiantesViewModelTests
         Assert.IsFalse(p.Contacto.FormularioVisible);
         Assert.IsTrue(p.HayFicha);
         Assert.HasCount(1, p.Ficha!.Contactos);
-        Assert.IsTrue(p.Ficha.Contactos[0].Contains("Va a entregar el TP"));
+        Assert.Contains("Va a entregar el TP", p.Ficha.Contactos[0]);
         Assert.HasCount(1, await _v.Dominio.Repositorio.ListarAsync<Contacto>());
     }
 

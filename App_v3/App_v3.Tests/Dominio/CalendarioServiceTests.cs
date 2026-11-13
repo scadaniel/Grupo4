@@ -67,7 +67,7 @@ public sealed class CalendarioServiceTests
 
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.NuevaClaseAsync(comision, 1, "Otra"));
 
-        Assert.IsTrue(ex.Message.Contains("Ya hay una clase"));
+        Assert.Contains("Ya hay una clase", ex.Message);
         Assert.HasCount(1, await _e.Calendario.ListarClasesAsync(comision.Id));
     }
 
@@ -141,8 +141,8 @@ public sealed class CalendarioServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Calendario.AgregarClaseAsync(comision.Id, dia, tema));
 
-        Assert.IsTrue(ex.Message.Contains("Complete los campos obligatorios"));
-        Assert.IsTrue(ex.Message.Contains(faltantes));
+        Assert.Contains("Complete los campos obligatorios", ex.Message);
+        Assert.Contains(faltantes, ex.Message);
         Assert.IsEmpty(await _e.Calendario.ListarClasesAsync(comision.Id));
     }
 
@@ -159,7 +159,7 @@ public sealed class CalendarioServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Calendario.AgregarTrabajoAsync(comision.Id, nombre, dia));
 
-        Assert.IsTrue(ex.Message.Contains(faltantes));
+        Assert.Contains(faltantes, ex.Message);
         Assert.IsEmpty(await _e.Calendario.ListarTrabajosAsync(comision.Id));
     }
 
@@ -169,6 +169,6 @@ public sealed class CalendarioServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Calendario.AgregarClaseAsync(999, _e.Hoy, "Tema"));
 
-        Assert.IsTrue(ex.Message.Contains("comisión"));
+        Assert.Contains("comisión", ex.Message);
     }
 }

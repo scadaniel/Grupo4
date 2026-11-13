@@ -15,7 +15,7 @@ public sealed class SelectorYMateriasViewModelTests
 
         Assert.IsFalse(_v.Selector.HayComision);
         Assert.IsNull(_v.Selector.ComisionId);
-        Assert.IsTrue(_v.Selector.Resumen.Contains("Cree una materia"));
+        Assert.Contains("Cree una materia", _v.Selector.Resumen);
     }
 
     [TestMethod]
@@ -82,7 +82,7 @@ public sealed class SelectorYMateriasViewModelTests
         await Ejecutar(pantalla.CrearComisionCommand);
 
         Assert.AreEqual("Atención", _v.Dialogos.Ultima.Titulo);
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("materia"));
+        Assert.Contains("materia", _v.Dialogos.Ultima.Mensaje);
     }
 
     [TestMethod]
@@ -111,7 +111,7 @@ public sealed class SelectorYMateriasViewModelTests
 
         await Ejecutar(pantalla.CrearComisionCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("Ya existe"));
+        Assert.Contains("Ya existe", _v.Dialogos.Ultima.Mensaje);
         Assert.HasCount(1, _v.Selector.Comisiones);
     }
 

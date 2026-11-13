@@ -49,7 +49,7 @@ public sealed class ConfiguracionYReportesViewModelTests
         await Ejecutar(p.GuardarCommand);
 
         Assert.AreEqual("Atención", _v.Dialogos.Ultima.Titulo);
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("enteros"));
+        Assert.Contains("enteros", _v.Dialogos.Ultima.Mensaje);
         Assert.IsFalse(_v.Dialogos.Alertas.Any(x => x.Titulo == "Umbrales guardados"));
         Assert.AreEqual(3, (await _v.Dominio.Umbrales.ObtenerAsync()).InasistenciasMedio);
     }
@@ -62,7 +62,7 @@ public sealed class ConfiguracionYReportesViewModelTests
 
         await Ejecutar(p.GuardarCommand);
 
-        Assert.IsTrue(_v.Dialogos.Ultima.Mensaje.Contains("menor"));
+        Assert.Contains("menor", _v.Dialogos.Ultima.Mensaje);
         Assert.IsEmpty(await _v.Dominio.Repositorio.ListarAsync<UmbralesRiesgo>());
     }
 
@@ -134,7 +134,7 @@ public sealed class ConfiguracionYReportesViewModelTests
 
         Assert.AreEqual("Ausente", p.Filas.Single().TextoEstado);
         Assert.AreEqual(EstadoAsistencia.Ausente, p.Filas.Single().Estado);
-        Assert.IsTrue(p.Filas.Single().Detalle.Contains("Variables"));
+        Assert.Contains("Variables", p.Filas.Single().Detalle);
         Assert.AreEqual(1, _v.Navegacion.Vueltas);
     }
 

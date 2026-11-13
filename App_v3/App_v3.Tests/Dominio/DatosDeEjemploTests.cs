@@ -30,7 +30,7 @@ public sealed class DatosDeEjemploTests
         Assert.IsNotEmpty(await _e.Estudiantes.ListarAsync());
         foreach (var comision in comisiones)
         {
-            Assert.IsTrue(materias.Contains(comision.MateriaId));
+            Assert.Contains(comision.MateriaId, materias);
             Assert.IsNotEmpty(await _e.Inscripciones.ListarActivosAsync(comision.Id));
         }
     }
@@ -63,9 +63,9 @@ public sealed class DatosDeEjemploTests
             Assert.IsTrue(niveles.SequenceEqual(niveles.OrderByDescending(n => n)));
         }
 
-        Assert.IsTrue(vistos.Contains(NivelRiesgo.Alto));
-        Assert.IsTrue(vistos.Contains(NivelRiesgo.Medio));
-        Assert.IsTrue(vistos.Contains(NivelRiesgo.Bajo));
+        Assert.Contains(NivelRiesgo.Alto, vistos);
+        Assert.Contains(NivelRiesgo.Medio, vistos);
+        Assert.Contains(NivelRiesgo.Bajo, vistos);
     }
 
     [TestMethod]
@@ -95,7 +95,7 @@ public sealed class DatosDeEjemploTests
             var todos = await _e.Seguimiento.PanelAsync(comision.Id);
             var sinContacto = await _e.Seguimiento.PanelAsync(comision.Id, soloNoContactadosEstaSemana: true);
 
-            Assert.IsTrue(sinContacto.Count <= todos.Count);
+            Assert.IsLessThanOrEqualTo(todos.Count, sinContacto.Count);
             Assert.IsTrue(sinContacto.All(f => f.Nivel != NivelRiesgo.Bajo));
             hayContactos |= todos.Any(f => f.UltimoContacto is not null);
             hayFiltrados |= sinContacto.Count > 0;
@@ -126,7 +126,7 @@ public sealed class DatosDeEjemploTests
             Assert.HasCount(activos.Count, planilla.Lineas);
         }
 
-        Assert.IsTrue(revisadas > 0);
+        Assert.IsGreaterThan(0, revisadas);
     }
 
     [TestMethod]
@@ -140,7 +140,7 @@ public sealed class DatosDeEjemploTests
 
             // Si el formato fuera inválido fallaría por validación; como ya existe, falla por duplicado.
             var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Estudiantes.AltaAsync(datos));
-            Assert.IsTrue(ex.Message.Contains("Ya existe"));
+            Assert.Contains("Ya existe", ex.Message);
         }
     }
 }

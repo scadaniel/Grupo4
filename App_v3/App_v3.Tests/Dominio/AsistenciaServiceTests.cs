@@ -48,7 +48,7 @@ public sealed class AsistenciaServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Asistencias.GuardarAsync(clase.Id, []));
 
-        Assert.IsTrue(ex.Message.Contains("No hay estudiantes activos"));
+        Assert.Contains("No hay estudiantes activos", ex.Message);
     }
 
     [TestMethod]
@@ -94,8 +94,8 @@ public sealed class AsistenciaServiceTests
 
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.TomarAsistenciaAsync(clase));
 
-        Assert.IsTrue(ex.Message.Contains("Ya existe un registro"));
-        Assert.IsTrue(ex.Message.Contains("Modificar asistencia"));
+        Assert.Contains("Ya existe un registro", ex.Message);
+        Assert.Contains("Modificar asistencia", ex.Message);
         Assert.HasCount(1, await _e.Repositorio.ListarAsync<Asistencia>());
     }
 
@@ -169,7 +169,7 @@ public sealed class AsistenciaServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Asistencias.CorregirAsync(clase.Id, [new LineaAsistencia(ana)]));
 
-        Assert.IsTrue(ex.Message.Contains("Todavía no hay asistencia"));
+        Assert.Contains("Todavía no hay asistencia", ex.Message);
     }
 
     [TestMethod]
@@ -184,7 +184,7 @@ public sealed class AsistenciaServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Asistencias.GuardarAsync(clase.Id, [new LineaAsistencia(ajeno)]));
 
-        Assert.IsTrue(ex.Message.Contains("Carla Díaz"));
+        Assert.Contains("Carla Díaz", ex.Message);
         Assert.IsEmpty(await _e.Repositorio.ListarAsync<Asistencia>());
     }
 
@@ -193,7 +193,7 @@ public sealed class AsistenciaServiceTests
     {
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Asistencias.ObtenerPlanillaAsync(999));
 
-        Assert.IsTrue(ex.Message.Contains("clase"));
+        Assert.Contains("clase", ex.Message);
     }
 
     [TestMethod]

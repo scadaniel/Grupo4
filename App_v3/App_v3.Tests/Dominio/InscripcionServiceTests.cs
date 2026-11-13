@@ -45,7 +45,7 @@ public sealed class InscripcionServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Inscripciones.InscribirAsync(estudiante.Id, comision.Id));
 
-        Assert.IsTrue(ex.Message.Contains("ya está inscripto"));
+        Assert.Contains("ya está inscripto", ex.Message);
         Assert.HasCount(1, await _e.Inscripciones.ListarNominaAsync(comision.Id));
     }
 
@@ -57,7 +57,7 @@ public sealed class InscripcionServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Inscripciones.InscribirAsync(999, comision.Id));
 
-        Assert.IsTrue(ex.Message.Contains("estudiante no existe"));
+        Assert.Contains("estudiante no existe", ex.Message);
     }
 
     [TestMethod]
@@ -68,7 +68,7 @@ public sealed class InscripcionServiceTests
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(
             () => _e.Inscripciones.InscribirAsync(estudiante.Id, 999));
 
-        Assert.IsTrue(ex.Message.Contains("comisión no existe"));
+        Assert.Contains("comisión no existe", ex.Message);
     }
 
     [TestMethod]

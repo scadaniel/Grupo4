@@ -75,7 +75,7 @@ public sealed class MateriaYComisionServiceTests
     {
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Comisiones.AltaAsync(999, "Comisión A"));
 
-        Assert.IsTrue(ex.Message.Contains("materia no existe"));
+        Assert.Contains("materia no existe", ex.Message);
     }
 
     [TestMethod]

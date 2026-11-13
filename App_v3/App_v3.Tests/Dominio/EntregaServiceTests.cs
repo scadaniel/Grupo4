@@ -109,7 +109,7 @@ public sealed class EntregaServiceTests
 
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Entregas.GuardarAsync(trabajo.Id, []));
 
-        Assert.IsTrue(ex.Message.Contains("No hay estudiantes activos"));
+        Assert.Contains("No hay estudiantes activos", ex.Message);
     }
 
     [TestMethod]
@@ -117,6 +117,6 @@ public sealed class EntregaServiceTests
     {
         var ex = await Assert.ThrowsAsync<ReglaDeNegocioException>(() => _e.Entregas.ObtenerPlanillaAsync(999));
 
-        Assert.IsTrue(ex.Message.Contains("trabajo práctico"));
+        Assert.Contains("trabajo práctico", ex.Message);
     }
 }

@@ -36,8 +36,8 @@ public sealed class ReporteRiesgoViewModelTests
         await p.CargarAsync();
 
         Assert.AreEqual("Todavía no hay datos para calcular el riesgo.", p.Titular);
-        Assert.IsFalse(p.Titular.Contains("0 de"));
-        Assert.IsFalse(p.Titular.Contains("en riesgo de abandonar"));
+        Assert.DoesNotContain("0 de", p.Titular);
+        Assert.DoesNotContain("en riesgo de abandonar", p.Titular);
     }
 
     [TestMethod]
