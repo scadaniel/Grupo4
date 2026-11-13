@@ -58,6 +58,12 @@
             Sobrecarga adicional por si el orden de los argumentos en el ViewModel fuera al revés (string, int)
             </summary>
         </member>
+        <member name="M:App_v3.Services.DatabaseService.ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(System.String)">
+            <summary>
+            Función exclusiva para el Módulo de Reporte de Riesgo con búsqueda flexible y robusta,
+            garantizando que traiga el total real de alumnos de la comisión sin romper otras ventanas.
+            </summary>
+        </member>
         <member name="M:App_v3.Services.RiesgoService.CalcularRiesgo(System.Int32,System.Int32)">
             <summary>
             Sobrecarga práctica: Calcula el riesgo leyendo automáticamente los umbrales de las preferencias o valores por defecto.

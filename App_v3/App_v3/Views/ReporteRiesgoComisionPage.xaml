@@ -48,6 +48,8 @@
                             <Label Text="/" TextColor="White" FontSize="36" FontAttributes="Bold" />
                             <Label x:Name="TotalAlumnosLabel" Text="0" TextColor="White" FontSize="36" FontAttributes="Bold" />
                         </HorizontalStackLayout>
+                        <!-- Etiqueta de texto de estado detallado -->
+                        <Label x:Name="EstadoRiesgoLabel" Text="Cargando información..." TextColor="#94A3B8" FontSize="13" HorizontalOptions="Center" Margin="0,5,0,0"/>
                     </VerticalStackLayout>
                 </Frame>
 

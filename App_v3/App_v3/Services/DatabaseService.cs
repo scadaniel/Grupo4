@@ -1184,7 +1184,54 @@ public class DatabaseService
         return await ObtenerEstudiantesParaModuloTpsExclusivoAsync(nombreComision);
     }
 
+    /// <summary>
+    /// Función exclusiva para el Módulo de Reporte de Riesgo con búsqueda flexible y robusta,
+    /// garantizando que traiga el total real de alumnos de la comisión sin romper otras ventanas.
+    /// </summary>
+    public async Task<List<Estudiante>> ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(string nombreComision)
+    {
+        await InitAsync();
 
+        try
+        {
+            var todos = await _dbConnection!.Table<Estudiante>().ToListAsync();
+            if (todos == null || !todos.Any()) return new List<Estudiante>();
+
+            if (string.IsNullOrWhiteSpace(nombreComision))
+                return new List<Estudiante>();
+
+            string comisionBuscada = nombreComision.Trim().ToLower();
+
+            // 1. Búsqueda flexible y tolerante a variaciones de texto
+            var filtrados = todos.Where(e =>
+                !string.IsNullOrWhiteSpace(e.Comision) &&
+                (e.Comision.Trim().Equals(comisionBuscada, StringComparison.OrdinalIgnoreCase) ||
+                 e.Comision.Trim().ToLower().Contains(comisionBuscada) ||
+                 comisionBuscada.Contains(e.Comision.Trim().ToLower()))
+            ).ToList();
+
+            // 2. Respaldo por ID relacional si el texto difiere
+            if (!filtrados.Any())
+            {
+                var comisionesDb = await _dbConnection.Table<Comision>().ToListAsync();
+                var comisionMatch = comisionesDb.FirstOrDefault(c =>
+                    !string.IsNullOrWhiteSpace(c.Nombre) &&
+                    c.Nombre.Trim().Equals(nombreComision.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (comisionMatch != null)
+                {
+                    filtrados = await GetEstudiantesPorComisionIdAsync(comisionMatch.Id);
+                }
+            }
+
+            return filtrados ?? new List<Estudiante>();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Error Reporte Riesgo Exclusivo]: {ex.Message}");
+            return new List<Estudiante>();
+        }
+    }
 
 
 }

@@ -17,7 +17,6 @@ public partial class ReporteRiesgoComisionPage : ContentPage
             _comisionSeleccionada = value;
             Title = $"Comisión: {_comisionSeleccionada}";
 
-            // 🌟 DISPARADOR AUTOMÁTICO: Tan pronto como MAUI inyecta la comisión, cargamos los datos
             if (!string.IsNullOrWhiteSpace(_comisionSeleccionada))
             {
                 _ = CargarDatosAsync();
@@ -35,7 +34,6 @@ public partial class ReporteRiesgoComisionPage : ContentPage
     {
         base.OnAppearing();
 
-        // Refresco por si acaso ya tenía valor asignado
         if (!string.IsNullOrEmpty(ComisionSeleccionada))
         {
             await CargarDatosAsync();
@@ -51,32 +49,12 @@ public partial class ReporteRiesgoComisionPage : ContentPage
     {
         if (string.IsNullOrEmpty(ComisionSeleccionada)) return;
 
-        // 1. Obtenemos TODOS los estudiantes de la base de datos
-        var todosEstudiantes = await _databaseService.GetEstudiantesAsync();
+        // 🌟 Llamamos ÚNICAMENTE a la función 100% nueva y aislada
+        var filtradosEstudiantes = await _databaseService.ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(ComisionSeleccionada);
 
-        if (todosEstudiantes == null || !todosEstudiantes.Any())
+        if (filtradosEstudiantes == null)
         {
-            TotalAlumnosLabel.Text = "0";
-            RiesgoRojoLabel.Text = "0";
-            EstudiantesCollection.ItemsSource = new List<EstudianteModelDto>();
-            return;
-        }
-
-        string comisionLimpia = ComisionSeleccionada.Trim().ToLower();
-
-        // 2. Filtro robusto tolerante a espacios y mayúsculas/minúsculas
-        var filtradosEstudiantes = todosEstudiantes
-            .Where(e => !string.IsNullOrWhiteSpace(e.Comision) &&
-                        e.Comision.Trim().ToLower().Equals(comisionLimpia))
-            .ToList();
-
-        // Respaldo por si el nombre contiene variaciones parciales
-        if (!filtradosEstudiantes.Any())
-        {
-            filtradosEstudiantes = todosEstudiantes
-                .Where(e => !string.IsNullOrWhiteSpace(e.Comision) &&
-                            e.Comision.Trim().ToLower().Contains(comisionLimpia))
-                .ToList();
+            filtradosEstudiantes = new List<Estudiante>();
         }
 
         int totalAlumnos = filtradosEstudiantes.Count;
@@ -84,7 +62,6 @@ public partial class ReporteRiesgoComisionPage : ContentPage
 
         int riesgoRojo = 0;
 
-        // Obtenemos las intervenciones/llamadas registradas
         List<IntervencionContacto> todasIntervenciones = new();
         try
         {
@@ -128,6 +105,20 @@ public partial class ReporteRiesgoComisionPage : ContentPage
 
         RiesgoRojoLabel.Text = riesgoRojo.ToString();
         EstudiantesCollection.ItemsSource = listaDetalle;
+
+        // Validación estricta de textos solicitados
+        if (totalAlumnos == 0)
+        {
+            EstadoRiesgoLabel.Text = "No hay suficiente información";
+        }
+        else if (riesgoRojo == 0)
+        {
+            EstadoRiesgoLabel.Text = $"No hay estudiantes en riesgo / {totalAlumnos} total de estudiantes";
+        }
+        else
+        {
+            EstadoRiesgoLabel.Text = $"{riesgoRojo} estudiantes en riesgo / {totalAlumnos} total de estudiantes";
+        }
     }
 
     private async void OnEnviarEmailClicked(object sender, EventArgs e)

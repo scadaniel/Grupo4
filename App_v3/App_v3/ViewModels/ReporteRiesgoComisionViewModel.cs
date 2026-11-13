@@ -43,8 +43,8 @@ namespace App_v3.ViewModels
         {
             if (string.IsNullOrEmpty(ComisionSeleccionada)) return;
 
-            // 🌟 Usamos la función 100% nueva y exclusiva para este módulo
-            var filtrados = await _databaseService.ObtenerEstudiantesParaReporteRiesgoAsync(ComisionSeleccionada);
+            // 🌟 Llamamos a la función exclusiva y flexible para traer TODOS los alumnos de la comisión
+            var filtrados = await _databaseService.ObtenerEstudiantesParaReporteRiesgoExclusivoAsync(ComisionSeleccionada);
 
             TotalAlumnos = filtrados?.Count ?? 0;
 
