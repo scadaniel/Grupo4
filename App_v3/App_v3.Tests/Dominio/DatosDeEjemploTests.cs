@@ -110,9 +110,14 @@ public sealed class DatosDeEjemploTests
     {
         await Ejemplo.CargarAsync();
 
+        var revisadas = 0;
         foreach (var comision in await _e.Comisiones.ListarAsync())
         {
-            var futura = (await _e.Calendario.ListarClasesAsync(comision.Id)).Last();
+            var clases = await _e.Calendario.ListarClasesAsync(comision.Id);
+            if (!clases.Any()) continue; // p. ej. 1°B de la demo de H12: comisión nueva, todavía sin clases
+
+            revisadas++;
+            var futura = clases.Last();
             var planilla = await _e.Asistencias.ObtenerPlanillaAsync(futura.Id);
             var activos = await _e.Inscripciones.ListarActivosAsync(comision.Id);
 
@@ -120,6 +125,8 @@ public sealed class DatosDeEjemploTests
             Assert.IsFalse(planilla.YaRegistrada);
             Assert.HasCount(activos.Count, planilla.Lineas);
         }
+
+        Assert.IsTrue(revisadas > 0);
     }
 
     [TestMethod]

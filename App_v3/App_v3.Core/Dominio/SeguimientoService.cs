@@ -34,6 +34,27 @@ public class SeguimientoService(
             .ToList();
     }
 
+    /// <summary>
+    /// H12: cuántos estudiantes activos de la comisión están en riesgo (nivel Medio o Alto).
+    /// Usa SituacionDe, la misma función que arma el panel, así que los dos números no pueden diferir (CA2).
+    /// Sin ninguna asistencia ni entrega registrada devuelve SinDatos y no "0 en riesgo" (CA3).
+    /// </summary>
+    public async Task<ResumenRiesgoComision> ResumenDeRiesgoAsync(int comisionId)
+    {
+        var activos = await inscripciones.ListarActivosAsync(comisionId);
+        if (activos.Count == 0) return ResumenRiesgoComision.SinEstudiantes();
+
+        var datos = await CargarDatosAsync(comisionId);
+        if (datos.Asistencias.Count == 0 && datos.Entregas.Count == 0)
+            return ResumenRiesgoComision.SinDatos(activos.Count);
+
+        var niveles = activos.Select(e => SituacionDe(datos, e).Nivel).ToList();
+        var alto = niveles.Count(n => n == NivelRiesgo.Alto);
+        var medio = niveles.Count(n => n == NivelRiesgo.Medio);
+
+        return new ResumenRiesgoComision(EstadoResumenRiesgo.Calculado, alto + medio, activos.Count, alto, medio);
+    }
+
     /// <summary>CA 9.1 a 9.3, CA 12.1 a 12.4 y CA 13.2: ficha de un estudiante, activo o inactivo.</summary>
     public async Task<FichaEstudiante> ObtenerFichaAsync(int estudianteId, int comisionId)
     {

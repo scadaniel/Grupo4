@@ -71,7 +71,7 @@ public sealed class ConfiguracionYReportesViewModelTests
     [TestMethod]
     public async Task CargarDatosDeEjemploPideConfirmacionYDejaListaLaSeleccion()
     {
-        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
+        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), new ImportadorCsvService(_v.Dominio.Repositorio), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
 
         await Ejecutar(p.CargarEjemploCommand);
 
@@ -85,7 +85,7 @@ public sealed class ConfiguracionYReportesViewModelTests
     {
         await _v.Dominio.Materias.AltaAsync("Mi materia");
         _v.Dialogos.RespuestaAConfirmar = false;
-        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
+        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), new ImportadorCsvService(_v.Dominio.Repositorio), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
 
         await Ejecutar(p.CargarEjemploCommand);
         await Ejecutar(p.BorrarTodoCommand);
@@ -99,7 +99,7 @@ public sealed class ConfiguracionYReportesViewModelTests
     {
         await new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj).CargarAsync();
         await _v.Selector.CargarAsync();
-        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
+        var p = new DatosViewModel(new DatosDeEjemplo(_v.Dominio.Repositorio, _v.Dominio.Reloj), new ImportadorCsvService(_v.Dominio.Repositorio), _v.Dominio.Repositorio, _v.Selector, _v.Dialogos);
 
         await Ejecutar(p.BorrarTodoCommand);
 

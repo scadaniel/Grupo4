@@ -9,6 +9,7 @@ public class MenuReportesViewModel(INavegacionService navegacion, IDialogService
 {
     public ICommand IrAsistenciasCommand { get; } = new ComandoAsync(() => navegacion.IrAAsync(Rutas.ReporteAsistencias));
     public ICommand IrEntregasCommand { get; } = new ComandoAsync(() => navegacion.IrAAsync(Rutas.ReporteEntregas));
+    public ICommand IrRiesgoCommand { get; } = new ComandoAsync(() => navegacion.IrAAsync(Rutas.ReporteRiesgo));
 }
 
 /// <summary>Un renglón de un reporte: un texto principal, un detalle y el estado con su color.</summary>

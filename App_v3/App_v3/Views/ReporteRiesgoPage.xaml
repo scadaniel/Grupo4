@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:PaginaBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:App_v3.Views"
+             x:Class="App_v3.Views.ReporteRiesgoPage"
+             Title="Estudiantes en riesgo">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Button Style="{StaticResource BotonVolver}" Command="{Binding VolverCommand}" />
+            <Label Text="Estudiantes en riesgo de la comisión" Style="{StaticResource Titulo}" />
+            <views:EstadoVacioView BindingContext="{Binding Selector}" />
+
+            <Border Style="{StaticResource Tarjeta}" IsVisible="{Binding Selector.HayComision}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding Selector.Resumen}" Style="{StaticResource Detalle}" />
+                    <Label Text="{Binding Titular}" Style="{StaticResource Titulo}" />
+                    <Label Text="{Binding Detalle}" Style="{StaticResource Detalle}" />
+                    <Button Text="Actualizar" Command="{Binding ActualizarCommand}" Style="{StaticResource BotonSecundario}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</views:PaginaBase>

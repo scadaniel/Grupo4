@@ -78,6 +78,7 @@ public class DatosViewModel : BaseViewModel
 
     private async Task ImportarCsvAsync()
     {
+#if WINDOWS || ANDROID || IOS || MACCATALYST
         var comisionId = _selector.ExigirComision();
         var nombreComision = $"{_selector.MateriaSeleccionada?.Nombre} · Comisión {_selector.ComisionSeleccionada?.Nombre}";
 
@@ -102,6 +103,11 @@ public class DatosViewModel : BaseViewModel
         await Dialogos.AlertAsync(
             "Importación completada",
             $"Se importaron {cantidad} historiales de estudiantes en {nombreComision}. Ya puede consultarlos en los Reportes filtrando por las fechas correspondientes.");
+#else
+        // El selector de archivos es de MAUI. El proyecto de tests compila este ViewModel sin MAUI,
+        // así que fuera de la app no hay selector y solo se avisa.
+        await Dialogos.AlertAsync("Importar CSV", "La importación de archivos solo está disponible dentro de la aplicación.");
+#endif
     }
     private async Task CargarEjemploAsync()
     {

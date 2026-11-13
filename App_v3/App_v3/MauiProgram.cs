@@ -76,11 +76,12 @@ public static class MauiProgram
         servicios.AddTransient<MenuReportesViewModel>();
         servicios.AddTransient<ReporteAsistenciasViewModel>();
         servicios.AddTransient<ReporteEntregasViewModel>();
+        servicios.AddTransient<ReporteRiesgoViewModel>();
         servicios.AddTransient<UmbralesViewModel>();
         servicios.AddTransient<DatosViewModel>();
         servicios.AddTransient<ConfiguracionViewModel>();
 
-      // <--VIEWMODEL DEL PORTAL DEL ESTUDIANTE -->
+        // <--VIEWMODEL DEL PORTAL DEL ESTUDIANTE -->
         servicios.AddTransient<EstudiantePortalViewModel>();
 
     }
@@ -96,10 +97,11 @@ public static class MauiProgram
         servicios.AddTransient<MenuReportesPage>();
         servicios.AddTransient<ReporteAsistenciasPage>();
         servicios.AddTransient<ReporteEntregasPage>();
+        servicios.AddTransient<ReporteRiesgoPage>();
         servicios.AddTransient<ConfiguracionPage>();
 
         // <-- La PÁGINA DEL PORTAL DEL ESTUDIANTE -->
         servicios.AddTransient<EstudiantePortalPage>();
     }
-    
+
 }

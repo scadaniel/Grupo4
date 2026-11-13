@@ -66,7 +66,7 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
         // ==========================================
         // CREACIÓN DE MATERIAS (Las 7 en común y las específicas)
         // ==========================================
-       
+
         // Troncales / En común
         var matTecnicas = await GuardarAsync(new Materia { Nombre = "Técnicas de Programación" });
         var matBaseDatos = await GuardarAsync(new Materia { Nombre = "Administración de Base de Datos" });
@@ -123,6 +123,101 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
             var com = await GuardarAsync(new Comision { MateriaId = mat.Id, Nombre = "20112" });
             await InscribirYCurarAsync(com, estudiantes20112, hoy);
         }
+
+
+        // H12: comisiones de demostración del reporte de estudiantes en riesgo
+        await CargarDemoRiesgoAsync(hoy);
+    }
+
+
+    // ==========================================================================
+    // H12 · DEMO DEL REPORTE DE ESTUDIANTES EN RIESGO
+    // Datos fijos (sin Random) para que los números de la demo sean siempre los mismos.
+    // Con los umbrales por defecto (inasistencias 3/5, TPs sin entregar 1/3):
+    //   1°A: 30 estudiantes activos, 7 en riesgo (2 Alto y 5 Medio, ver PerfilDe1A) -> "7 de 30".
+    //   1°B: 30 estudiantes inscriptos, sin clases ni TPs y SIN ninguna asistencia
+    //        ni entrega registrada -> "todavía no hay datos".
+    // No se toca el modelo ni el cálculo de riesgo: solo se cargan registros.
+    // ==========================================================================
+    private async Task CargarDemoRiesgoAsync(DateTime hoy)
+    {
+        var materia = await GuardarAsync(new Materia { Nombre = "Demo H12 · Riesgo de abandono" });
+
+        await CargarComision1AAsync(materia, hoy);
+        await CargarComision1BAsync(materia, hoy);
+    }
+
+    private async Task CargarComision1AAsync(Materia materia, DateTime hoy)
+    {
+        var comision = await GuardarAsync(new Comision { MateriaId = materia.Id, Nombre = "1°A" });
+        var estudiantes = await CrearEstudiantesRangoAsync(30, 30001, 60);
+        var clases = await CrearClasesAsync(comision, hoy);
+        var trabajos = await CrearTrabajosAsync(comision, hoy);
+
+        for (var i = 0; i < estudiantes.Count; i++)
+        {
+            var (ausentes, justificadas, entregados) = PerfilDe1A(i);
+            await InscribirAsync(comision, estudiantes[i]);
+            await RegistrarAsistenciasPorClaseAsync(clases, estudiantes[i], ausentes, justificadas);
+            await RegistrarEntregasAsync(trabajos, estudiantes[i], entregados);
+        }
+    }
+
+    private async Task CargarComision1BAsync(Materia materia, DateTime hoy)
+    {
+        var comision = await GuardarAsync(new Comision { MateriaId = materia.Id, Nombre = "1°B" });
+        var estudiantes = await CrearEstudiantesRangoAsync(30, 30501, 100);
+
+        // Comisión recién creada: tiene sus estudiantes inscriptos y nada más. Sin clases, sin trabajos prácticos
+        // y sin asistencias ni entregas registradas (CA3). Así no hay nada que sume al riesgo en el panel.
+        foreach (var estudiante in estudiantes)
+            await InscribirAsync(comision, estudiante);
+    }
+
+    // Qué clases (de las 5 ya dictadas, numeradas desde 0) faltó cada estudiante, si las faltas fueron
+    // justificadas y cuántos de los 3 TPs vencidos entregó. Los 7 primeros (L-30001 a L-30007) están en riesgo.
+    private static (int[] Ausentes, bool Justificadas, int Entregados) PerfilDe1A(int i) => i switch
+    {
+        // Tres faltas cada uno (nivel Medio), pero en momentos distintos. El cálculo actual no los distingue.
+        0 => (new[] { 2, 3, 4 }, false, 3),   // L-30001: faltó a las últimas tres clases
+        1 => (new[] { 0, 2, 4 }, false, 3),   // L-30002: tres faltas salteadas
+        2 => (new[] { 0, 1, 2 }, false, 3),   // L-30003: tres faltas hace un mes y después vino siempre
+
+        3 => (new[] { 0, 1, 2, 3, 4 }, false, 3),   // L-30004: 5 faltas -> Alto
+        4 => (Array.Empty<int>(), false, 0),        // L-30005: 3 TPs sin entregar -> Alto
+        5 => (Array.Empty<int>(), false, 2),        // L-30006: 1 TP sin entregar -> Medio
+        6 => (new[] { 0, 1, 3, 4 }, false, 3),     // L-30007: 4 faltas -> Medio
+
+        // 4 ausencias, pero justificadas: no suman al riesgo (CA 3.5) -> Bajo
+        7 => (new[] { 0, 1, 2, 3 }, true, 3),
+
+        // El resto: 0, 1 o 2 faltas y todos los TPs entregados -> Bajo
+        _ => (Enumerable.Range(0, i % 3).ToArray(), false, 3)
+    };
+
+    private Task InscribirAsync(Comision comision, Estudiante estudiante) =>
+        GuardarAsync(new Inscripcion
+        {
+            EstudianteId = estudiante.Id,
+            ComisionId = comision.Id,
+            Activa = true,
+            FechaBaja = null
+        });
+
+    private async Task RegistrarAsistenciasPorClaseAsync(
+        List<ClaseDictada> clases, Estudiante estudiante, int[] ausentes, bool justificadas)
+    {
+        for (var c = 0; c < 5; c++)
+        {
+            var ausente = ausentes.Contains(c);
+            await GuardarAsync(new Asistencia
+            {
+                ClaseDictadaId = clases[c].Id,
+                EstudianteId = estudiante.Id,
+                Presente = !ausente,
+                Justificada = ausente && justificadas
+            });
+        }
     }
 
 
@@ -144,7 +239,7 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
                 Dni = $"4{legajoBase + i:D7}".Substring(0, 8),
                 Nombre = nombre,
                 Apellido = apellido,
-                Email = $"{SinTildes(nombre).ToLowerInvariant()}.{SinTildes(apellido).ToLowerInvariant()}{legajoBase + i}@ejemplo.com",
+                Email = $"{SinTildes(nombre).ToLowerInvariant().Replace(" ", string.Empty)}.{SinTildes(apellido).ToLowerInvariant()}{legajoBase + i}@ejemplo.com",
                 Telefono = $"11-5555-{(legajoBase + i)}"
             });
             lista.Add(est);
@@ -189,13 +284,30 @@ public class DatosDeEjemplo(IRepositorio repositorio, TimeProvider reloj)
 
         foreach (var estudiante in estudiantes)
         {
+            // El último estudiante de cada plantel está dado de baja (baja lógica, H13): conserva su historial.
+            var esBaja = estudiante == estudiantes[^1];
+
             await GuardarAsync(new Inscripcion
             {
                 EstudianteId = estudiante.Id,
                 ComisionId = comision.Id,
-                Activa = true,
-                FechaBaja = null
+                Activa = !esBaja,
+                FechaBaja = esBaja ? hoy.AddDays(-10) : null
             });
+
+            // Los tres primeros del plantel ya fueron contactados esta semana (H10 y H11); el resto, no.
+            if (estudiantes.IndexOf(estudiante) < 3)
+            {
+                await GuardarAsync(new Contacto
+                {
+                    EstudianteId = estudiante.Id,
+                    ComisionId = comision.Id,
+                    Fecha = hoy.AddDays(-2),
+                    Medio = MedioContacto.Llamada,
+                    Resultado = "Atendió",
+                    Nota = "Contacto de ejemplo"
+                });
+            }
 
 
             int ausencias = rand.Next(0, 6);

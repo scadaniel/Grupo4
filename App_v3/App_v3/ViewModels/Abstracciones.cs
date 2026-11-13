@@ -33,6 +33,7 @@ public static class Rutas
 {
     public const string ReporteAsistencias = "ReporteAsistencias";
     public const string ReporteEntregas = "ReporteEntregas";
+    public const string ReporteRiesgo = "ReporteRiesgo";
     public const string Reportes = "Reportes";
     public const string Configuracion = "Configuracion";
 }
